@@ -1,76 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head"></head>
 
-<head th:replace="layout :: head">
-</head>
+  <body>
+    <!-- Navbar -->
+    <nav th:replace="layout :: navbar"></nav>
 
-<body>
-  <div th:replace="layout :: navbar"></div>
-
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <h2 class="mb-4 text-success">
-          <i class="bi bi-tree"></i> Registrar Nuevo Árbol
-        </h2>
-
-        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Error:</strong> <span th:text="${error}"></span>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-
-        <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Éxito:</strong> <span th:text="${mensaje}"></span>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-
-        <form th:action="@{/arboles/registro}" method="POST" class="needs-validation">
-          <div class="mb-3">
-            <label for="especie" class="form-label">Especie del Árbol</label>
-            <input type="text" class="form-control" id="especie" name="especie" th:field="${arbol.especie}"
-              required />
-            <small class="form-text text-muted">Ej: Mango, Tamarindo, Ficus, etc.</small>
-          </div>
-
-          <div class="mb-3">
-            <label for="ubicacion" class="form-label">Ubicación</label>
-            <textarea class="form-control" id="ubicacion" name="ubicacion" th:field="${arbol.ubicacion}"
-              rows="3" required></textarea>
-            <small class="form-text text-muted">Describe dónde está ubicado el árbol (dirección, referencia,
-              etc.)</small>
-          </div>
-
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha de Registro</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" th:field="${arbol.fecha}" required />
-          </div>
-
-          <div class="mb-3">
-            <label for="estado" class="form-label">Estado del Árbol</label>
-            <select class="form-select" id="estado" name="estado" th:field="${arbol.estado}" required>
-              <option value="">Selecciona un estado...</option>
-              <option value="Muy Bueno">Muy Bueno</option>
-              <option value="Bueno">Bueno</option>
-              <option value="Regular">Regular</option>
-              <option value="Malo">Malo</option>
-              <option value="Crítico">Crítico</option>
-            </select>
-          </div>
-
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a th:href="@{/arboles/listado}" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-success">
-              <i class="bi bi-check-circle"></i> Registrar Árbol
-            </button>
-          </div>
-        </form>
+    <!-- Contenido principal -->
+    <main class="registro-container">
+      <div class="registro-header">
+        <h2><i class="bi bi-tree"></i> Registrar Nuevo Árbol</h2>
       </div>
-    </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ybVbY2z7FcqAF3M5KVrQ0YMCxQBBKM6rqcRbr4Q3p1wqWq7vj2v8J9zZ0zZ0z0z0z"
-    crossorigin="anonymous"></script>
-</body>
+      <!-- Mensaje de error -->
+      <div th:if="${error}" class="registro-alert registro-alert-danger">
+        <strong>Error:</strong> <span th:text="${error}"></span>
+      </div>
 
+      <!-- Formulario -->
+      <form
+        id="registroForm"
+        th:action="@{/arboles/registro}"
+        method="POST"
+        class="registro-form"
+      >
+        <div class="registro-form-group">
+          <label for="especie">🌿 Especie del Árbol *</label>
+          <input type="text" id="especie" name="especie" required />
+          <small>Ej: Mango, Tamarindo, Ficus, Roble, etc.</small>
+          <div class="registro-invalid-feedback" id="error-especie"></div>
+        </div>
+
+        <div class="registro-form-group">
+          <label for="ubicacion">📍 Ubicación *</label>
+          <textarea
+            id="ubicacion"
+            name="ubicacion"
+            rows="3"
+            required
+          ></textarea>
+          <small
+            >Describe dónde está ubicado el árbol (dirección, parque,
+            referencia)</small
+          >
+          <div class="registro-invalid-feedback" id="error-ubicacion"></div>
+        </div>
+
+        <div class="registro-form-group">
+          <label for="fecha">📅 Fecha de Registro *</label>
+          <input type="date" id="fecha" name="fecha" required />
+          <div class="registro-invalid-feedback" id="error-fecha"></div>
+        </div>
+
+        <div class="registro-form-group">
+          <label for="estado">🏥 Estado del Árbol *</label>
+          <select id="estado" name="estado" required>
+            <option value="">Selecciona un estado...</option>
+            <option value="Muy Bueno">🌳 Muy Bueno</option>
+            <option value="Bueno">🌿 Bueno</option>
+            <option value="Regular">🍂 Regular</option>
+            <option value="Malo">🍁 Malo</option>
+            <option value="Crítico">⚠️ Crítico</option>
+          </select>
+          <div class="registro-invalid-feedback" id="error-estado"></div>
+        </div>
+
+        <div class="registro-buttons">
+          <a th:href="@{/arboles/listado}" class="registro-btn-secondary"
+            >Cancelar</a
+          >
+          <button type="submit" class="registro-btn-success">
+            <i class="bi bi-check-circle"></i> Registrar Árbol
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="layout :: footer"></footer>
+    <!-- Scripts -->
+    <th:div th:replace="layout :: scripts"></th:div>
+  </body>
 </html>
