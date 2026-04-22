@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // --- 1. LÓGICA DE ELIMINACIÓN Y FILTRO (LISTADO) ---
   document.querySelectorAll(".btn-eliminar").forEach((btn) => {
     btn.addEventListener("click", function (e) {
       if (
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // --- 2. LÓGICA DE VALIDACIÓN (FORMULARIO) ---
   const form = document.getElementById("registroForm");
   if (form) {
     const inputs = ["especie", "ubicacion", "fecha", "estado"];
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Limpiar errores al interactuar
     inputs.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
