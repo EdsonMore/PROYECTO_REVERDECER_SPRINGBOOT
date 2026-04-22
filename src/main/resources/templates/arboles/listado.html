@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head">
+</head>
+
+<body>
+  <div th:replace="layout :: navbar"></div>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="text-success">
+            <i class="bi bi-tree"></i> Mis Árboles
+          </h2>
+          <a th:href="@{/arboles/registro}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar Nuevo Árbol
+          </a>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error:</strong> <span th:text="${error}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+
+        <div th:if="${arboles != null and arboles.size() > 0}">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead class="table-success">
+                <tr>
+                  <th>#</th>
+                  <th>Especie</th>
+                  <th>Ubicación</th>
+                  <th>Fecha de Registro</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="arbol, iterStat : ${arboles}">
+                  <td th:text="${iterStat.count}"></td>
+                  <td th:text="${arbol.especie}"></td>
+                  <td th:text="${arbol.ubicacion}"></td>
+                  <td th:text="${#temporals.format(arbol.fecha, 'dd/MM/yyyy')}"></td>
+                  <td>
+                    <span th:classappend="'badge'">
+                      <span th:if="${arbol.estado == 'Muy Bueno'}" class="badge bg-success"
+                        th:text="${arbol.estado}"></span>
+                      <span th:if="${arbol.estado == 'Bueno'}" class="badge bg-info"
+                        th:text="${arbol.estado}"></span>
+                      <span th:if="${arbol.estado == 'Regular'}" class="badge bg-warning"
+                        th:text="${arbol.estado}"></span>
+                      <span th:if="${arbol.estado == 'Malo'}" class="badge bg-danger"
+                        th:text="${arbol.estado}"></span>
+                      <span th:if="${arbol.estado == 'Crítico'}" class="badge bg-dark"
+                        th:text="${arbol.estado}"></span>
+                    </span>
+                  </td>
+                  <td>
+                    <a th:href="@{/arboles/eliminar/{id}(id=${arbol.id})}" class="btn btn-sm btn-danger"
+                      onclick="return confirm('¿Estás seguro de eliminar este árbol?')">
+                      <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div th:if="${arboles == null or arboles.size() == 0}" class="alert alert-info">
+          <i class="bi bi-info-circle"></i> No tienes árboles registrados aún.
+          <a th:href="@{/arboles/registro}" class="alert-link">Registra tu primer árbol</a>
+        </div>
+
+        <div class="mt-4">
+          <a th:href="@{/}" class="btn btn-outline-secondary">
+            <i class="bi bi-house"></i> Volver al Inicio
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ybVbY2z7FcqAF3M5KVrQ0YMCxQBBKM6rqcRbr4Q3p1wqWq7vj2v8J9zZ0zZ0z0z0z"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

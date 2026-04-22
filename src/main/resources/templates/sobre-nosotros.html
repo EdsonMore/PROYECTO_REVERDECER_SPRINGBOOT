@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Sobre Nosotros - ReVerdecer Piura'"
+  ></head>
+
+  <body>
+    <!-- Navbar -->
+    <nav th:replace="layout :: navbar"></nav>
+
+    <!-- Hero Section -->
+    <section
+      th:replace="layout :: hero(
+    'Sobre Nosotros',
+    'Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT, comprometidos con reverdecer Piura.',
+    false,
+    ~{:: #vacio}
+)"
+    >
+      <div id="vacio"></div>
+    </section>
+
+    <!-- Historia -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="position-relative">
+              <img
+                th:src="@{/img/logo1.webp}"
+                class="img-fluid rounded-4 shadow-lg"
+                alt="Nuestra historia"
+                style="transition: transform 0.3s ease"
+              />
+              <div
+                class="position-absolute bottom-0 start-0 bg-success text-white p-3 rounded-top-end"
+              >
+                <strong>Desde 2024</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="ps-lg-4">
+              <h2 class="fw-bold mb-4 text-success">Nuestra Historia</h2>
+              <p class="text-muted fs-6 mb-3 lh-lg">
+                En
+                <strong class="text-dark">ReVerdecer Piura</strong>
+                nace con la misión de combatir la deforestación urbana y el
+                deterioro de áreas verdes en la ciudad de Piura. Mediante el uso
+                de tecnologías IoT y web, buscamos garantizar el cuidado
+                adecuado de cada árbol plantado.
+              </p>
+              <p class="text-muted fs-6 mb-4 lh-lg">
+                Creemos en la innovación, la sostenibilidad y en brindar a la
+                comunidad una herramienta que permita participar activamente en
+                la reforestación y el monitoreo ambiental de nuestra ciudad.
+              </p>
+              <div class="d-flex align-items-center gap-4">
+                <div class="text-center">
+                  <h3 class="text-success fw-bold mb-1">2024</h3>
+                  <small class="text-muted">Año de fundación</small>
+                </div>
+                <div class="text-center">
+                  <h3 class="text-success fw-bold mb-1">100+</h3>
+                  <small class="text-muted">Árboles monitoreados</small>
+                </div>
+                <div class="text-center">
+                  <h3 class="text-success fw-bold mb-1">IoT</h3>
+                  <small class="text-muted">Tecnología inteligente</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Valores -->
+    <section class="bg-light py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold mb-3">Nuestros Valores</h2>
+          <p class="lead text-muted">
+            Los pilares que guían nuestro compromiso con el medio ambiente
+          </p>
+        </div>
+        <div class="row g-4">
+          <!-- Sostenibilidad -->
+          <div class="col-md-4">
+            <div
+              class="card border-0 shadow-sm h-100 hover-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body text-center p-4">
+                <div
+                  class="bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                  style="width: 80px; height: 80px"
+                >
+                  <i class="bi bi-tree text-white fs-1"></i>
+                </div>
+                <h5 class="fw-bold text-success mb-3">Sostenibilidad</h5>
+                <p class="text-muted">
+                  Promovemos el cuidado del medio ambiente mediante tecnologías
+                  que optimizan el uso del agua y garantizan la supervivencia de
+                  los árboles urbanos.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Innovación -->
+          <div class="col-md-4">
+            <div
+              class="card border-0 shadow-sm h-100 hover-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body text-center p-4">
+                <div
+                  class="bg-primary bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                  style="width: 80px; height: 80px"
+                >
+                  <i class="bi bi-cpu text-white fs-1"></i>
+                </div>
+                <h5 class="fw-bold text-primary mb-3">Innovación</h5>
+                <p class="text-muted">
+                  Integramos IoT, sensores y análisis de datos para ofrecer
+                  soluciones inteligentes al monitoreo ambiental.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compromiso -->
+          <div class="col-md-4">
+            <div
+              class="card border-0 shadow-sm h-100 hover-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body text-center p-4">
+                <div
+                  class="bg-warning bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                  style="width: 80px; height: 80px"
+                >
+                  <i class="bi bi-people text-white fs-1"></i>
+                </div>
+                <h5 class="fw-bold text-warning mb-3">Compromiso</h5>
+                <p class="text-muted">
+                  Trabajamos junto a la comunidad para construir una Piura más
+                  verde y sostenible para las futuras generaciones.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Misión y Visión -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-md-6">
+            <div class="card border-success border-2 h-100">
+              <div class="card-header bg-success text-white text-center py-3">
+                <h4 class="mb-0 fw-bold">
+                  <i class="bi bi-bullseye me-2"></i>Nuestra Misión
+                </h4>
+              </div>
+              <div class="card-body p-4">
+                <p class="text-muted mb-0 lh-lg">
+                  Desarrollar e implementar soluciones tecnológicas accesibles
+                  que permitan monitorear, cuidar y optimizar el riego de
+                  árboles urbanos en Piura, contribuyendo a la sostenibilidad
+                  ambiental y la mejora de la calidad de vida de los ciudadanos.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card border-success border-2 h-100">
+              <div class="card-header bg-success text-white text-center py-3">
+                <h4 class="mb-0 fw-bold">
+                  <i class="bi bi-eye me-2"></i>Nuestra Visión
+                </h4>
+              </div>
+              <div class="card-body p-4">
+                <p class="text-muted mb-0 lh-lg">
+                  Ser la plataforma líder en Latinoamérica en monitoreo
+                  inteligente de áreas verdes urbanas, expandiendo nuestra
+                  tecnología a más ciudades y promoviendo una cultura de
+                  reforestación asistida por IoT.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold mb-3">Nuestro Equipo</h2>
+          <p class="lead text-muted">
+            Conoce a las personas que hacen posible ReVerdecer Piura
+          </p>
+        </div>
+        <div class="row g-4 justify-content-center">
+          <!-- Valery Leyva -->
+          <div class="col-lg-4 col-md-6">
+            <div
+              class="card border-0 shadow-sm text-center h-100 team-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body p-4">
+                <div class="position-relative d-inline-block mb-4">
+                  <img
+                    src="https://ui-avatars.com/api/?name=Valery+Leyva&background=2E7D32&color=fff&size=120"
+                    class="rounded-circle shadow-lg"
+                    width="120"
+                    height="120"
+                    alt="Valery Leyva"
+                  />
+                  <div
+                    class="position-absolute bottom-0 end-0 bg-success rounded-circle p-2"
+                  >
+                    <i class="bi bi-person-badge text-white"></i>
+                  </div>
+                </div>
+                <h5 class="fw-bold text-success mb-2">Valery Leyva Sánchez</h5>
+                <p class="text-muted mb-3">Desarrolladora Full Stack</p>
+                <p class="small text-muted">
+                  Especialista en Spring Boot y frontend, encargada de la
+                  arquitectura web y la experiencia de usuario.
+                </p>
+                <div class="mt-3">
+                  <a
+                    href="#"
+                    class="btn btn-outline-success btn-sm me-2"
+                    title="LinkedIn"
+                  >
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn-outline-success btn-sm"
+                    title="Email"
+                  >
+                    <i class="bi bi-envelope"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edson More -->
+          <div class="col-lg-4 col-md-6">
+            <div
+              class="card border-0 shadow-sm text-center h-100 team-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body p-4">
+                <div class="position-relative d-inline-block mb-4">
+                  <img
+                    src="https://ui-avatars.com/api/?name=Edson+More&background=2E7D32&color=fff&size=120"
+                    class="rounded-circle shadow-lg"
+                    width="120"
+                    height="120"
+                    alt="Edson More"
+                  />
+                  <div
+                    class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2"
+                  >
+                    <i class="bi bi-graph-up text-white"></i>
+                  </div>
+                </div>
+                <h5 class="fw-bold text-primary mb-2">Edson More Anton</h5>
+                <p class="text-muted mb-3">Especialista IoT y Arduino</p>
+                <p class="small text-muted">
+                  Responsable de la integración de sensores, sistemas de riego
+                  automático y comunicación con la plataforma web.
+                </p>
+                <div class="mt-3">
+                  <a
+                    href="#"
+                    class="btn btn-outline-primary btn-sm me-2"
+                    title="LinkedIn"
+                  >
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn-outline-primary btn-sm"
+                    title="Email"
+                  >
+                    <i class="bi bi-envelope"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brandon Inga -->
+          <div class="col-lg-4 col-md-6">
+            <div
+              class="card border-0 shadow-sm text-center h-100 team-card"
+              style="transition: transform 0.3s ease"
+            >
+              <div class="card-body p-4">
+                <div class="position-relative d-inline-block mb-4">
+                  <img
+                    src="https://ui-avatars.com/api/?name=Brandon+Inga&background=2E7D32&color=fff&size=120"
+                    class="rounded-circle shadow-lg"
+                    width="120"
+                    height="120"
+                    alt="Brandon Inga"
+                  />
+                  <div
+                    class="position-absolute bottom-0 end-0 bg-warning rounded-circle p-2"
+                  >
+                    <i class="bi bi-database text-white"></i>
+                  </div>
+                </div>
+                <h5 class="fw-bold text-warning mb-2">Brandon Inga Albines</h5>
+                <p class="text-muted mb-3">Analista de Datos y Base de Datos</p>
+                <p class="small text-muted">
+                  Encargado del análisis de datos ambientales, estadísticas y
+                  gestión de la base de datos del sistema.
+                </p>
+                <div class="mt-3">
+                  <a
+                    href="#"
+                    class="btn btn-outline-warning btn-sm me-2"
+                    title="LinkedIn"
+                  >
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn-outline-warning btn-sm"
+                    title="Email"
+                  >
+                    <i class="bi bi-envelope"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-success text-white">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h3 class="fw-bold mb-3">
+              ¿Quieres participar en ReVerdecer Piura?
+            </h3>
+            <p class="lead mb-4">
+              Únete a nuestra iniciativa, reporta árboles o sé parte del
+              monitoreo ambiental en tu ciudad.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a th:href="@{/contacto}" class="btn btn-light btn-lg">
+                <i class="bi bi-envelope me-2"></i>Contáctanos
+              </a>
+              <a
+                href="https://wa.me/51999988777"
+                target="_blank"
+                class="btn btn-outline-light btn-lg"
+              >
+                <i class="bi bi-whatsapp me-2"></i>WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer th:replace="layout :: footer"></footer>
+
+    <!-- Scripts -->
+    <th:div th:replace="layout :: scripts"></th:div>
+  </body>
+</html>

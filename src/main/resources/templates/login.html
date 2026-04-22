@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Iniciar Sesión - ReVerdecer Piura'"
+  ></head>
+  <body>
+    <div class="container mt-4">
+      <!-- Flecha regresar arriba a la izquierda -->
+      <div class="mb-3">
+        <a
+          th:href="@{/}"
+          class="text-decoration-none text-secondary d-flex align-items-center"
+        >
+          <i class="bi bi-arrow-left me-2"></i> Regresar
+        </a>
+      </div>
+
+      <div
+        class="row justify-content-center align-items-center"
+        style="min-height: 70vh"
+      >
+        <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+          <img
+            th:src="@{/img/logo1.webp}"
+            alt="Logo ReVerdecer Piura"
+            class="img-fluid"
+          />
+        </div>
+
+        <!-- Formulario a la derecha -->
+        <div class="col-md-4">
+          <h2 class="text-success">Iniciar sesión</h2>
+          <div
+            th:if="${errorLogin}"
+            class="alert alert-danger"
+            th:text="${errorLogin}"
+          ></div>
+          <form th:action="@{/login}" method="post" novalidate>
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo electrónico</label>
+              <input
+                type="email"
+                id="correo"
+                class="form-control"
+                name="correo"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                name="password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+              <i class="bi bi-tree me-2"></i>Iniciar sesión
+            </button>
+          </form>
+
+          <p class="mt-3">
+            ¿No tienes cuenta?
+            <a th:href="@{/registro}" class="text-success">Regístrate</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <div th:replace="~{layout :: scripts}"></div>
+  </body>
+</html>
