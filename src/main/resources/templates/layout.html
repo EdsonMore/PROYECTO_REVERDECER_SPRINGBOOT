@@ -13,253 +13,147 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
 </head>
 
 <body>
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top" th:fragment="navbar">
-        <div class="container-fluid">
-            <!-- Marca / Logo -->
-            <a class="navbar-brand fw-bold" th:href="@{/}" style="font-size: 1.5rem">
-                <img th:src="@{/img/logo1.webp}" alt="Logo ReVerdecer Piura" width="40" height="40" class="me-2 rounded-circle" /> ReVerdecer Piura
+    <nav class="navbar" th:fragment="navbar">
+
+        <div class="nav-container">
+
+            <a class="logo" th:href="@{/}">
+                <img th:src="@{/img/logo1.webp}" width="35"> ReVerdecer Piura
             </a>
 
-            <!-- Botón de menu hamburguesa -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alternar navegación">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/arboles}">Árboles</a></li>
+                <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+                <li><a th:href="@{/contacto}">Contacto</a></li>
+            </ul>
 
-            <!-- Elementos de navegación -->
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-link" th:href="@{/}">
-                        <i class="bi bi-tree"></i> Inicio
-                    </a>
-                    <a class="nav-link" th:href="@{/arboles}">
-                        <i class="bi bi-map"></i> Árboles
-                    </a>
+            <button class="login-btn" th:onclick="|window.location='@{/login}'|">
+Iniciar sesión
+</button>
 
-                    <a class="nav-link" th:href="@{/sobre-nosotros}">
-                        <i class="bi bi-people"></i> Sobre Nosotros
-                    </a>
-                    <a class="nav-link" th:href="@{/libro-reclamaciones}" th:classappend="${activePage == 'libro-reclamaciones'} ? 'active'">
-                        <i class="bi bi-journal-text"></i> Libro de Reclamaciones
-                    </a>
-                    <a class="nav-link" th:href="@{/contacto}" th:classappend="${activePage == 'contacto'} ? 'active'">
-                        <i class="bi bi-envelope"></i> Contacto
-                    </a>
-                </div>
-
-                <!-- Botón de alertas / notificaciones -->
-                <div class="d-flex m-2">
-                    <button type="button" class="btn btn-outline-light position-relative" th:onclick="|window.location='@{/alertas}'|">
-              <i class="bi bi-bell"></i>
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                id="alertas-count"
-                >0</span
-              >
-            </button>
-                </div>
-
-                <!-- Botón de Inicio de sesión (login) -->
-                <!-- Dropdown de usuario si hay sesión, de lo contrario mostrar botón login -->
-                <div class="d-flex m-2">
-                    <!-- Si hay usuario en sesión -->
-                    <div th:if="${session.usuario != null}" class="dropdown">
-                        <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.usuario.nombres}">
-                Usuario
-              </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li>
-                                <a class="dropdown-item" th:href="@{/perfil}">Mi perfil</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" th:href="@{/mis-arboles}">Mis árboles</a
-                  >
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item text-danger" th:href="@{/logout}"
-                    >Cerrar sesión</a
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <!-- Si NO hay usuario en sesión -->
-            <div th:unless="${session.usuario != null}">
-              <button
-                type="button"
-                class="btn btn-outline-light position-relative"
-                th:onclick="|window.location='@{/login}'|"
-              >
-                Iniciar Sesión <i class="bi bi-person-circle"></i>
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
+
     </nav>
 
     <!-- Fragmento de sección Hero (con botones opcionales) -->
-    <section
-      class="hero-section py-3"
-      th:fragment="hero(titulo, subtitulo, mostrarBotones, cuerpo)"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center text-black">
-            <h1 class="display-3 fw-bold mb-4" th:text="${titulo}">
-              Título por defecto
+    <section class="hero-section" th:fragment="hero(titulo, subtitulo, mostrarBotones, cuerpo)">
+
+        <div class="hero-container">
+
+            <h1 th:text="${titulo}">
+                Título por defecto
             </h1>
-            <p class="lead fs-4 mb-4" th:text="${subtitulo}">
-              Subtítulo por defecto
+
+            <p class="hero-subtitle" th:text="${subtitulo}">
+                Subtítulo por defecto
             </p>
 
             <div th:replace="${cuerpo}"></div>
 
-            <div
-              class="d-flex gap-3 justify-content-center flex-wrap mt-4"
-              th:if="${mostrarBotones}"
-            >
-              <a
-                href="#arboles-destacados"
-                class="btn btn-warning btn-lg px-4 py-2"
-              >
-                <i class="bi bi-eye"></i> Ver Árboles Monitoreados
-              </a>
-                                <a th:href="@{/registro}" class="btn btn-outline-success btn-lg px-4 py-2">
-                                    <i class="bi bi-person-plus"></i> Regístrate Gratis
-                                </a>
-                    </div>
-                </div>
+            <div class="hero-buttons" th:if="${mostrarBotones}">
+
+                <a href="#arboles-destacados" class="btn-primary">
+Ver Árboles Monitoreados
+</a>
+
+                <a th:href="@{/registro}" class="btn-secondary">
+Regístrate Gratis
+</a>
+
             </div>
+
         </div>
-        </section>
 
-        <!-- Pie de página -->
-        <footer class="bg-dark text-white pt-4" th:fragment="footer">
-            <div class="container">
-                <div class="row">
-                    <!-- Información del proyecto -->
-                    <div class="col-md-4 mb-4">
-                        <h5 class="fw-bold">ReVerdecer Piura</h5>
-                        <p class="mb-2">
-                            Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT
-                        </p>
-                        <address class="mb-0">
-              <i class="bi bi-geo-alt"></i> Piura, Perú<br />
-              <i class="bi bi-phone"></i> +51 999 888 777<br />
-              <i class="bi bi-envelope"></i> info@reverdecerpiura.com<br />
-              <i class="bi bi-clock"></i> Monitoreo 24/7
-            </address>
-                    </div>
+    </section>
 
-                    <!-- Enlaces rápidos -->
-                    <div class="col-md-4 mb-4">
-                        <h5 class="fw-bold">Enlaces rápidos</h5>
-                        <nav>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a th:href="@{/}" class="text-white text-decoration-none">Inicio</a
-                  >
-                </li>
-                <li>
-                  <a
-                    th:href="@{/arboles}"
-                    class="text-white text-decoration-none"
-                    >Árboles</a
-                  >
-                </li>
-                <li>
-                  <a
-                    th:href="@{/monitoreo}"
-                    class="text-white text-decoration-none"
-                    >Monitoreo</a
-                  >
-                </li>
-                <li>
-                  <a
-                    th:href="@{/sobre-nosotros}"
-                    class="text-white text-decoration-none"
-                    >Sobre Nosotros</a
-                  >
-                </li>
-                <li>
-                  <a
-                    th:href="@{/libro-reclamaciones}"
-                    class="text-white text-decoration-none"
-                    >Libro de Reclamaciones</a
-                  >
-                </li>
-                <li>
-                  <a
-                    th:href="@{/contacto}"
-                    class="text-white text-decoration-none"
-                    >Contacto</a
-                  >
-                </li>
-              </ul>
-            </nav>
-          </div>
+    <!-- Pie de página -->
+    <footer class="footer" th:fragment="footer">
 
-          <!-- Redes sociales -->
-          <div class="col-md-4 text-md-end text-center">
-            <h5 class="fw-bold">Síguenos en</h5>
-            <div class="mb-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                class="text-white me-3"
-                aria-label="Síguenos en Facebook"
-              >
-                <i class="bi bi-facebook fs-4"></i>
-              </a>
-                                    <a href="https://instagram.com" target="_blank" class="text-white me-3" aria-label="Síguenos en Instagram">
-                                        <i class="bi bi-instagram fs-4"></i>
-                                    </a>
-                                    <a href="https://wa.me/51999988777" target="_blank" class="text-white" aria-label="Contáctanos por WhatsApp">
-                                        <i class="bi bi-whatsapp fs-4"></i>
-                                    </a>
-                    </div>
-                    <p class="small mb-0">
-                        <span class="badge bg-success">IoT</span> Monitoreo ambiental en tiempo real
-                    </p>
-                </div>
-            </div>
+        <div class="footer-container">
 
-            <!-- Derechos reservados -->
-            <hr class="my-3 border-light" />
-            <div class="text-center">
-                <p class="mb-0">
-                    &copy;
-                    <span th:text="${#dates.year(#dates.createNow())}">2024</span> ReVerdecer Piura. Tecnología para un futuro más verde.
+            <!-- Información -->
+            <div class="footer-col">
+                <h3>ReVerdecer Piura</h3>
+
+                <p>
+                    Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT
                 </p>
-            </div>
-            </div>
-        </footer>
 
-        <!-- Scripts bases -->
-        <div th:fragment="scripts">
-            <!-- Librería Bootstrap -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+                <p>📍 Piura, Perú</p>
+                <p>📞 +51 999 888 777</p>
+                <p>✉ info@reverdecerpiura.com</p>
+                <p>⏰ Monitoreo 24/7</p>
 
-            <!-- Scripts por página -->
-            <script th:src="@{/js/scripts.js}"></script>
-            <script th:src="@{/js/arboles.js}"></script>
-            <script th:src="@{/js/monitoreo.js}"></script>
-            <script th:src="@{/js/login-registro.js}"></script>
-            <script th:src="@{/js/perfil.js}"></script>
-            <script th:src="@{/js/detalles-arbol.js}"></script>
-            <script th:src="@{/js/contacto.js}"></script>
-            <script th:src="@{/js/libro-reclamaciones.js}"></script>
-            <script th:src="@{/js/alertas.js}"></script>
+            </div>
+
+            <!-- Enlaces -->
+            <div class="footer-col">
+                <h3>Enlaces rápidos</h3>
+
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/arboles}">Árboles</a></li>
+                    <li><a th:href="@{/monitoreo}">Monitoreo</a></li>
+                    <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+                    <li><a th:href="@{/contacto}">Contacto</a></li>
+                </ul>
+
+            </div>
+
+            <!-- Redes -->
+            <div class="footer-col">
+                <h3>Síguenos</h3>
+
+                <div class="social-icons">
+
+                    <a href="https://facebook.com">Facebook</a>
+
+                    <a href="https://instagram.com">Instagram</a>
+
+                    <a href="https://wa.me/51999988777">WhatsApp</a>
+
+                </div>
+
+                <p class="iot">IoT - Monitoreo ambiental en tiempo real</p>
+
+            </div>
+
         </div>
+
+        <hr>
+
+        <div class="footer-copy">
+
+            © <span th:text="${#dates.year(#dates.createNow())}">2024</span> ReVerdecer Piura. Tecnología para un futuro más verde.
+
+        </div>
+
+    </footer>
+
+    <!-- Scripts bases -->
+    <div th:fragment="scripts">
+
+        <!-- Scripts del proyecto -->
+        <script th:src="@{/js/scripts.js}"></script>
+        <script th:src="@{/js/arboles.js}"></script>
+        <script th:src="@{/js/monitoreo.js}"></script>
+        <script th:src="@{/js/login-registro.js}"></script>
+        <script th:src="@{/js/perfil.js}"></script>
+        <script th:src="@{/js/detalles-arbol.js}"></script>
+        <script th:src="@{/js/contacto.js}"></script>
+        <script th:src="@{/js/libro-reclamaciones.js}"></script>
+        <script th:src="@{/js/alertas.js}"></script>
+
+    </div>
 </body>
 
 </html>
