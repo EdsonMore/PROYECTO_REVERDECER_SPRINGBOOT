@@ -10,11 +10,9 @@ public class Arbol {
     private LocalDate fecha;
     private String estado;
 
-    // Constructor vacío
     public Arbol() {
     }
 
-    // Constructor con parámetros
     public Arbol(Long id, String especie, String ubicacion, LocalDate fecha, String estado) {
         this.id = id;
         this.especie = especie;
@@ -23,7 +21,6 @@ public class Arbol {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }

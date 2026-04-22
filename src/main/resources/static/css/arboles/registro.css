@@ -1,0 +1,153 @@
+/* ============================================
+   arboles/registro.css - Específico para formulario
+   No choca con el CSS global
+   ============================================ */
+
+.registro-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.registro-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registro-header h2 {
+    color: #2e7d32;
+    font-size: 28px;
+}
+
+/* === FORMULARIO === */
+.registro-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.registro-form-group {
+    margin-bottom: 20px;
+}
+
+.registro-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a3b2e;
+}
+
+.registro-form-group input,
+.registro-form-group textarea,
+.registro-form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.registro-form-group input:focus,
+.registro-form-group textarea:focus,
+.registro-form-group select:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.registro-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.registro-form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* === BOTONES DEL FORMULARIO === */
+.registro-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.registro-btn-success {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.registro-btn-success:hover {
+    background-color: #2e7d32;
+}
+
+.registro-btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.registro-btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* === VALIDACIÓN JS === */
+.registro-is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.registro-invalid-feedback {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* === ALERTAS === */
+.registro-alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid;
+}
+
+.registro-alert-danger {
+    background-color: #f8d7da;
+    border-left-color: #dc3545;
+    color: #721c24;
+}
+
+/* === RESPONSIVIDAD === */
+@media (max-width: 768px) {
+    .registro-container {
+        padding: 0 15px;
+    }
+    
+    .registro-form {
+        padding: 20px;
+    }
+    
+    .registro-buttons {
+        flex-direction: column;
+    }
+    
+    .registro-btn-success,
+    .registro-btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}

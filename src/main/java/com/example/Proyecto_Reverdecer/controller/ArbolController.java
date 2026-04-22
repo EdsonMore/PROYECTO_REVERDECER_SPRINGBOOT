@@ -1,152 +1,94 @@
 package com.example.Proyecto_Reverdecer.controller;
 
+import com.example.Proyecto_Reverdecer.model.Arbol;
+import com.example.Proyecto_Reverdecer.model.Usuario;
+import com.example.Proyecto_Reverdecer.service.ArbolService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
-
-import com.example.Proyecto_Reverdecer.model.Usuario;
-import com.example.Proyecto_Reverdecer.model.Arbol;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 @Controller
 @RequestMapping("/arboles")
 public class ArbolController {
 
-    private static final String DATOS_JSON = "src/main/resources/static/data/usuarios.json";
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ArbolService arbolService;
 
-    // --- REDIRIGIR A LISTADO ---
+    // Inyección por constructor
+    public ArbolController(ArbolService arbolService) {
+        this.arbolService = arbolService;
+    }
+
+    // Redirigir /arboles a /arboles/listado
     @GetMapping("")
-    public String redirigirAListado() {
+    public String redirigir() {
         return "redirect:/arboles/listado";
     }
 
-    // --- LISTAR ÁRBOLES ---
+    // Listar todos los árboles
     @GetMapping("/listado")
-    public String listarArboles(HttpSession session, Model model) {
+    public String listar(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-
         if (usuario == null) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("arboles", usuario.getArboles());
+        model.addAttribute("arboles", arbolService.listarTodos());
         return "arboles/listado";
     }
 
-    // --- MOSTRAR FORMULARIO DE REGISTRO ---
+    // Mostrar formulario de registro
     @GetMapping("/registro")
-    public String mostrarRegistroArbol(HttpSession session, Model model) {
+    public String mostrarFormulario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-
         if (usuario == null) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
-
         model.addAttribute("arbol", new Arbol());
         return "arboles/registro";
     }
 
-    // --- PROCESAR REGISTRO DE ÁRBOL ---
+    // Guardar nuevo árbol (POST)
     @PostMapping("/registro")
-    public String registrarArbol(@ModelAttribute Arbol arbol, HttpSession session, Model model) {
-        try {
-            Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
+    public String guardar(
+            HttpSession session,
+            @RequestParam String especie,
+            @RequestParam String ubicacion,
+            @RequestParam String fecha,
+            @RequestParam String estado,
+            Model model) {
 
-            if (usuarioSesion == null) {
-                return "redirect:/login";
-            }
-
-            File file = new File(DATOS_JSON);
-            if (!file.exists() || file.length() == 0) {
-                model.addAttribute("error", "Error: archivo de usuarios no encontrado");
-                return "arboles/registro";
-            }
-
-            List<Usuario> usuarios = mapper.readValue(file, new TypeReference<List<Usuario>>() {});
-
-            // Buscar el usuario actual y agregar el árbol
-            Usuario usuarioEncontrado = null;
-            for (Usuario u : usuarios) {
-                if (u.getId().equals(usuarioSesion.getId())) {
-                    // Generar ID único para el árbol
-                    long nuevoId = u.getArboles().stream()
-                            .mapToLong(a -> a.getId() == null ? 0 : a.getId())
-                            .max()
-                            .orElse(0L) + 1L;
-                    arbol.setId(nuevoId);
-
-                    u.getArboles().add(arbol);
-                    usuarioEncontrado = u;
-                    break;
-                }
-            }
-
-            if (usuarioEncontrado == null) {
-                model.addAttribute("error", "Usuario no encontrado");
-                return "arboles/registro";
-            }
-
-            // Guardar en JSON
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, usuarios);
-
-            // Actualizar sesión
-            session.setAttribute("usuario", usuarioEncontrado);
-
-            model.addAttribute("mensaje", "Árbol registrado correctamente");
-            return "redirect:/arboles/listado";
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Error al registrar árbol");
-            return "arboles/registro";
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null) {
+            return "redirect:/auth/login";
         }
+
+        // Validación
+        if (especie == null || especie.trim().isEmpty()) {
+            model.addAttribute("error", "La especie es obligatoria");
+            model.addAttribute("arboles", arbolService.listarTodos());
+            return "arboles/listado";
+        }
+
+        // Crear y guardar el árbol
+        Arbol arbol = new Arbol();
+        arbol.setEspecie(especie);
+        arbol.setUbicacion(ubicacion);
+        arbol.setFecha(LocalDate.parse(fecha));
+        arbol.setEstado(estado);
+
+        arbolService.guardar(arbol);
+        return "redirect:/arboles/listado";
     }
 
-    // --- ELIMINAR ÁRBOL ---
+    // Eliminar árbol
     @GetMapping("/eliminar/{id}")
-    public String eliminarArbol(@PathVariable Long id, HttpSession session, Model model) {
-        try {
-            Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
-
-            if (usuarioSesion == null) {
-                return "redirect:/login";
-            }
-
-            File file = new File(DATOS_JSON);
-            if (!file.exists() || file.length() == 0) {
-                model.addAttribute("error", "Error: archivo de usuarios no encontrado");
-                return "redirect:/arboles/listado";
-            }
-
-            List<Usuario> usuarios = mapper.readValue(file, new TypeReference<List<Usuario>>() {});
-
-            // Buscar el usuario y eliminar el árbol
-            for (Usuario u : usuarios) {
-                if (u.getId().equals(usuarioSesion.getId())) {
-                    u.getArboles().removeIf(a -> a.getId().equals(id));
-                    // Guardar en JSON
-                    mapper.writerWithDefaultPrettyPrinter().writeValue(file, usuarios);
-                    // Actualizar sesión
-                    session.setAttribute("usuario", u);
-                    break;
-                }
-            }
-
-            return "redirect:/arboles/listado";
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Error al eliminar árbol");
-            return "redirect:/arboles/listado";
+    public String eliminar(HttpSession session, @PathVariable Long id) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null) {
+            return "redirect:/auth/login";
         }
+        arbolService.eliminar(id);
+        return "redirect:/arboles/listado";
     }
 }
