@@ -69,10 +69,10 @@ function validarEmail(email) {
 }
 
 /**
- * Valida contraseña (mínimo 6 caracteres)
+ * Valida contraseña (mínimo 8 caracteres)
  */
 function validarPassword(password) {
-  return password.length >= 6;
+  return password.length >= 8;
 }
 
 /**
@@ -134,7 +134,7 @@ function validarCampoRegistro(campo) {
 
   if (nombre === "password" && valor) {
     if (!validarPassword(valor)) {
-      mostrarError(campo, "Mínimo 6 caracteres");
+      mostrarError(campo, "Mínimo 8 caracteres");
       return false;
     }
   }
@@ -189,7 +189,7 @@ function validarFormularioLogin(form) {
     password &&
     (!password.value.trim() || !validarPassword(password.value))
   ) {
-    mostrarError(password, "Contraseña requerida (mínimo 6 caracteres)");
+    mostrarError(password, "Contraseña requerida (mínimo 8 caracteres)");
     valido = false;
   } else {
     limpiarError(password);

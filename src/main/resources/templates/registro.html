@@ -34,30 +34,32 @@
 
           <!-- Errores -->
           <div
-            th:if="${errorEdad}"
+            th:if="${error}"
             class="alert alert-danger"
-            th:text="${errorEdad}"
-          ></div>
-          <div
-            th:if="${errorCorreo}"
-            class="alert alert-danger"
-            th:text="${errorCorreo}"
+            th:text="${error}"
           ></div>
 
+          <!-- FORMULARIO CON BINDING THYMELEAF -->
+          <!-- th:action="@{/auth/registro}" genera la URL correcta -->
+          <!-- th:object="${usuario}" vincula el formulario al objeto Usuario -->
+          <!-- th:field="*{propiedad}" vincula cada input con propiedades del objeto -->
           <form
-            th:action="@{/registro}"
+            th:action="@{/auth/registro}"
+            th:object="${usuario}"
             method="post"
             id="registroForm"
             novalidate
+            onsubmit="return validarRegistro();"
           >
             <div class="row">
               <div class="col-md-7 mb-3">
                 <label for="nombres" class="form-label">Nombres</label>
+                <!-- th:field vincula automáticamente con usuario.nombres -->
                 <input
                   type="text"
                   id="nombres"
                   class="form-control"
-                  name="nombres"
+                  th:field="*{nombres}"
                   required
                 />
               </div>
@@ -70,7 +72,7 @@
                   type="text"
                   id="apellidoPaterno"
                   class="form-control"
-                  name="apellidoPaterno"
+                  th:field="*{apellidoPaterno}"
                   required
                 />
               </div>
@@ -83,7 +85,7 @@
                   type="text"
                   id="apellidoMaterno"
                   class="form-control"
-                  name="apellidoMaterno"
+                  th:field="*{apellidoMaterno}"
                   required
                 />
               </div>
@@ -94,7 +96,7 @@
                   type="email"
                   id="correo"
                   class="form-control"
-                  name="correo"
+                  th:field="*{correo}"
                   required
                 />
               </div>
@@ -105,7 +107,7 @@
                   type="password"
                   id="password"
                   class="form-control"
-                  name="password"
+                  th:field="*{password}"
                   required
                 />
               </div>
@@ -117,7 +119,7 @@
                 <select
                   id="tipoDoc"
                   class="form-select"
-                  name="tipoDoc"
+                  th:field="*{tipoDoc}"
                   required
                 >
                   <option value="">Seleccionar</option>
@@ -133,7 +135,7 @@
                   type="text"
                   id="dni"
                   class="form-control"
-                  name="dni"
+                  th:field="*{dni}"
                   required
                 />
               </div>
@@ -145,14 +147,14 @@
                   type="date"
                   id="fechaNacimiento"
                   class="form-control"
-                  name="fechaNacimiento"
+                  th:field="*{fechaNacimiento}"
                   required
                 />
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="genero" class="form-label">Género</label>
-                <select id="genero" class="form-select" name="genero" required>
+                <select id="genero" class="form-select" th:field="*{genero}" required>
                   <option value="">Seleccionar</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
@@ -169,7 +171,7 @@
                   type="text"
                   id="numero"
                   class="form-control"
-                  name="numero"
+                  th:field="*{numero}"
                   required
                 />
               </div>
@@ -180,7 +182,7 @@
                   type="text"
                   id="direccion1"
                   class="form-control"
-                  name="direccion1"
+                  th:field="*{direccion1}"
                   required
                 />
               </div>
@@ -201,5 +203,8 @@
 
     <!-- Scripts -->
     <div th:replace="~{layout :: scripts}"></div>
+    
+    <!-- SCRIPT DE VALIDACIÓN NATIVA -->
+    <script th:src="@{/js/auth.js}"></script>
   </body>
 </html>
