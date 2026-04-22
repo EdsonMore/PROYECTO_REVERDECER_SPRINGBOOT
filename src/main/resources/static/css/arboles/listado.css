@@ -1,16 +1,12 @@
-/* ============================================
-   arboles/listado.css - Específico para página de árboles
-   No choca con el CSS global
-   ============================================ */
 
-/* === CONTENEDOR PRINCIPAL === */
+
 .arboles-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* === HEADER DE LA SECCIÓN === */
+
 .arboles-header {
     display: flex;
     justify-content: space-between;
@@ -122,7 +118,6 @@
     background-color: #e8f5e9;
 }
 
-/* === BADGES DE ESTADO === */
 .arboles-badge {
     display: inline-block;
     padding: 5px 12px;
@@ -156,7 +151,6 @@
     color: white;
 }
 
-/* === ALERTAS === */
 .arboles-alert {
     padding: 15px 20px;
     border-radius: 8px;
@@ -176,7 +170,6 @@
     color: #0c5460;
 }
 
-/* === RESPONSIVIDAD === */
 @media (max-width: 768px) {
     .arboles-header {
         flex-direction: column;

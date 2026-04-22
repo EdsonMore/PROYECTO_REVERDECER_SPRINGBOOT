@@ -15,12 +15,10 @@
         </a>
       </div>
 
-      <!-- Mensaje de error -->
       <div th:if="${error}" class="arboles-alert arboles-alert-danger">
         <strong>Error:</strong> <span th:text="${error}"></span>
       </div>
 
-      <!-- Tabla de árboles -->
       <div th:if="${arboles != null and arboles.size() > 0}">
         <div class="arboles-table-wrapper">
           <table class="arboles-table">
@@ -83,7 +81,6 @@
         </div>
       </div>
 
-      <!-- Mensaje cuando no hay árboles -->
       <div
         th:if="${arboles == null or arboles.size() == 0}"
         class="arboles-alert arboles-alert-info"
@@ -92,7 +89,6 @@
         <a th:href="@{/arboles/registro}">Registra tu primer árbol</a>
       </div>
 
-      <!-- Botón volver -->
       <div style="margin-top: 20px">
         <a th:href="@{/}" class="arboles-btn-outline">
           <i class="bi bi-house"></i> Volver al Inicio

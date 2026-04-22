@@ -15,12 +15,10 @@ public class ArbolController {
 
     private final ArbolService arbolService;
 
-    // Inyección por constructor
     public ArbolController(ArbolService arbolService) {
         this.arbolService = arbolService;
     }
 
-    // Redirigir /arboles a /arboles/listado
     @GetMapping("")
     public String redirigir() {
         return "redirect:/arboles/listado";
@@ -37,7 +35,6 @@ public class ArbolController {
         return "arboles/listado";
     }
 
-    // Mostrar formulario de registro
     @GetMapping("/registro")
     public String mostrarFormulario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -48,7 +45,6 @@ public class ArbolController {
         return "arboles/registro";
     }
 
-    // Guardar nuevo árbol (POST)
     @PostMapping("/registro")
     public String guardar(
             HttpSession session,
@@ -63,14 +59,12 @@ public class ArbolController {
             return "redirect:/auth/login";
         }
 
-        // Validación
         if (especie == null || especie.trim().isEmpty()) {
             model.addAttribute("error", "La especie es obligatoria");
             model.addAttribute("arboles", arbolService.listarTodos());
             return "arboles/listado";
         }
 
-        // Crear y guardar el árbol
         Arbol arbol = new Arbol();
         arbol.setEspecie(especie);
         arbol.setUbicacion(ubicacion);
@@ -81,7 +75,6 @@ public class ArbolController {
         return "redirect:/arboles/listado";
     }
 
-    // Eliminar árbol
     @GetMapping("/eliminar/{id}")
     public String eliminar(HttpSession session, @PathVariable Long id) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");

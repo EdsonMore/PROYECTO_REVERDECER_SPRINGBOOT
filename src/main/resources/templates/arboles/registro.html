@@ -12,12 +12,10 @@
         <h2><i class="bi bi-tree"></i> Registrar Nuevo Árbol</h2>
       </div>
 
-      <!-- Mensaje de error -->
       <div th:if="${error}" class="registro-alert registro-alert-danger">
         <strong>Error:</strong> <span th:text="${error}"></span>
       </div>
 
-      <!-- Formulario -->
       <form
         id="registroForm"
         th:action="@{/arboles/registro}"

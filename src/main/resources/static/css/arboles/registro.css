@@ -1,7 +1,3 @@
-/* ============================================
-   arboles/registro.css - Específico para formulario
-   No choca con el CSS global
-   ============================================ */
 
 .registro-container {
     max-width: 800px;
@@ -19,7 +15,6 @@
     font-size: 28px;
 }
 
-/* === FORMULARIO === */
 .registro-form {
     background-color: white;
     padding: 30px;
@@ -69,7 +64,6 @@
     font-size: 12px;
 }
 
-/* === BOTONES DEL FORMULARIO === */
 .registro-buttons {
     display: flex;
     justify-content: flex-end;
@@ -106,7 +100,6 @@
     background-color: #5a6268;
 }
 
-/* === VALIDACIÓN JS === */
 .registro-is-invalid {
     border-color: #dc3545 !important;
 }
@@ -117,7 +110,6 @@
     margin-top: 5px;
 }
 
-/* === ALERTAS === */
 .registro-alert {
     padding: 15px;
     border-radius: 8px;
@@ -131,7 +123,6 @@
     color: #721c24;
 }
 
-/* === RESPONSIVIDAD === */
 @media (max-width: 768px) {
     .registro-container {
         padding: 0 15px;
