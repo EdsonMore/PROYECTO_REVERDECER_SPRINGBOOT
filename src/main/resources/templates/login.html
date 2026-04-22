@@ -31,32 +31,55 @@
         <!-- Formulario a la derecha -->
         <div class="col-md-4">
           <h2 class="text-success">Iniciar sesión</h2>
+          <div th:if="${param.success}" class="alert alert-success">
+            ✅ Registro exitoso. Por favor, inicia sesión con tus credenciales.
+          </div>
+          <div th:if="${param.logout}" class="alert alert-info">
+            ℹ️ Sesión cerrada correctamente.
+          </div>
           <div
             th:if="${errorLogin}"
             class="alert alert-danger"
             th:text="${errorLogin}"
           ></div>
-          <form th:action="@{/login}" method="post" novalidate>
+          <!-- FORMULARIO CON BINDING THYMELEAF -->
+          <!-- th:action="@{/auth/login}" genera la URL correcta -->
+          <!-- th:object="${usuario}" vincula el formulario al objeto Usuario -->
+          <!-- th:field="*{propiedad}" vincula cada input con propiedades del objeto -->
+          <form
+            th:action="@{/auth/login}"
+            th:object="${usuario}"
+            method="post"
+            novalidate
+            onsubmit="return validarLogin();"
+          >
             <div class="mb-3">
               <label for="correo" class="form-label">Correo electrónico</label>
+              <!-- th:field="*{correo}" vincula automáticamente con usuario.correo -->
+              <!-- El nombre del input será "correo" igual que la propiedad Java -->
               <input
                 type="email"
                 id="correo"
                 class="form-control"
-                name="correo"
+                th:field="*{correo}"
+                placeholder="tu@email.com"
                 required
               />
+              <small class="form-text text-danger" id="errorCorreo"></small>
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
+              <!-- th:field="*{password}" vincula automáticamente con usuario.password -->
               <input
                 type="password"
                 id="password"
                 class="form-control"
-                name="password"
+                th:field="*{password}"
+                placeholder="Mínimo 8 caracteres"
                 required
               />
+              <small class="form-text text-danger" id="errorPassword"></small>
             </div>
 
             <button type="submit" class="btn btn-success w-100">
@@ -66,7 +89,7 @@
 
           <p class="mt-3">
             ¿No tienes cuenta?
-            <a th:href="@{/registro}" class="text-success">Regístrate</a>
+            <a th:href="@{/auth/registro}" class="text-success">Regístrate</a>
           </p>
         </div>
       </div>
@@ -74,5 +97,8 @@
 
     <!-- Scripts -->
     <div th:replace="~{layout :: scripts}"></div>
+
+    <!-- SCRIPT DE VALIDACIÓN NATIVA -->
+    <script th:src="@{/js/auth.js}"></script>
   </body>
 </html>
