@@ -1,367 +1,365 @@
-/**
- * AUTH.JS - VALIDACIONES JAVASCRIPT NATIVAS
- * ==========================================
- *
- * Este archivo contiene validaciones del lado del cliente
- * para los formularios de Login y Registro.
- *
- * IMPORTANTE: Las validaciones en JavaScript son para experiencia del usuario.
- * Las validaciones REALES deben ocurrir en el Backend (Service) por seguridad.
- *
- * Validaciones implementadas (nativas, sin librerías):
- * 1. Campos no vacíos
- * 2. Email válido (formato correcto)
- * 3. Password mínimo de caracteres
- * 4. Manipulación del DOM para mostrar/ocultar errores
- * 5. Eventos: onchange, onclick, onsubmit
- *
- * Patrón usado: Expresiones Regulares (Regex) nativas de JavaScript
- */
-
-/**
- * FUNCIÓN: Validar formato de email
- *
- * Usa una expresión regular para verificar que el email
- * tenga un formato válido: usuario@dominio.com
- *
- * Componentes del regex:
- * - ^ : Inicio de la cadena
- * - [^@]+ : Uno o más caracteres que no sean @
- * - @ : El símbolo @
- * - [^@]+ : Uno o más caracteres que no sean @
- * - \. : Un punto literal
- * - [^@]+ : Uno o más caracteres que no sean @
- * - $ : Fin de la cadena
- *
- * @param {string} email Email a validar
- * @returns {boolean} true si email es válido, false si no
- */
-function validarFormatoEmail(email) {
-  // Expresión regular para validar email
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regexEmail.test(email);
-}
-
-/**
- * FUNCIÓN: Validar email en tiempo real
- *
- * Se ejecuta cuando el usuario sale del campo email (onchange)
- * Muestra/oculta mensaje de error dinámicamente
- *
- * @param {HTMLElement} input Elemento input que dispara el evento
- */
-function validarEmail(input) {
-  const email = input.value.trim();
-  const errorElement = document.getElementById("errorEmail");
-
-  // Si campo está vacío, limpiar error
-  if (!email) {
-    errorElement.textContent = "";
-    return;
-  }
-
-  // Validar formato
-  if (!validarFormatoEmail(email)) {
-    errorElement.textContent =
-      "❌ Email inválido. Ejemplo: usuario@dominio.com";
-    input.classList.add("is-invalid");
-  } else {
-    errorElement.textContent = "✅ Email válido";
-    input.classList.remove("is-invalid");
-    input.classList.add("is-valid");
-  }
-}
-
-/**
- * FUNCIÓN: Validar contraseña en tiempo real
- *
- * Se ejecuta cuando el usuario sale del campo password (onchange)
- * Verifica requisitos mínimos y muestra feedback
- *
- * Requisitos:
- * - Mínimo 8 caracteres
- * - Idealmente variedad (mayúsculas, números, símbolos)
- *
- * @param {HTMLElement} input Elemento input que dispara el evento
- */
-function validarPassword(input) {
-  const password = input.value.trim();
-  const errorElement = document.getElementById("errorPassword");
-
-  // Si campo está vacío, limpiar error
-  if (!password) {
-    errorElement.textContent = "";
-    return;
-  }
-
-  // Validar longitud mínima
-  if (password.length < 8) {
-    errorElement.textContent = "❌ Mínimo 8 caracteres";
-    input.classList.add("is-invalid");
-    return;
-  }
-
-  // Validaciones adicionales (fortaleza)
-  let fortaleza = 0;
-
-  // Verificar si tiene minúsculas
-  if (/[a-z]/.test(password)) fortaleza++;
-
-  // Verificar si tiene mayúsculas
-  if (/[A-Z]/.test(password)) fortaleza++;
-
-  // Verificar si tiene números
-  if (/[0-9]/.test(password)) fortaleza++;
-
-  // Verificar si tiene caracteres especiales
-  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) fortaleza++;
-
-  // Mostrar feedback según fortaleza
-  if (fortaleza < 2) {
-    errorElement.textContent =
-      "⚠️ Contraseña débil. Mezcla letras, números y símbolos";
-  } else if (fortaleza < 3) {
-    errorElement.textContent = "✅ Contraseña moderada";
-  } else {
-    errorElement.textContent = "✅ Contraseña fuerte";
-  }
-
-  input.classList.remove("is-invalid");
-  input.classList.add("is-valid");
-}
-
-/**
- * FUNCIÓN: Mostrar mensaje de error en el DOM
- *
- * Utilidad para mostrar mensajes de error de forma consistente
- *
- * @param {string} elementId ID del elemento donde mostrar el error
- * @param {string} mensaje Texto del error a mostrar
- */
-function mostrarError(elementId, mensaje) {
-  const elemento = document.getElementById(elementId);
-  if (elemento) {
-    elemento.textContent = "❌ " + mensaje;
-    elemento.style.color = "#dc3545";
-    elemento.style.fontSize = "0.875rem";
-    elemento.style.marginTop = "0.25rem";
-  }
-}
-
-/**
- * FUNCIÓN: Limpiar errores de un formulario
- *
- * Elimina todos los mensajes de error y clases de validación
- *
- * @param {string} formId ID del formulario a limpiar
- */
-function limpiarErrores(formId) {
-  const form = document.getElementById(formId);
-  if (form) {
-    // Encontrar todos los elementos con clase de error
-    const errores = form.querySelectorAll(".error-message");
-    errores.forEach((error) => {
-      error.textContent = "";
-    });
-
-    // Limpiar clases de validación
-    const inputs = form.querySelectorAll("input, select, textarea");
-    inputs.forEach((input) => {
-      input.classList.remove("is-invalid", "is-valid");
-    });
-  }
-}
-
-/**
- * FUNCIÓN: Validación completa de formulario LOGIN
- *
- * Se ejecuta al hacer submit del formulario de login
- * Valida todos los campos antes de enviar al servidor
- *
- * Validaciones:
- * 1. Email no vacío
- * 2. Email formato válido
- * 3. Password no vacío
- * 4. Password mínimo 8 caracteres
- *
- * @returns {boolean} true si todas las validaciones pasan, false si falla
- */
 function validarLogin() {
-  // Limpiar errores previos
-  document.querySelectorAll(".error-message").forEach((el) => {
-    el.textContent = "";
-  });
+  // Limpiar errores anteriores
+  limpiarErrores();
 
-  // Obtener referencias a los inputs
-  const emailInput = document.getElementById("correo");
-  const passwordInput = document.getElementById("password");
-
-  // Obtener valores (trim elimina espacios al inicio/final)
-  const email = emailInput ? emailInput.value.trim() : "";
-  const password = passwordInput ? passwordInput.value.trim() : "";
-
-  let esValido = true;
-
-  // VALIDACIÓN 1: Email no vacío
-  if (!email) {
-    mostrarError("errorCorreo", "El email es requerido");
-    esValido = false;
-  }
-  // VALIDACIÓN 2: Email formato válido
-  else if (!validarFormatoEmail(email)) {
-    mostrarError("errorCorreo", "Email inválido. Ejemplo: usuario@dominio.com");
-    esValido = false;
-  }
-
-  // VALIDACIÓN 3: Password no vacío
-  if (!password) {
-    mostrarError("errorPassword", "La contraseña es requerida");
-    esValido = false;
-  }
-  // VALIDACIÓN 4: Password longitud mínima
-  else if (password.length < 8) {
-    mostrarError(
-      "errorPassword",
-      "La contraseña debe tener mínimo 8 caracteres",
-    );
-    esValido = false;
-  }
-
-  // Si hay errores, no enviar el formulario
-  if (!esValido) {
-    console.log("[VALIDACIÓN LOGIN] Errores encontrados");
-    return false;
-  }
-
-  console.log("[VALIDACIÓN LOGIN] ✅ Todas las validaciones pasaron");
-  return true; // Enviar formulario al servidor
-}
-
-/**
- * FUNCIÓN: Validación completa de formulario REGISTRO
- *
- * Se ejecuta al hacer submit del formulario de registro
- * Valida todos los campos antes de enviar al servidor
- *
- * Validaciones:
- * 1. Nombres no vacíos
- * 2. Apellidos no vacíos
- * 3. Email válido
- * 4. Password válido (mínimo 8)
- * 5. DNI no vacío
- * 6. Género seleccionado
- *
- * @returns {boolean} true si todas las validaciones pasan
- */
-function validarRegistro() {
-  // Limpiar errores previos
-  document.querySelectorAll('[id^="error"]').forEach((el) => {
-    el.textContent = "";
-  });
-
-  // Obtener referencias a los inputs
-  const nombres = document.getElementById("nombres");
-  const apellidoPaterno = document.getElementById("apellidoPaterno");
   const correo = document.getElementById("correo");
   const password = document.getElementById("password");
-  const dni = document.getElementById("dni");
-  const genero = document.getElementById("genero");
+  let esValido = true;
+
+  // Validación de correo (estructura if)
+  if (!correo.value.trim()) {
+    mostrarError(correo, "El correo es obligatorio");
+    esValido = false;
+  } else if (!validarFormatoCorreo(correo.value)) {
+    mostrarError(correo, "Ingrese un correo válido (ejemplo@dominio.com)");
+    esValido = false;
+  }
+
+  // Validación de contraseña
+  if (!password.value) {
+    mostrarError(password, "La contraseña es obligatoria");
+    esValido = false;
+  } else if (password.value.length < 6) {
+    mostrarError(password, "La contraseña debe tener al menos 6 caracteres");
+    esValido = false;
+  }
+
+  return esValido;
+}
+
+// ============ VALIDACIÓN DE REGISTRO ============
+function validarRegistro() {
+  limpiarErrores();
+
+  // Obtener todos los campos
+  const campos = {
+    nombres: document.getElementById("nombres"),
+    apellidoPaterno: document.getElementById("apellidoPaterno"),
+    apellidoMaterno: document.getElementById("apellidoMaterno"),
+    correo: document.getElementById("correo"),
+    password: document.getElementById("password"),
+    tipoDoc: document.getElementById("tipoDoc"),
+    dni: document.getElementById("dni"),
+    fechaNacimiento: document.getElementById("fechaNacimiento"),
+    genero: document.getElementById("genero"),
+    numero: document.getElementById("numero"),
+    direccion1: document.getElementById("direccion1"),
+  };
 
   let esValido = true;
 
-  // VALIDACIÓN: Nombres no vacío
-  if (!nombres || !nombres.value.trim()) {
-    mostrarError("errorNombres", "Los nombres son requeridos");
+  // Validación de nombres (solo letras)
+  if (!campos.nombres.value.trim()) {
+    mostrarError(campos.nombres, "Los nombres son obligatorios");
+    esValido = false;
+  } else if (!validarSoloLetras(campos.nombres.value)) {
+    mostrarError(campos.nombres, "Los nombres solo deben contener letras");
     esValido = false;
   }
 
-  // VALIDACIÓN: Apellido paterno no vacío
-  if (!apellidoPaterno || !apellidoPaterno.value.trim()) {
-    mostrarError("errorApellidoPaterno", "El apellido paterno es requerido");
+  // Validación de apellidos
+  if (!campos.apellidoPaterno.value.trim()) {
+    mostrarError(campos.apellidoPaterno, "El apellido paterno es obligatorio");
     esValido = false;
-  }
-
-  // VALIDACIÓN: Email válido
-  if (!correo || !validarFormatoEmail(correo.value.trim())) {
-    mostrarError("errorCorreo", "Email inválido. Ejemplo: usuario@dominio.com");
-    esValido = false;
-  }
-
-  // VALIDACIÓN: Password válido
-  if (!password || password.value.trim().length < 8) {
+  } else if (!validarSoloLetras(campos.apellidoPaterno.value)) {
     mostrarError(
-      "errorPassword",
-      "La contraseña debe tener mínimo 8 caracteres",
+      campos.apellidoPaterno,
+      "El apellido solo debe contener letras",
     );
     esValido = false;
   }
 
-  // VALIDACIÓN: DNI no vacío
-  if (!dni || !dni.value.trim()) {
-    mostrarError("errorDni", "El DNI es requerido");
+  if (!campos.apellidoMaterno.value.trim()) {
+    mostrarError(campos.apellidoMaterno, "El apellido materno es obligatorio");
+    esValido = false;
+  } else if (!validarSoloLetras(campos.apellidoMaterno.value)) {
+    mostrarError(
+      campos.apellidoMaterno,
+      "El apellido solo debe contener letras",
+    );
     esValido = false;
   }
 
-  // VALIDACIÓN: Género seleccionado
-  if (!genero || !genero.value) {
-    mostrarError("errorGenero", "Debes seleccionar un género");
+  // Validación de correo
+  if (!campos.correo.value.trim()) {
+    mostrarError(campos.correo, "El correo es obligatorio");
+    esValido = false;
+  } else if (!validarFormatoCorreo(campos.correo.value)) {
+    mostrarError(campos.correo, "Ingrese un correo válido");
     esValido = false;
   }
 
-  if (!esValido) {
-    console.log("[VALIDACIÓN REGISTRO] Errores encontrados");
-    return false;
+  // Validación de contraseña
+  if (!campos.password.value) {
+    mostrarError(campos.password, "La contraseña es obligatoria");
+    esValido = false;
+  } else if (campos.password.value.length < 6) {
+    mostrarError(
+      campos.password,
+      "La contraseña debe tener al menos 6 caracteres",
+    );
+    esValido = false;
+  } else if (!validarPasswordFuerte(campos.password.value)) {
+    mostrarError(
+      campos.password,
+      "La contraseña debe tener al menos una mayúscula y un número",
+    );
+    esValido = false;
   }
 
-  console.log("[VALIDACIÓN REGISTRO] ✅ Todas las validaciones pasaron");
-  return true; // Enviar formulario al servidor
+  // Validación de tipo de documento
+  if (!campos.tipoDoc.value) {
+    mostrarError(campos.tipoDoc, "Seleccione un tipo de documento");
+    esValido = false;
+  }
+
+  // Validación de DNI/RUC según tipo (estructura switch en JS)
+  if (!campos.dni.value.trim()) {
+    mostrarError(campos.dni, "El número de documento es obligatorio");
+    esValido = false;
+  } else {
+    const tipoDoc = campos.tipoDoc.value;
+    const numeroDoc = campos.dni.value.trim();
+
+    switch (tipoDoc) {
+      case "DNI":
+        if (!validarDNI(numeroDoc)) {
+          mostrarError(campos.dni, "DNI debe tener 8 dígitos");
+          esValido = false;
+        }
+        break;
+      case "RUC":
+        if (!validarRUC(numeroDoc)) {
+          mostrarError(campos.dni, "RUC debe tener 11 dígitos");
+          esValido = false;
+        }
+        break;
+      case "PASAPORTE":
+        if (!validarPasaporte(numeroDoc)) {
+          mostrarError(
+            campos.dni,
+            "Pasaporte debe tener 6-12 caracteres alfanuméricos",
+          );
+          esValido = false;
+        }
+        break;
+    }
+  }
+
+  // Validación de fecha de nacimiento (edad mínima 18 años)
+  if (!campos.fechaNacimiento.value) {
+    mostrarError(
+      campos.fechaNacimiento,
+      "La fecha de nacimiento es obligatoria",
+    );
+    esValido = false;
+  } else if (!validarEdad(campos.fechaNacimiento.value)) {
+    mostrarError(campos.fechaNacimiento, "Debes ser mayor de 18 años");
+    esValido = false;
+  }
+
+  // Validación de género
+  if (!campos.genero.value) {
+    mostrarError(campos.genero, "Seleccione un género");
+    esValido = false;
+  }
+
+  // Validación de teléfono
+  if (!campos.numero.value) {
+    mostrarError(campos.numero, "El teléfono es obligatorio");
+    esValido = false;
+  } else if (!validarTelefono(campos.numero.value)) {
+    mostrarError(campos.numero, "Teléfono debe tener 9 dígitos");
+    esValido = false;
+  }
+
+  // Validación de dirección
+  if (!campos.direccion1.value.trim()) {
+    mostrarError(campos.direccion1, "La dirección es obligatoria");
+    esValido = false;
+  }
+
+  return esValido;
 }
 
-/**
- * EVENTO: DOMContentLoaded
- *
- * Se ejecuta cuando el HTML está completamente cargado
- * Inicializa event listeners para validación en tiempo real
- */
+// ============ FUNCIONES DE VALIDACIÓN (DOM Manipulation) ============
+
+function mostrarError(input, mensaje) {
+  // Manipulación del DOM - agregar clases y mensajes de error
+  const formGroup = input.closest(".auth-group");
+  input.classList.add("input-error");
+
+  // Verificar si ya existe mensaje de error
+  let errorMsg = formGroup.querySelector(".auth-error-msg");
+  if (!errorMsg) {
+    errorMsg = document.createElement("span");
+    errorMsg.className = "auth-error-msg";
+    formGroup.appendChild(errorMsg);
+  }
+  errorMsg.textContent = mensaje;
+}
+
+function limpiarErrores() {
+  // Limpiar todos los mensajes de error y clases de error
+  const errores = document.querySelectorAll(".auth-error-msg");
+  errores.forEach((error) => error.remove());
+
+  const inputsError = document.querySelectorAll(".input-error");
+  inputsError.forEach((input) => input.classList.remove("input-error"));
+}
+
+// ============ FUNCIONES DE VALIDACIÓN ESPECÍFICAS ============
+
+function validarFormatoCorreo(correo) {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(correo);
+}
+
+function validarSoloLetras(texto) {
+  const regex = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/;
+  return regex.test(texto);
+}
+
+function validarPasswordFuerte(password) {
+  // Al menos una mayúscula y un número
+  const tieneMayuscula = /[A-Z]/.test(password);
+  const tieneNumero = /[0-9]/.test(password);
+  return tieneMayuscula && tieneNumero;
+}
+
+function validarDNI(dni) {
+  return /^\d{8}$/.test(dni);
+}
+
+function validarRUC(ruc) {
+  return /^\d{11}$/.test(ruc);
+}
+
+function validarPasaporte(pasaporte) {
+  return /^[A-Z0-9]{6,12}$/i.test(pasaporte);
+}
+
+function validarTelefono(telefono) {
+  return /^\d{9}$/.test(telefono);
+}
+
+function validarEdad(fechaNacimiento) {
+  const hoy = new Date();
+  const fechaNac = new Date(fechaNacimiento);
+  let edad = hoy.getFullYear() - fechaNac.getFullYear();
+  const mes = hoy.getMonth() - fechaNac.getMonth();
+
+  if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+    edad--;
+  }
+
+  return edad >= 18;
+}
+
+// ============ EVENTOS EN TIEMPO REAL (onchange, oninput) ============
+
+// Inicializar eventos cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("[AUTH.JS] Script de validación cargado");
+  // Validación en tiempo real para el formulario de registro
+  const registroForm = document.getElementById("registroForm");
+  if (registroForm) {
+    // Agregar eventos a todos los inputs del formulario de registro
+    const inputs = registroForm.querySelectorAll("input, select");
+    inputs.forEach((input) => {
+      // Evento oninput para validación en tiempo real
+      input.addEventListener("input", function () {
+        // Limpiar error específico de este campo
+        const errorMsg =
+          this.closest(".auth-group")?.querySelector(".auth-error-msg");
+        if (errorMsg) errorMsg.remove();
+        this.classList.remove("input-error");
+      });
 
-  // Agregar validación en tiempo real al campo de email (si existe)
-  const emailInput = document.getElementById("correo");
-  if (emailInput) {
-    emailInput.addEventListener("change", function () {
-      validarEmail(this);
+      // Evento onchange para validación al salir del campo
+      input.addEventListener("change", function () {
+        if (registroForm.onsubmit) {
+          // Trigger de validación suave
+          validarRegistro();
+        }
+      });
     });
+
+    // Validación específica para DNI según tipo de documento
+    const tipoDoc = document.getElementById("tipoDoc");
+    const dniInput = document.getElementById("dni");
+
+    if (tipoDoc && dniInput) {
+      tipoDoc.addEventListener("change", function () {
+        const tipo = this.value;
+        let placeholder = "";
+        let maxLength = 0;
+
+        switch (tipo) {
+          case "DNI":
+            placeholder = "8 dígitos";
+            maxLength = 8;
+            break;
+          case "RUC":
+            placeholder = "11 dígitos";
+            maxLength = 11;
+            break;
+          case "PASAPORTE":
+            placeholder = "6-12 caracteres";
+            maxLength = 12;
+            break;
+        }
+
+        dniInput.placeholder = placeholder;
+        dniInput.maxLength = maxLength;
+        dniInput.value = ""; // Limpiar al cambiar tipo
+      });
+    }
+
+    // Validación de contraseña en tiempo real
+    const passwordInput = document.getElementById("password");
+    if (passwordInput) {
+      passwordInput.addEventListener("input", function () {
+        const valor = this.value;
+        const formGroup = this.closest(".auth-group");
+        let existingHint = formGroup.querySelector(".password-hint");
+
+        if (!existingHint && valor.length > 0) {
+          existingHint = document.createElement("small");
+          existingHint.className = "password-hint";
+          existingHint.style.display = "block";
+          existingHint.style.fontSize = "0.75rem";
+          existingHint.style.marginTop = "0.25rem";
+          existingHint.style.color = "#666";
+          formGroup.appendChild(existingHint);
+        }
+
+        if (existingHint) {
+          if (valor.length >= 6 && /[A-Z]/.test(valor) && /[0-9]/.test(valor)) {
+            existingHint.innerHTML = "✅ Contraseña válida";
+            existingHint.style.color = "#2e7d32";
+          } else if (valor.length > 0) {
+            existingHint.innerHTML =
+              "⚠️ La contraseña debe tener: mínimo 6 caracteres, 1 mayúscula y 1 número";
+            existingHint.style.color = "#f57c00";
+          } else {
+            existingHint.remove();
+          }
+        }
+      });
+    }
   }
 
-  // Agregar validación en tiempo real al campo de password (si existe)
-  const passwordInput = document.getElementById("password");
-  if (passwordInput) {
-    passwordInput.addEventListener("change", function () {
-      validarPassword(this);
+  // Validación en tiempo real para login
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    const inputs = loginForm.querySelectorAll("input");
+    inputs.forEach((input) => {
+      input.addEventListener("input", function () {
+        const errorMsg =
+          this.closest(".auth-group")?.querySelector(".auth-error-msg");
+        if (errorMsg) errorMsg.remove();
+        this.classList.remove("input-error");
+      });
     });
   }
-
-  console.log("[AUTH.JS] Event listeners configurados");
 });
-
-/**
- * FLUJO DE DATOS - RESUMEN
- * ==========================
- *
- * 1. USUARIO COMPLETA FORMULARIO
- *    ↓
- * 2. HACE SUBMIT DEL FORMULARIO
- *    ↓
- * 3. JavaScript valida (onsubmit)
- *    ├─ Si falla: muestra errores, NO envía
- *    └─ Si pasa: envía al servidor
- *    ↓
- * 4. BACKEND valida (Service)
- *    ├─ Si falla: retorna a formulario con error
- *    └─ Si pasa: procesa datos
- *    ↓
- * 5. RESPUESTA AL USUARIO
- *    ├─ Login exitoso: sesión activa + redirección a inicio
- *    └─ Registro exitoso: redirección a login
- */
