@@ -1,52 +1,70 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Contacto - ReVerdecer Piura'"
+  ></head>
 
-<head th:replace="layout :: head" th:with="titulo='Contacto - ReVerdecer Piura'"></head>
-
-<body>
+  <body>
     <nav th:replace="layout :: navbar"></nav>
 
     <main>
-        <section th:replace="layout :: hero(
+      <section
+        th:replace="layout :: hero(
     'Contáctanos',
     'En ReVerdecer Piura, estamos aquí para ayudarte. Ya sea que tengas una consulta, sugerencia sobre nuestros árboles urbanos, o quieras participar en iniciativas de reforestación, nos encantaría saber de ti. Completa el formulario a continuación o utiliza nuestros canales de contacto rápido para comunicarte con nosotros.',
     false,
     ~{:: #vacio}
-)">
-            <div id="vacio"></div>
-        </section>
+)"
+      >
+        <div id="vacio"></div>
+      </section>
 
-        <!-- formulario -->
-        <section class="contacto-formulario">
-            <div class="contacto-container">
-                <div class="contacto-card">
-                    <div class="contacto-card-header">
-                        <h2>Envíanos un mensaje</h2>
-                    </div>
-                    <div class="contacto-card-body">
-                        <form id="contactoForm">
-                            <div class="contacto-fila">
-                                <div class="contacto-grupo">
-                                    <label>Nombre completo *</label>
-                                    <input type="text" id="nombre" class="contacto-input" placeholder="Ingrese su nombre" />
-                                    <div class="contacto-error" id="errorNombre"></div>
-                                </div>
-                                <div class="contacto-grupo">
-                                    <label>Correo electrónico *</label>
-                                    <input type="email" id="correo" class="contacto-input" placeholder="nombre@ejemplo.com" />
-                                    <div class="contacto-error" id="errorCorreo"></div>
-                                </div>
-                            </div>
+      <section class="contacto-formulario">
+        <div class="contacto-container">
+          <div class="contacto-card">
+            <div class="contacto-card-header">
+              <h2>Envíanos un mensaje</h2>
+            </div>
+            <div class="contacto-card-body">
+              <form id="contactoForm">
+                <div class="contacto-fila">
+                  <div class="contacto-grupo">
+                    <label>Nombre completo *</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      class="contacto-input"
+                      placeholder="Ingrese su nombre"
+                    />
+                    <div class="contacto-error" id="errorNombre"></div>
+                  </div>
+                  <div class="contacto-grupo">
+                    <label>Correo electrónico *</label>
+                    <input
+                      type="email"
+                      id="correo"
+                      class="contacto-input"
+                      placeholder="nombre@ejemplo.com"
+                    />
+                    <div class="contacto-error" id="errorCorreo"></div>
+                  </div>
+                </div>
 
-                            <div class="contacto-fila">
-                                <div class="contacto-grupo">
-                                    <label> Teléfono</label>
-                                    <input type="tel" id="telefono" class="contacto-input" placeholder="+51 999 888 777" />
-                                    <div class="contacto-error" id="errorTelefono"></div>
-                                </div>
-                                <div class="contacto-grupo">
-                                    <label>Asunto *</label>
-                                    <select id="asunto" class="contacto-select">
+                <div class="contacto-fila">
+                  <div class="contacto-grupo">
+                    <label> Teléfono</label>
+                    <input
+                      type="tel"
+                      id="telefono"
+                      class="contacto-input"
+                      placeholder="+51 999 888 777"
+                    />
+                    <div class="contacto-error" id="errorTelefono"></div>
+                  </div>
+                  <div class="contacto-grupo">
+                    <label>Asunto *</label>
+                    <select id="asunto" class="contacto-select">
                       <option value="">Seleccione un asunto</option>
                       <option value="consulta">Consulta general</option>
                       <option value="arbol">Reporte de árbol</option>
@@ -55,99 +73,115 @@
                         Iniciativa de reforestación
                       </option>
                     </select>
-                                    <div class="contacto-error" id="errorAsunto"></div>
-                                </div>
-                            </div>
+                    <div class="contacto-error" id="errorAsunto"></div>
+                  </div>
+                </div>
 
-                            <div class="contacto-grupo">
-                                <label>Mensaje *</label>
-                                <textarea id="mensaje" class="contacto-textarea" rows="5" placeholder="Escribe tu mensaje aquí..."></textarea>
-                                <div class="contacto-contador">
-                                    <span id="contador">0</span>/500 caracteres
-                                </div>
-                                <div class="contacto-error" id="errorMensaje"></div>
-                            </div>
+                <div class="contacto-grupo">
+                  <label>Mensaje *</label>
+                  <textarea
+                    id="mensaje"
+                    class="contacto-textarea"
+                    rows="5"
+                    placeholder="Escribe tu mensaje aquí..."
+                  ></textarea>
+                  <div class="contacto-contador">
+                    <span id="contador">0</span>/500 caracteres
+                  </div>
+                  <div class="contacto-error" id="errorMensaje"></div>
+                </div>
 
-                            <div class="contacto-grupo">
-                                <label class="contacto-checkbox">
+                <div class="contacto-grupo">
+                  <label class="contacto-checkbox">
                     <input type="checkbox" id="terminos" />
                     <span>Acepto los términos y condiciones *</span>
                   </label>
-                                <div class="contacto-error" id="errorTerminos"></div>
-                            </div>
+                  <div class="contacto-error" id="errorTerminos"></div>
+                </div>
 
-                            <div class="contacto-botones">
-                                <button type="button" id="limpiarBtn" class="contacto-btn contacto-btn-limpiar">
+                <div class="contacto-botones">
+                  <button
+                    type="button"
+                    id="limpiarBtn"
+                    class="contacto-btn contacto-btn-limpiar"
+                  >
                     Limpiar
                   </button>
-                                <button type="submit" class="contacto-btn contacto-btn-enviar">
+                  <button
+                    type="submit"
+                    class="contacto-btn contacto-btn-enviar"
+                  >
                     Enviar Mensaje
                   </button>
-                            </div>
-
-                            <div id="mensajeExito" class="contacto-exito" style="display: none">
-                                ✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.
-                            </div>
-                        </form>
-                    </div>
                 </div>
+
+                <div
+                  id="mensajeExito"
+                  class="contacto-exito"
+                  style="display: none"
+                >
+                  ✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto
+                  pronto.
+                </div>
+              </form>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-
-
-        <section class="contacto-faq">
-            <div class="contacto-container">
-                <div class="contacto-faq-header">
-                    <h2>Preguntas Frecuentes</h2>
-                    <p>Encuentra respuestas rápidas a las consultas más comunes</p>
-                </div>
-                <div class="contacto-faq-grid">
-                    <div class="contacto-faq-item">
-                        <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+      <section class="contacto-faq">
+        <div class="contacto-container">
+          <div class="contacto-faq-header">
+            <h2>Preguntas Frecuentes</h2>
+            <p>Encuentra respuestas rápidas a las consultas más comunes</p>
+          </div>
+          <div class="contacto-faq-grid">
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
                 <span>¿Cómo funciona el sistema de riego automático?</span>
                 <span class="contacto-faq-flecha">▼</span>
               </button>
-                        <div class="contacto-faq-respuesta">
-                            <p>
-                                El sistema utiliza sensores de humedad en el suelo conectados a Arduino. Cuando detecta niveles bajos, activa automáticamente el riego.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="contacto-faq-item">
-                        <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+              <div class="contacto-faq-respuesta">
+                <p>
+                  El sistema utiliza sensores de humedad en el suelo conectados
+                  a Arduino. Cuando detecta niveles bajos, activa
+                  automáticamente el riego.
+                </p>
+              </div>
+            </div>
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
                 <span>¿Puedo reportar un árbol que necesita atención?</span>
                 <span class="contacto-faq-flecha">▼</span>
               </button>
-                        <div class="contacto-faq-respuesta">
-                            <p>
-                                Sí. Desde la plataforma puedes registrar árboles y reportar su estado. Nuestro equipo revisará la información.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="contacto-faq-item">
-                        <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+              <div class="contacto-faq-respuesta">
+                <p>
+                  Sí. Desde la plataforma puedes registrar árboles y reportar su
+                  estado. Nuestro equipo revisará la información.
+                </p>
+              </div>
+            </div>
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
                 <span
-                  >¿Cómo puedo participar en iniciativas de
-                  reforestación?</span
+                  >¿Cómo puedo participar en iniciativas de reforestación?</span
                 >
                 <span class="contacto-faq-flecha">▼</span>
               </button>
-                        <div class="contacto-faq-respuesta">
-                            <p>
-                                Puedes contactarnos a través del formulario o escribirnos a nuestro correo. ¡Toda ayuda es bienvenida!
-                            </p>
-                        </div>
-                    </div>
-                </div>
+              <div class="contacto-faq-respuesta">
+                <p>
+                  Puedes contactarnos a través del formulario o escribirnos a
+                  nuestro correo. ¡Toda ayuda es bienvenida!
+                </p>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer th:replace="layout :: footer"></footer>
 
-    <!-- Scripts -->
     <th:div th:replace="layout :: scripts"></th:div>
-</body>
-
+  </body>
 </html>

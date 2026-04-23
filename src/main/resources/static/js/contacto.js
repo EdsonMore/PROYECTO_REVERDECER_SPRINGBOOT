@@ -1,4 +1,3 @@
-// Contador de caracteres
 const mensaje = document.getElementById("mensaje");
 const contador = document.getElementById("contador");
 
@@ -6,7 +5,6 @@ mensaje.addEventListener("input", function () {
   contador.textContent = this.value.length;
 });
 
-// Validación del formulario
 const form = document.getElementById("contactoForm");
 
 form.addEventListener("submit", function (e) {
@@ -19,7 +17,6 @@ form.addEventListener("submit", function (e) {
   const mensaje = document.getElementById("mensaje");
   const terminos = document.getElementById("terminos");
 
-  // Validar nombre
   if (nombre.value.trim() === "") {
     document.getElementById("errorNombre").textContent =
       "El nombre es obligatorio";
@@ -30,7 +27,6 @@ form.addEventListener("submit", function (e) {
     nombre.classList.remove("contacto-input-error");
   }
 
-  // Validar correo
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(correo.value)) {
     document.getElementById("errorCorreo").textContent =
@@ -42,7 +38,6 @@ form.addEventListener("submit", function (e) {
     correo.classList.remove("contacto-input-error");
   }
 
-  // Validar asunto
   if (asunto.value === "") {
     document.getElementById("errorAsunto").textContent = "Seleccione un asunto";
     asunto.classList.add("contacto-input-error");
@@ -52,7 +47,6 @@ form.addEventListener("submit", function (e) {
     asunto.classList.remove("contacto-input-error");
   }
 
-  // Validar mensaje
   if (mensaje.value.trim().length < 10) {
     document.getElementById("errorMensaje").textContent =
       "El mensaje debe tener al menos 10 caracteres";
@@ -63,7 +57,6 @@ form.addEventListener("submit", function (e) {
     mensaje.classList.remove("contacto-input-error");
   }
 
-  // Validar términos
   if (!terminos.checked) {
     document.getElementById("errorTerminos").textContent =
       "Debes aceptar los términos";
@@ -82,7 +75,6 @@ form.addEventListener("submit", function (e) {
   }
 });
 
-// Botón limpiar
 document.getElementById("limpiarBtn").addEventListener("click", function () {
   form.reset();
   contador.textContent = "0";
@@ -94,7 +86,6 @@ document.getElementById("limpiarBtn").addEventListener("click", function () {
   });
 });
 
-// Función para FAQ
 function toggleFaq(btn) {
   const item = btn.closest(".contacto-faq-item");
   item.classList.toggle("active");

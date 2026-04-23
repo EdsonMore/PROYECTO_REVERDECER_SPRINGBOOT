@@ -24,7 +24,6 @@
             th:text="${errorLogin}"
           ></div>
 
-          <!-- IMPORTANTE: action DEBE ser /auth/login -->
           <form
             th:action="@{/auth/login}"
             th:object="${usuario}"
@@ -69,7 +68,7 @@
     </main>
 
     <footer th:replace="layout :: footer"></footer>
-    <!-- Scripts -->
+
     <th:div th:replace="layout :: scripts"></th:div>
   </body>
 </html>

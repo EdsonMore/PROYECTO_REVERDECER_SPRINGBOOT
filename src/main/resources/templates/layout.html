@@ -10,10 +10,8 @@
       ReVerdecer Piura - Plataforma IoT de Monitoreo de Árboles Urbanos
     </title>
 
-    <!-- CSS global (YA INCLUYE TODOS LOS ESTILOS NECESARIOS) -->
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 
-    <!-- CSS específicos por página -->
     <link rel="stylesheet" th:href="@{/css/arboles/listado.css}" />
     <link rel="stylesheet" th:href="@{/css/arboles/registro.css}" />
     <link rel="stylesheet" th:href="@{/css/home.css}" />
@@ -25,7 +23,6 @@
   </head>
 
   <body>
-    <!-- Barra de navegación CON AUTENTICACIÓN INTEGRADA -->
     <nav class="navbar" th:fragment="navbar">
       <div class="nav-container">
         <a class="logo" th:href="@{/}">
@@ -40,7 +37,6 @@
           <li><a th:href="@{/arboles}">Mís Árboles</a></li>
         </ul>
 
-        <!-- SI EL USUARIO ESTÁ LOGUEADO: Muestra nombre + botón cerrar sesión -->
         <div th:if="${session.usuario != null}" class="user-menu">
           <div class="user-info">
             <span class="user-name" th:text="${session.usuario.nombres}"></span>
@@ -54,7 +50,6 @@
           </button>
         </div>
 
-        <!-- SI EL USUARIO NO ESTÁ LOGUEADO: Muestra botón iniciar sesión -->
         <div th:unless="${session.usuario != null}">
           <button
             class="login-btn"
@@ -66,7 +61,6 @@
       </div>
     </nav>
 
-    <!-- Fragmento de sección Hero -->
     <section
       class="hero-section"
       th:fragment="hero(titulo, subtitulo, mostrarBotones, cuerpo)"

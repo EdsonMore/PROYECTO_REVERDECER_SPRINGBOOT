@@ -1,10 +1,4 @@
-/* ============================================
-   contacto.css - CSS básico y responsivo
-   Fácil de explicar en la defensa técnica
-   Sin conflictos con global.css
-   ============================================ */
 
-/* === HERO === */
 .contacto-hero {
     background: linear-gradient(135deg, #1b5e20, #4caf50);
     text-align: center;
@@ -23,20 +17,17 @@
     margin: 0 auto;
 }
 
-/* === CONTENEDOR PRINCIPAL === */
 .contacto-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* === SECCIÓN FORMULARIO === */
 .contacto-formulario {
     padding: 60px 0;
     background: #f5f9f5;
 }
 
-/* === TARJETA DEL FORMULARIO === */
 .contacto-card {
     background: white;
     border-radius: 20px;
@@ -59,7 +50,6 @@
     padding: 30px;
 }
 
-/* === GRUPOS DEL FORMULARIO === */
 .contacto-grupo {
     margin-bottom: 20px;
 }
@@ -96,7 +86,6 @@
     min-height: 120px;
 }
 
-/* === FILA DE DOS COLUMNAS (FLEXBOX) === */
 .contacto-fila {
     display: flex;
     gap: 20px;
@@ -110,7 +99,6 @@
     margin-bottom: 0;
 }
 
-/* === CONTADOR DE CARACTERES === */
 .contacto-contador {
     text-align: right;
     font-size: 12px;
@@ -118,7 +106,6 @@
     margin-top: 5px;
 }
 
-/* === CHECKBOX === */
 .contacto-checkbox {
     display: flex;
     align-items: center;
@@ -136,7 +123,6 @@
     color: #555;
 }
 
-/* === BOTONES === */
 .contacto-botones {
     display: flex;
     gap: 15px;
@@ -176,7 +162,6 @@
     color: #2e7d32;
 }
 
-/* === MENSAJES DE VALIDACIÓN === */
 .contacto-error {
     color: #dc3545;
     font-size: 12px;
@@ -196,7 +181,6 @@
     text-align: center;
 }
 
-/* === SECCIÓN FAQ === */
 .contacto-faq {
     padding: 60px 0;
     background: white;
@@ -277,7 +261,7 @@
     margin: 0;
 }
 
-/* === RESPONSIVIDAD === */
+/*respon*/
 @media (max-width: 768px) {
     .contacto-hero h1 {
         font-size: 32px;

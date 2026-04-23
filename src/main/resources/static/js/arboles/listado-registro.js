@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.addEventListener("click", function (e) {
       if (
         !confirm(
-          "⚠️ ¿Estás seguro de eliminar este árbol? Esta acción no se puede deshacer.",
+          " ¿Estás seguro de eliminar este árbol? Esta acción no se puede deshacer.",
         )
       ) {
         e.preventDefault();
