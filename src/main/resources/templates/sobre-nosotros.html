@@ -1,172 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='sobre nosotros- ReVerdecer Piura'"
+  ></head>
 
-<head th:replace="layout :: head" th:with="titulo='sobre nosotros- ReVerdecer Piura'"></head>
-
-<body>
-    <!-- Navbar -->
+  <body>
     <nav th:replace="layout :: navbar"></nav>
 
     <main>
-        <!-- HERO PROPIO (no usar el del layout) -->
-        <!-- Hero Section -->
-        <section th:replace="layout :: hero(
+      <!-- Hero Section -->
+      <section
+        th:replace="layout :: hero(
     'Sobre Nosotros',
     'Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT, comprometidos con reverdecer Piura.',
     false,
     ~{:: #vacio}
-)">
-            <div id="vacio"></div>
-        </section>
+)"
+      >
+        <div id="vacio"></div>
+      </section>
 
-        <!-- HISTORIA -->
-        <section class="about-history">
-            <div class="about-container">
-                <div class="about-history-grid">
-                    <div class="about-history-image">
-                        <div class="about-image-wrapper">
-                            <img th:src="@{/img/logo1.webp}" alt="Nuestra historia">
-                            <div class="about-image-badge"> Desde 2024</div>
-                        </div>
-                    </div>
-                    <div class="about-history-content">
-                        <h2 class="about-title-green">Nuestra Historia</h2>
-                        <p class="about-history-text">
-                            <strong>ReVerdecer Piura</strong> nació en 2024 como una iniciativa tecnológica orientada a promover el cuidado de los árboles urbanos en la ciudad de Piura. El proyecto integra una plataforma web desarrollada con Spring Boot
-                            y dispositivos basados en Arduino con sensores ambientales que permiten monitorear variables como la humedad del suelo y la temperatura. A través de esta tecnología, el sistema analiza los datos obtenidos para identificar cuándo
-                            un árbol necesita riego, activando de forma automática un mecanismo que ayuda a garantizar su adecuado cuidado. Con esta propuesta buscamos demostrar cómo la combinación de tecnología web, IoT y análisis de datos puede contribuir
-                            al desarrollo de ciudades más sostenibles y al fortalecimiento de iniciativas de reforestación urbana.
-                        </p>
-                        <div class="about-stats-row">
-                            <div class="about-stat-item">
-                                <span class="about-stat-number">2024</span>
-                                <span class="about-stat-label">Fundación</span>
-                            </div>
-                            <div class="about-stat-item">
-                                <span class="about-stat-number">100+</span>
-                                <span class="about-stat-label">Árboles</span>
-                            </div>
-                            <div class="about-stat-item">
-                                <span class="about-stat-number">IoT</span>
-                                <span class="about-stat-label">Tecnología</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- HISTORIA -->
+      <section class="sobre-historia">
+        <div class="sobre-container">
+          <div class="sobre-grid">
+            <div class="sobre-imagen">
+              <img th:src="@{/img/logo1.webp}" alt="Nuestra historia" />
             </div>
-        </section>
+            <div class="sobre-contenido">
+              <h2>Nuestra Historia</h2>
+              <p>
+                <strong>ReVerdecer Piura</strong> nació en 2024 como una
+                iniciativa tecnológica orientada a promover el cuidado de los
+                árboles urbanos en la ciudad de Piura. El proyecto integra una
+                plataforma web desarrollada con Spring Boot y dispositivos
+                basados en Arduino con sensores ambientales que permiten
+                monitorear variables como la humedad del suelo y la temperatura.
+              </p>
+              <div class="sobre-stats">
+                <div class="sobre-stat">
+                  <span>2024</span>
+                  <span>Fundación</span>
+                </div>
+                <div class="sobre-stat">
+                  <span>100+</span>
+                  <span>Árboles</span>
+                </div>
+                <div class="sobre-stat">
+                  <span>IoT</span>
+                  <span>Tecnología</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- VALORES -->
-        <section class="about-values">
-            <div class="about-container">
-                <div class="about-section-header">
-                    <h2 class="about-section-title">Nuestros Valores</h2>
-                    <p class="about-section-subtitle">Los pilares que guían nuestro compromiso con el medio ambiente</p>
-                </div>
-                <div class="about-values-grid">
-                    <div class="about-value-card about-value-success">
-                        <div class="about-value-icon"><span></span></div>
-                        <h3>Sostenibilidad</h3>
-                        <p>Promovemos el cuidado del medio ambiente mediante tecnologías que optimizan el uso del agua y garantizan la supervivencia de los árboles urbanos.</p>
-                    </div>
-                    <div class="about-value-card about-value-primary">
-                        <div class="about-value-icon"><span></span></div>
-                        <h3>Innovación</h3>
-                        <p>Integramos IoT, sensores y análisis de datos para ofrecer soluciones inteligentes al monitoreo ambiental.</p>
-                    </div>
-                    <div class="about-value-card about-value-warning">
-                        <div class="about-value-icon"><span></span></div>
-                        <h3>Compromiso</h3>
-                        <p>Trabajamos junto a la comunidad para construir una Piura más verde y sostenible para las futuras generaciones.</p>
-                    </div>
-                </div>
+      <!-- VALORES (GRID) -->
+      <section class="sobre-valores">
+        <div class="sobre-container">
+          <div class="sobre-titulo">
+            <h2>Nuestros Valores</h2>
+            <p>
+              Los pilares que guían nuestro compromiso con el medio ambiente
+            </p>
+          </div>
+          <div class="sobre-grid-valores">
+            <div class="sobre-card">
+              <div class="sobre-icono">🌿</div>
+              <h3>Sostenibilidad</h3>
+              <p>
+                Promovemos el cuidado del medio ambiente mediante tecnologías
+                que optimizan el uso del agua.
+              </p>
             </div>
-        </section>
+            <div class="sobre-card">
+              <div class="sobre-icono">💡</div>
+              <h3>Innovación</h3>
+              <p>
+                Integramos IoT, sensores y análisis de datos para soluciones
+                inteligentes.
+              </p>
+            </div>
+            <div class="sobre-card">
+              <div class="sobre-icono">🤝</div>
+              <h3>Compromiso</h3>
+              <p>
+                Trabajamos junto a la comunidad para construir una Piura más
+                verde.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- MISIÓN Y VISIÓN -->
-        <section class="about-mission-vision">
-            <div class="about-container">
-                <div class="about-mv-flex">
-                    <div class="about-mv-card">
-                        <div class="about-mv-header">
-                            <span class="about-mv-icon"></span>
-                            <h3>Misión</h3>
-                        </div>
-                        <div class="about-mv-body">
-                            <p>Desarrollar e implementar soluciones tecnológicas accesibles que permitan monitorear, cuidar y optimizar el riego de árboles urbanos en Piura, contribuyendo a la sostenibilidad ambiental y la mejora de la calidad de vida de
-                                los ciudadanos.</p>
-                        </div>
-                    </div>
-                    <div class="about-mv-card">
-                        <div class="about-mv-header">
-                            <span class="about-mv-icon"></span>
-                            <h3>Visión</h3>
-                        </div>
-                        <div class="about-mv-body">
-                            <p>Ser la plataforma líder en Latinoamérica en monitoreo inteligente de áreas verdes urbanas, expandiendo nuestra tecnología a más ciudades y promoviendo una cultura de reforestación asistida por IoT.</p>
-                        </div>
-                    </div>
-                </div>
+      <!-- MISIÓN Y VISIÓN (FLEX) -->
+      <section class="sobre-mv">
+        <div class="sobre-container">
+          <div class="sobre-mv-flex">
+            <div class="sobre-mv-card">
+              <div class="sobre-mv-header">
+                <h3>Misión</h3>
+              </div>
+              <div class="sobre-mv-body">
+                <p>
+                  Desarrollar e implementar soluciones tecnológicas accesibles
+                  que permitan monitorear, cuidar y optimizar el riego de
+                  árboles urbanos en Piura, contribuyendo a la sostenibilidad
+                  ambiental.
+                </p>
+              </div>
             </div>
-        </section>
+            <div class="sobre-mv-card">
+              <div class="sobre-mv-header">
+                <h3>Visión</h3>
+              </div>
+              <div class="sobre-mv-body">
+                <p>
+                  Ser la plataforma líder en Latinoamérica en monitoreo
+                  inteligente de áreas verdes urbanas, expandiendo nuestra
+                  tecnología a más ciudades.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- EQUIPO -->
-        <section class="about-team">
-            <div class="about-container">
-                <div class="about-section-header">
-                    <h2 class="about-section-title">Nuestro Equipo</h2>
-                    <p class="about-section-subtitle">Conoce a las personas que hacen posible ReVerdecer Piura</p>
-                </div>
-                <div class="about-team-grid">
-                    <div class="about-team-card">
-                        <div class="about-team-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Valery+Leyva&background=2E7D32&color=fff&size=130" alt="Valery Leyva">
-                            <div class="about-avatar-badge"></div>
-                        </div>
-                        <h4>Valery Leyva Sánchez</h4>
-                        <p class="about-team-role">Desarrolladora Full Stack</p>
-                        <p class="about-team-description">Especialista en Spring Boot y frontend, encargada de la arquitectura web y la experiencia de usuario.</p>
-                    </div>
-                    <div class="about-team-card">
-                        <div class="about-team-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Edson+More&background=1976D2&color=fff&size=130" alt="Edson More">
-                            <div class="about-avatar-badge about-bg-primary"></div>
-                        </div>
-                        <h4>Edson More Anton</h4>
-                        <p class="about-team-role">Especialista IoT y Arduino</p>
-                        <p class="about-team-description">Responsable de la integración de sensores, sistemas de riego automático y comunicación con la plataforma web.</p>
-                    </div>
-                    <div class="about-team-card">
-                        <div class="about-team-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Brandon+Inga&background=F57C00&color=fff&size=130" alt="Brandon Inga">
-                            <div class="about-avatar-badge about-bg-warning"></div>
-                        </div>
-                        <h4>Brandon Inga Albines</h4>
-                        <p class="about-team-role">Analista de Datos</p>
-                        <p class="about-team-description">Encargado del análisis de datos ambientales, estadísticas y gestión de la base de datos del sistema.</p>
-                    </div>
-                </div>
+      <!-- EQUIPO -->
+      <section class="sobre-equipo">
+        <div class="sobre-container">
+          <div class="sobre-titulo">
+            <h2>Nuestro Equipo</h2>
+            <p>Conoce a las personas que hacen posible ReVerdecer Piura</p>
+          </div>
+          <div class="sobre-grid-equipo">
+            <div class="sobre-miembro">
+              <img
+                src="https://ui-avatars.com/api/?name=Valery+Leyva&background=2E7D32&color=fff&size=120"
+                alt="Valery Leyva"
+              />
+              <h4>Valery Leyva Sánchez</h4>
+              <p class="sobre-rol">Desarrolladora Full Stack</p>
+              <p>
+                Especialista en Spring Boot y frontend, encargada de la
+                arquitectura web.
+              </p>
             </div>
-        </section>
+            <div class="sobre-miembro">
+              <img
+                src="https://ui-avatars.com/api/?name=Edson+More&background=1976D2&color=fff&size=120"
+                alt="Edson More"
+              />
+              <h4>Edson More Anton</h4>
+              <p class="sobre-rol">Especialista IoT y Arduino</p>
+              <p>
+                Responsable de la integración de sensores y sistemas de riego
+                automático.
+              </p>
+            </div>
+            <div class="sobre-miembro">
+              <img
+                src="https://ui-avatars.com/api/?name=Brandon+Inga&background=F57C00&color=fff&size=120"
+                alt="Brandon Inga"
+              />
+              <h4>Brandon Inga Albines</h4>
+              <p class="sobre-rol">Analista de Datos</p>
+              <p>
+                Encargado del análisis de datos ambientales y gestión de la base
+                de datos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- CTA -->
-        <section class="about-cta">
-            <div class="about-cta-container">
-                <h2>¿Quieres participar en ReVerdecer Piura?</h2>
-                <p>Únete a nuestra iniciativa, reporta árboles o sé parte del monitoreo ambiental en tu ciudad.</p>
-                <div class="about-cta-buttons">
-                    <a th:href="@{/contacto}" class="about-btn about-btn-light"> Contáctanos</a>
-                    <a href="https://whatsapp.com" target="_blank" class="about-btn about-btn-outline"> WhatsApp</a>
-                </div>
-            </div>
-        </section>
+      <!-- CTA -->
+      <section class="sobre-cta">
+        <h2>¿Quieres participar en ReVerdecer Piura?</h2>
+        <p>
+          Únete a nuestra iniciativa, reporta árboles o sé parte del monitoreo
+          ambiental.
+        </p>
+        <div class="sobre-botones">
+          <a th:href="@{/contacto}" class="sobre-btn sobre-btn-claro"
+            >Contáctanos</a
+          >
+          <a href="#" class="sobre-btn sobre-btn-borde">WhatsApp</a>
+        </div>
+      </section>
     </main>
 
-    <!-- Footer -->
     <footer th:replace="layout :: footer"></footer>
-
     <!-- Scripts -->
     <th:div th:replace="layout :: scripts"></th:div>
-</body>
-
+  </body>
 </html>

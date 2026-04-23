@@ -1,175 +1,191 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Contacto - ReVerdecer Piura'"
+  ></head>
 
-<head th:replace="layout :: head" th:with="titulo='Contacto - ReVerdecer Piura'"></head>
-
-<body>
-    <!-- Navbar -->
+  <body>
     <nav th:replace="layout :: navbar"></nav>
 
     <main>
-        <!-- HERO PROPIO -->
-        <section th:replace="layout :: hero(
+      <section
+        th:replace="layout :: hero(
     'Contáctanos',
     'En ReVerdecer Piura, estamos aquí para ayudarte. Ya sea que tengas una consulta, sugerencia sobre nuestros árboles urbanos, o quieras participar en iniciativas de reforestación, nos encantaría saber de ti. Completa el formulario a continuación o utiliza nuestros canales de contacto rápido para comunicarte con nosotros.',
     false,
     ~{:: #vacio}
-)">
-            <div id="vacio"></div>
-        </section>
+)"
+      >
+        <div id="vacio"></div>
+      </section>
 
-        <!-- CONTENIDO PRINCIPAL - FORMULARIO CENTRADO -->
-        <div class="contact-main">
-            <div class="contact-container">
-                <div class="contact-grid-center">
-                    <!-- FORMULARIO DE CONTACTO CENTRADO -->
-                    <div class="contact-form-wrapper-center">
-                        <div class="contact-card">
-                            <div class="contact-card-header contact-card-header-success">
-                                <span class="contact-card-icon"></span>
-                                <h3>Envíanos un mensaje</h3>
-                            </div>
-                            <div class="contact-card-body">
-                                <form id="contactForm" class="contact-form" novalidate>
-                                    <div class="contact-form-row">
-                                        <div class="contact-form-group">
-                                            <label for="nombre">
-                                                <span class="contact-label-icon"></span>
-                                                Nombre completo *
-                                            </label>
-                                            <input type="text" id="nombre" name="nombre" class="contact-input" placeholder="Ingrese su nombre completo" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+" required>
-                                            <div class="contact-error-message" id="nombreError"></div>
-                                        </div>
-                                        <div class="contact-form-group">
-                                            <label for="correo">
-                                                <span class="contact-label-icon"></span>
-                                                Correo electrónico *
-                                            </label>
-                                            <input type="email" id="correo" name="correo" class="contact-input" placeholder="nombre@ejemplo.com" required>
-                                            <div class="contact-error-message" id="correoError"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-form-row">
-                                        <div class="contact-form-group">
-                                            <label for="telefono">
-                                                <span class="contact-label-icon"></span>
-                                                Teléfono
-                                            </label>
-                                            <input type="tel" id="telefono" name="telefono" class="contact-input" placeholder="+51 999 888 777" pattern="[0-9+\s\-()]+">
-                                            <div class="contact-error-message" id="telefonoError"></div>
-                                        </div>
-                                        <div class="contact-form-group">
-                                            <label for="asunto">
-                                                <span class="contact-label-icon"></span>
-                                                Asunto *
-                                            </label>
-                                            <select id="asunto" name="asunto" class="contact-select" required>
-                                                <option value="" selected disabled>Seleccione un asunto</option>
-                                                <option value="consulta">Consulta general</option>
-                                                <option value="arbol">Reporte de árbol</option>
-                                                <option value="riego">Problema con riego</option>
-                                                <option value="reforestacion">Iniciativa de reforestación</option>
-                                                <option value="sugerencia">Sugerencia</option>
-                                                <option value="otro">Otro</option>
-                                            </select>
-                                            <div class="contact-error-message" id="asuntoError"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-form-group">
-                                        <label for="mensaje">
-                                            <span class="contact-label-icon"></span>
-                                            Mensaje *
-                                        </label>
-                                        <textarea id="mensaje" name="mensaje" class="contact-textarea" rows="5" placeholder="Escribe tu mensaje aquí..." minlength="10" maxlength="500" required></textarea>
-                                        <div class="contact-char-counter">
-                                            <span id="charCount">0</span>/500 caracteres
-                                        </div>
-                                        <div class="contact-error-message" id="mensajeError"></div>
-                                    </div>
-
-                                    <div class="contact-form-group">
-                                        <label class="contact-checkbox">
-                                            <input type="checkbox" id="terminos" required>
-                                            <span class="contact-checkbox-label">
-                                                Acepto recibir comunicaciones de ReVerdecer Piura y he leído la 
-                                                <a href="#" class="contact-link">política de privacidad</a> *
-                                            </span>
-                                        </label>
-                                        <div class="contact-error-message" id="terminosError"></div>
-                                    </div>
-
-                                    <div class="contact-form-buttons">
-                                        <button type="reset" class="contact-btn contact-btn-outline" id="resetBtn">
-                                             Limpiar
-                                        </button>
-                                        <button type="submit" class="contact-btn contact-btn-success">
-                                             Enviar Mensaje
-                                        </button>
-                                    </div>
-
-                                    <div id="formSuccessMessage" class="contact-success-message" style="display: none;">
-                                        ¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- FORMULARIO -->
+      <section class="contacto-formulario">
+        <div class="contacto-container">
+          <div class="contacto-card">
+            <div class="contacto-card-header">
+              <h2>Envíanos un mensaje</h2>
             </div>
+            <div class="contacto-card-body">
+              <form id="contactoForm">
+                <div class="contacto-fila">
+                  <div class="contacto-grupo">
+                    <label>Nombre completo *</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      class="contacto-input"
+                      placeholder="Ingrese su nombre"
+                    />
+                    <div class="contacto-error" id="errorNombre"></div>
+                  </div>
+                  <div class="contacto-grupo">
+                    <label>Correo electrónico *</label>
+                    <input
+                      type="email"
+                      id="correo"
+                      class="contacto-input"
+                      placeholder="nombre@ejemplo.com"
+                    />
+                    <div class="contacto-error" id="errorCorreo"></div>
+                  </div>
+                </div>
+
+                <div class="contacto-fila">
+                  <div class="contacto-grupo">
+                    <label> Teléfono</label>
+                    <input
+                      type="tel"
+                      id="telefono"
+                      class="contacto-input"
+                      placeholder="+51 999 888 777"
+                    />
+                    <div class="contacto-error" id="errorTelefono"></div>
+                  </div>
+                  <div class="contacto-grupo">
+                    <label>Asunto *</label>
+                    <select id="asunto" class="contacto-select">
+                      <option value="">Seleccione un asunto</option>
+                      <option value="consulta">Consulta general</option>
+                      <option value="arbol">Reporte de árbol</option>
+                      <option value="riego">Problema con riego</option>
+                      <option value="reforestacion">
+                        Iniciativa de reforestación
+                      </option>
+                    </select>
+                    <div class="contacto-error" id="errorAsunto"></div>
+                  </div>
+                </div>
+
+                <div class="contacto-grupo">
+                  <label>Mensaje *</label>
+                  <textarea
+                    id="mensaje"
+                    class="contacto-textarea"
+                    rows="5"
+                    placeholder="Escribe tu mensaje aquí..."
+                  ></textarea>
+                  <div class="contacto-contador">
+                    <span id="contador">0</span>/500 caracteres
+                  </div>
+                  <div class="contacto-error" id="errorMensaje"></div>
+                </div>
+
+                <div class="contacto-grupo">
+                  <label class="contacto-checkbox">
+                    <input type="checkbox" id="terminos" />
+                    <span>Acepto los términos y condiciones *</span>
+                  </label>
+                  <div class="contacto-error" id="errorTerminos"></div>
+                </div>
+
+                <div class="contacto-botones">
+                  <button
+                    type="button"
+                    id="limpiarBtn"
+                    class="contacto-btn contacto-btn-limpiar"
+                  >
+                    Limpiar
+                  </button>
+                  <button
+                    type="submit"
+                    class="contacto-btn contacto-btn-enviar"
+                  >
+                    Enviar Mensaje
+                  </button>
+                </div>
+
+                <div
+                  id="mensajeExito"
+                  class="contacto-exito"
+                  style="display: none"
+                >
+                  ✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto
+                  pronto.
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- SECCIÓN FAQ -->
-        <section class="contact-faq">
-            <div class="contact-container">
-                <div class="contact-section-header">
-                    <h2>Preguntas Frecuentes</h2>
-                    <p>Encuentra respuestas rápidas a las consultas más comunes</p>
-                </div>
-                <div class="contact-faq-grid">
-                    <div class="contact-faq-item">
-                        <button class="contact-faq-question" onclick="toggleFaq(this)">
-                            <span></span>
-                            ¿Cómo funciona el sistema de riego automático?
-                            <span class="contact-faq-arrow">▼</span>
-                        </button>
-                        <div class="contact-faq-answer">
-                            <p>El sistema utiliza sensores de humedad en el suelo conectados a Arduino. Cuando detecta niveles bajos, activa automáticamente el riego. Puedes monitorear todo desde nuestra plataforma web.</p>
-                        </div>
-                    </div>
-                    <div class="contact-faq-item">
-                        <button class="contact-faq-question" onclick="toggleFaq(this)">
-                            <span></span>
-                            ¿Puedo reportar un árbol que necesita atención?
-                            <span class="contact-faq-arrow">▼</span>
-                        </button>
-                        <div class="contact-faq-answer">
-                            <p>Sí. Desde la plataforma puedes registrar árboles y reportar su estado. Nuestro equipo revisará la información y programará el mantenimiento necesario.</p>
-                        </div>
-                    </div>
-                    <div class="contact-faq-item">
-                        <button class="contact-faq-question" onclick="toggleFaq(this)">
-                            <span></span>
-                            ¿Cómo puedo participar en iniciativas de reforestación?
-                            <span class="contact-faq-arrow">▼</span>
-                        </button>
-                        <div class="contact-faq-answer">
-                            <p>Puedes contactarnos a través del formulario, escribirnos a nuestro correo o unirte a nuestros voluntarios. ¡Toda ayuda es bienvenida para reverdecer Piura!</p>
-                        </div>
-                    </div>
-                </div>
+      <!-- FAQ -->
+      <section class="contacto-faq">
+        <div class="contacto-container">
+          <div class="contacto-faq-header">
+            <h2>Preguntas Frecuentes</h2>
+            <p>Encuentra respuestas rápidas a las consultas más comunes</p>
+          </div>
+          <div class="contacto-faq-grid">
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+                <span>🌱 ¿Cómo funciona el sistema de riego automático?</span>
+                <span class="contacto-faq-flecha">▼</span>
+              </button>
+              <div class="contacto-faq-respuesta">
+                <p>
+                  El sistema utiliza sensores de humedad en el suelo conectados
+                  a Arduino. Cuando detecta niveles bajos, activa
+                  automáticamente el riego.
+                </p>
+              </div>
             </div>
-        </section>
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+                <span>🌿 ¿Puedo reportar un árbol que necesita atención?</span>
+                <span class="contacto-faq-flecha">▼</span>
+              </button>
+              <div class="contacto-faq-respuesta">
+                <p>
+                  Sí. Desde la plataforma puedes registrar árboles y reportar su
+                  estado. Nuestro equipo revisará la información.
+                </p>
+              </div>
+            </div>
+            <div class="contacto-faq-item">
+              <button class="contacto-faq-pregunta" onclick="toggleFaq(this)">
+                <span
+                  >🤝 ¿Cómo puedo participar en iniciativas de
+                  reforestación?</span
+                >
+                <span class="contacto-faq-flecha">▼</span>
+              </button>
+              <div class="contacto-faq-respuesta">
+                <p>
+                  Puedes contactarnos a través del formulario o escribirnos a
+                  nuestro correo. ¡Toda ayuda es bienvenida!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- Footer -->
     <footer th:replace="layout :: footer"></footer>
 
     <!-- Scripts -->
     <th:div th:replace="layout :: scripts"></th:div>
-
-
-</body>
-
+  </body>
 </html>

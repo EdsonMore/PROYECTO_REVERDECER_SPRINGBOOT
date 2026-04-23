@@ -1,12 +1,10 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro - ReVerdecer Piura</title>
-    <link rel="stylesheet" th:href="@{/css/global.css}" />
-    <link rel="stylesheet" th:href="@{/css/auth.css}" />
-  </head>
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Registro - ReVerdecer Piura'"
+  ></head>
+
   <body>
     <!-- Navbar -->
     <nav th:replace="layout :: navbar"></nav>
@@ -143,7 +141,7 @@
     </main>
 
     <footer th:replace="layout :: footer"></footer>
-
-    <script th:src="@{/js/auth.js}"></script>
+    <!-- Scripts -->
+    <th:div th:replace="layout :: scripts"></th:div>
   </body>
 </html>
