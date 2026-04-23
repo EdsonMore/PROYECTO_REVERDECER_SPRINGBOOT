@@ -240,7 +240,7 @@
 }
 
 
-/* ===== SECCIÓN BENEFICIOS (Grid - Rúbrica) ===== */
+/* beneficios */
 
 .benefits-section {
     padding: 60px 0;
@@ -287,7 +287,7 @@
 }
 
 
-/* ===== SECCIÓN ESTADÍSTICAS (Flexbox - Rúbrica) ===== */
+/* estadisticas */
 
 .stats-section {
     padding: 60px 0;
@@ -337,7 +337,7 @@
 }
 
 
-/* ===== SECCIÓN TESTIMONIOS (Grid - Rúbrica) ===== */
+/* testimonios */
 
 .testimonials-section {
     padding: 60px 0;
@@ -411,7 +411,7 @@
 }
 
 
-/* ===== SECCIÓN CTA (Call to Action) ===== */
+/* sección CTA */
 
 .cta-section {
     padding: 60px 0;
@@ -455,7 +455,7 @@
 }
 
 
-/* ===== RESPONSIVIDAD (Media Queries - Rúbrica) ===== */
+/* responsivo */
 
 @media (max-width: 768px) {
     .section-title {
@@ -513,7 +513,7 @@
 }
 
 
-/* ===== ANIMACIONES PARA INTERACCIÓN (JavaScript-ready) ===== */
+/* animacion para interaccion  */
 
 .fade-in {
     animation: fadeIn 0.8s ease-in;
@@ -549,4 +549,43 @@
     background: #e8f5e9;
     border-radius: 8px;
     margin-top: 10px;
+}
+
+
+/* Estilos para imágenes de beneficios */
+
+.benefit-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.benefit-card:hover .benefit-img {
+    transform: scale(1.1);
+}
+
+.benefit-stats {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #ffc107;
+    font-weight: bold;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .benefit-img {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    .benefit-img {
+        width: 45px;
+        height: 45px;
+    }
 }
