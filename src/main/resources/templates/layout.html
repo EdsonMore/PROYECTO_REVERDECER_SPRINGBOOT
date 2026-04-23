@@ -10,9 +10,10 @@
       ReVerdecer Piura - Plataforma IoT de Monitoreo de Árboles Urbanos
     </title>
 
+    <!-- CSS global (YA INCLUYE TODOS LOS ESTILOS NECESARIOS) -->
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 
-    <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <!-- CSS específicos por página -->
     <link rel="stylesheet" th:href="@{/css/arboles/listado.css}" />
     <link rel="stylesheet" th:href="@{/css/arboles/registro.css}" />
     <link rel="stylesheet" th:href="@{/css/home.css}" />
@@ -23,6 +24,7 @@
   </head>
 
   <body>
+    <!-- Barra de navegación CON AUTENTICACIÓN INTEGRADA -->
     <nav class="navbar" th:fragment="navbar">
       <div class="nav-container">
         <a class="logo" th:href="@{/}">
@@ -37,15 +39,33 @@
           <li><a th:href="@{/arboles}">Mís Árboles</a></li>
         </ul>
 
-        <button
-          class="login-btn"
-          th:onclick="|window.location='@{/auth/login}'|"
-        >
-          Iniciar sesión
-        </button>
+        <!-- SI EL USUARIO ESTÁ LOGUEADO: Muestra nombre + botón cerrar sesión -->
+        <div th:if="${session.usuario != null}" class="user-menu">
+          <div class="user-info">
+            <span class="user-name" th:text="${session.usuario.nombres}"></span>
+            <span class="user-email" th:text="${session.usuario.correo}"></span>
+          </div>
+          <button
+            class="logout-btn"
+            th:onclick="|window.location='@{/auth/logout}'|"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        <!-- SI EL USUARIO NO ESTÁ LOGUEADO: Muestra botón iniciar sesión -->
+        <div th:unless="${session.usuario != null}">
+          <button
+            class="login-btn"
+            th:onclick="|window.location='@{/auth/login}'|"
+          >
+            Iniciar sesión
+          </button>
+        </div>
       </div>
     </nav>
 
+    <!-- Fragmento de sección Hero -->
     <section
       class="hero-section"
       th:fragment="hero(titulo, subtitulo, mostrarBotones, cuerpo)"
@@ -55,14 +75,12 @@
         <p class="hero-subtitle" th:text="${subtitulo}">
           Subtítulo por defecto
         </p>
-
         <div th:replace="${cuerpo}"></div>
-
         <div class="hero-buttons" th:if="${mostrarBotones}">
           <a href="#arboles-destacados" class="btn-primary">
             Ver Árboles Monitoreados
           </a>
-          <a th:href="@{/registro}" class="btn-secondary">
+          <a th:href="@{/auth/registro}" class="btn-secondary">
             Regístrate Gratis
           </a>
         </div>
@@ -71,7 +89,6 @@
 
     <footer class="footer" th:fragment="footer">
       <div class="footer-container">
-        <!-- Columna 1: Información -->
         <div class="footer-col">
           <h3>ReVerdecer Piura</h3>
           <p>

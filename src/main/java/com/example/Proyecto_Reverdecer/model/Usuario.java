@@ -3,9 +3,12 @@ package com.example.Proyecto_Reverdecer.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable; 
 
-public class Usuario {
-
+public class Usuario implements Serializable {
+    
+    private static final long serialVersionUID = 1L;  // ← IMPORTANTE
+    
     private Long id;
     private String user;
     private String password;
@@ -22,8 +25,8 @@ public class Usuario {
     private TipoDoc tipoDoc;
     private List<Arbol> arboles = new ArrayList<>();
 
-
-
+        public Usuario() {
+        }
     // Getters y Setters
     public Long getId() {
         return id;
