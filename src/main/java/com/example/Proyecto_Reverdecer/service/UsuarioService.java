@@ -13,73 +13,64 @@ import java.util.regex.Pattern;
 public class UsuarioService {
     private final List<Usuario> usuarios = new ArrayList<>();
     private Long nextId = 1L;
-    
+
     // Mejor ubicación para el archivo (dentro del directorio del usuario)
     private static final String DATA_DIR = System.getProperty("user.home") + "/.reverdecer/";
     private static final String DATA_FILE = DATA_DIR + "usuarios.dat";
-    
+
     public UsuarioService() {
-        // Crear directorio si no existe
         File dir = new File(DATA_DIR);
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        
+
         cargarUsuarios();
         if (usuarios.isEmpty()) {
             crearUsuarioEjemplo();
             try {
-                guardarUsuarios(); // Guardar el usuario ejemplo
+                guardarUsuarios(); 
             } catch (IOException e) {
                 System.err.println("Error guardando usuario ejemplo: " + e.getMessage());
             }
         }
     }
- 
+
     public boolean registrar(Usuario usuario) throws IOException {
         System.out.println("\n=== SERVICE: REGISTRO ===");
-        
-        // Validar campos mínimos
+
         if (!validarCamposMinimos(usuario)) {
             return false;
         }
-        
-        // Validar formato de correo
+
         if (!validarCorreo(usuario.getCorreo())) {
             return false;
         }
-        
-        // Validar contraseña
+
         if (!validarPassword(usuario.getPassword())) {
             return false;
         }
-        
-        // Validar edad (solo si se proporcionó)
+
         if (usuario.getFechaNacimiento() != null && !validarEdad(usuario.getFechaNacimiento())) {
             return false;
         }
-        
-        // Validar documento (solo si se proporcionó)
+
         if (usuario.getTipoDoc() != null && usuario.getDni() != null && !usuario.getDni().isEmpty()) {
             if (!validarDocumento(usuario.getTipoDoc().toString(), usuario.getDni())) {
                 return false;
             }
         }
-        
-        // Validar teléfono (solo si se proporcionó)
+
         if (usuario.getNumero() > 0 && !validarTelefono(usuario.getNumero())) {
             return false;
         }
-        
-        // Verificar correo duplicado
+
         for (Usuario existing : usuarios) {
             if (existing.getCorreo().equalsIgnoreCase(usuario.getCorreo())) {
                 System.out.println("Correo ya registrado: " + usuario.getCorreo());
                 return false;
             }
         }
-        
-        // Valores por defecto
+
         if (usuario.getGenero() == null || usuario.getGenero().isEmpty()) {
             usuario.setGenero("No especificado");
         }
@@ -92,22 +83,20 @@ public class UsuarioService {
         if (usuario.getApellidoMaterno() == null) {
             usuario.setApellidoMaterno("");
         }
-        
-        // Asignar ID y guardar
+
         usuario.setId(nextId++);
         usuarios.add(usuario);
-        
-        // Guardar en archivo
+
         guardarUsuarios();
-        
+
         System.out.println(" REGISTRO EXITOSO! ID: " + usuario.getId());
         System.out.println("  - Correo: " + usuario.getCorreo());
         System.out.println("  - Nombre: " + usuario.getNombres());
         System.out.println("  - Archivo: " + DATA_FILE);
-        
+
         return true;
     }
-    
+
     private boolean validarCamposMinimos(Usuario usuario) {
         if (usuario.getNombres() == null || usuario.getNombres().trim().isEmpty()) {
             System.out.println("Nombres es obligatorio");
@@ -123,16 +112,16 @@ public class UsuarioService {
         }
         return true;
     }
-  
+
     public Usuario autenticar(String correo, String password) {
         System.out.println("\n=== SERVICE: AUTENTICACIÓN ===");
         System.out.println("Buscando: " + correo);
-        
+
         Optional<Usuario> usuario = usuarios.stream()
-            .filter(u -> u.getCorreo().equalsIgnoreCase(correo))
-            .filter(u -> u.getPassword().equals(password))
-            .findFirst();
-        
+                .filter(u -> u.getCorreo().equalsIgnoreCase(correo))
+                .filter(u -> u.getPassword().equals(password))
+                .findFirst();
+
         if (usuario.isPresent()) {
             System.out.println(" Usuario encontrado: " + usuario.get().getNombres());
         } else {
@@ -142,10 +131,10 @@ public class UsuarioService {
                 System.out.println("  - " + u.getCorreo());
             }
         }
-        
+
         return usuario.orElse(null);
     }
-    
+
     public Usuario buscarPorCorreo(String correo) {
         for (Usuario u : usuarios) {
             if (u.getCorreo().equalsIgnoreCase(correo)) {
@@ -154,31 +143,32 @@ public class UsuarioService {
         }
         return null;
     }
-    
+
     public List<Usuario> listarTodos() {
         return new ArrayList<>(usuarios);
     }
-    
-    
+
     private boolean validarCorreo(String correo) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         return Pattern.compile(emailRegex).matcher(correo).matches();
     }
-    
+
     private boolean validarPassword(String password) {
         return password != null && password.length() >= 6;
     }
-    
+
     private boolean validarEdad(LocalDate fechaNacimiento) {
-        if (fechaNacimiento == null) return true;
+        if (fechaNacimiento == null)
+            return true;
         LocalDate hoy = LocalDate.now();
         int edad = Period.between(fechaNacimiento, hoy).getYears();
         return edad >= 18;
     }
-    
+
     private boolean validarDocumento(String tipoDoc, String numero) {
-        if (numero == null) return false;
-        
+        if (numero == null)
+            return false;
+
         switch (tipoDoc.toUpperCase()) {
             case "DNI":
                 return numero.matches("\\d{8}");
@@ -190,32 +180,32 @@ public class UsuarioService {
                 return false;
         }
     }
-    
+
     private boolean validarTelefono(int numero) {
         String telefonoStr = String.valueOf(numero);
         return telefonoStr.matches("\\d{9}");
     }
-    
-    //PERSISTENCIA
-    
+
+    // PERSISTENCIA
+
     @SuppressWarnings("unchecked")
     private void cargarUsuarios() {
         File file = new File(DATA_FILE);
         System.out.println("Cargando usuarios desde: " + file.getAbsolutePath());
-        
+
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 List<Usuario> cargados = (List<Usuario>) ois.readObject();
                 usuarios.addAll(cargados);
-                
+
                 // Actualizar nextId
                 nextId = usuarios.stream()
-                    .mapToLong(Usuario::getId)
-                    .max()
-                    .orElse(0L) + 1;
-                    
+                        .mapToLong(Usuario::getId)
+                        .max()
+                        .orElse(0L) + 1;
+
                 System.out.println("Cargados " + usuarios.size() + " usuarios desde archivo");
-                
+
             } catch (FileNotFoundException e) {
                 System.out.println("Archivo no encontrado, se creará uno nuevo");
             } catch (IOException e) {
@@ -229,16 +219,16 @@ public class UsuarioService {
             System.out.println("Archivo no existe, se creará al primer registro");
         }
     }
-    
+
     private void guardarUsuarios() throws IOException {
         File file = new File(DATA_FILE);
-        
+
         // Asegurar que el directorio existe
         File dir = file.getParentFile();
         if (dir != null && !dir.exists()) {
             dir.mkdirs();
         }
-        
+
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(usuarios);
             System.out.println("Guardados " + usuarios.size() + " usuarios en: " + file.getAbsolutePath());
@@ -247,7 +237,7 @@ public class UsuarioService {
             throw e;
         }
     }
-    
+
     private void crearUsuarioEjemplo() {
         Usuario ejemplo = new Usuario();
         ejemplo.setId(nextId++);
@@ -262,6 +252,6 @@ public class UsuarioService {
         ejemplo.setNumero(987654321);
         ejemplo.setGenero("Masculino");
         usuarios.add(ejemplo);
-      
+
     }
 }

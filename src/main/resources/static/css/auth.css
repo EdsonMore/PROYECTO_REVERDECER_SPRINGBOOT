@@ -1,6 +1,4 @@
-/* ===== AUTH.CSS - Versión optimizada y responsiva ===== */
 
-/* Contenedor principal */
 .auth-wrapper {
   min-height: calc(100vh - 200px);
   display: flex;
@@ -9,7 +7,6 @@
   padding: clamp(1rem, 5vw, 3rem);
 }
 
-/* Tarjetas */
 .auth-card {
   background: white;
   width: 100%;
@@ -34,7 +31,6 @@
   word-break: break-word;
 }
 
-/* Grupos de formulario */
 .auth-group {
   margin-bottom: clamp(0.8rem, 3vw, 1.5rem);
 }
@@ -66,7 +62,6 @@
   box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
 }
 
-/* Estados de error */
 .auth-group input.input-error,
 .auth-group select.input-error {
   border-color: #d32f2f;
@@ -80,7 +75,6 @@
   display: block;
 }
 
-/* Grid responsivo */
 .auth-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -144,7 +138,6 @@
   color: #1565c0;
 }
 
-/* Enlaces y footer */
 .auth-back-link {
   display: inline-flex;
   align-items: center;
@@ -179,9 +172,8 @@
   text-decoration: underline;
 }
 
-/* ===== RESPONSIVIDAD SIMPLIFICADA ===== */
 
-/* Tablets y móviles */
+/*respon tabl y cell */
 @media (max-width: 768px) {
   .auth-grid {
     grid-template-columns: 1fr;
@@ -199,7 +191,7 @@
   }
 }
 
-/* Móviles pequeños */
+/* respon cell pequeños */
 @media (max-width: 480px) {
   .auth-wrapper {
     padding: 0.8rem;
@@ -233,7 +225,7 @@
   }
 }
 
-/* Móviles muy pequeños */
+/* respon moviles mas pequeños */
 @media (max-width: 320px) {
   .auth-card,
   .auth-card--wide {
@@ -260,7 +252,7 @@
   }
 }
 
-/* Orientación horizontal en móviles */
+/* respon para cell horizontales */
 @media (max-height: 600px) and (orientation: landscape) {
   .auth-wrapper {
     min-height: auto;
@@ -282,7 +274,7 @@
   }
 }
 
-/* Mejoras para dispositivos táctiles */
+/* hover paralos cell y el tactil */
 @media (hover: none) and (pointer: coarse) {
   .auth-btn:hover {
     transform: none;
@@ -292,52 +284,5 @@
   .auth-group select,
   .auth-btn {
     font-size: 16px;
-  }
-}
-
-/* Modo oscuro */
-@media (prefers-color-scheme: dark) {
-  .auth-card {
-    background: #1e1e1e;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .auth-title {
-    color: #4caf50;
-  }
-
-  .auth-group label {
-    color: #e0e0e0;
-  }
-
-  .auth-group input,
-  .auth-group select {
-    background: #2d2d2d;
-    border-color: #444;
-    color: #fff;
-  }
-
-  .auth-group input:focus,
-  .auth-group select:focus {
-    border-color: #4caf50;
-  }
-
-  .auth-footer {
-    border-top-color: #444;
-  }
-
-  .auth-alert--success {
-    background: #1b5e20;
-    color: #e8f5e9;
-  }
-
-  .auth-alert--danger {
-    background: #c62828;
-    color: #ffebee;
-  }
-
-  .auth-alert--info {
-    background: #1565c0;
-    color: #e3f2fd;
   }
 }

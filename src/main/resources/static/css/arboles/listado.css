@@ -77,7 +77,6 @@
     color: white;
 }
 
-/* === FILTRO (creado por JS) === */
 .arboles-filtro {
     padding: 8px 16px;
     border-radius: 20px;
@@ -87,7 +86,7 @@
     cursor: pointer;
 }
 
-/* === TABLA === */
+/* tbl */
 .arboles-table-wrapper {
     overflow-x: auto;
     margin-top: 20px;

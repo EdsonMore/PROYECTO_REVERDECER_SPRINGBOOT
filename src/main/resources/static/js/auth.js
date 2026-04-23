@@ -1,12 +1,10 @@
 function validarLogin() {
-  // Limpiar errores anteriores
   limpiarErrores();
 
   const correo = document.getElementById("correo");
   const password = document.getElementById("password");
   let esValido = true;
 
-  // Validación de correo (estructura if)
   if (!correo.value.trim()) {
     mostrarError(correo, "El correo es obligatorio");
     esValido = false;
@@ -15,7 +13,6 @@ function validarLogin() {
     esValido = false;
   }
 
-  // Validación de contraseña
   if (!password.value) {
     mostrarError(password, "La contraseña es obligatoria");
     esValido = false;
@@ -27,11 +24,9 @@ function validarLogin() {
   return esValido;
 }
 
-//VALIDACIÓN DE REGISTRO
 function validarRegistro() {
   limpiarErrores();
 
-  // Obtener todos los campos
   const campos = {
     nombres: document.getElementById("nombres"),
     apellidoPaterno: document.getElementById("apellidoPaterno"),
@@ -48,7 +43,6 @@ function validarRegistro() {
 
   let esValido = true;
 
-  // Validación de nombres (solo letras)
   if (!campos.nombres.value.trim()) {
     mostrarError(campos.nombres, "Los nombres son obligatorios");
     esValido = false;
@@ -57,7 +51,6 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de apellidos
   if (!campos.apellidoPaterno.value.trim()) {
     mostrarError(campos.apellidoPaterno, "El apellido paterno es obligatorio");
     esValido = false;
@@ -80,7 +73,6 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de correo
   if (!campos.correo.value.trim()) {
     mostrarError(campos.correo, "El correo es obligatorio");
     esValido = false;
@@ -89,7 +81,6 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de contraseña
   if (!campos.password.value) {
     mostrarError(campos.password, "La contraseña es obligatoria");
     esValido = false;
@@ -107,13 +98,11 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de tipo de documento
   if (!campos.tipoDoc.value) {
     mostrarError(campos.tipoDoc, "Seleccione un tipo de documento");
     esValido = false;
   }
 
-  // Validación de DNI/RUC según tipo (estructura switch en JS)
   if (!campos.dni.value.trim()) {
     mostrarError(campos.dni, "El número de documento es obligatorio");
     esValido = false;
@@ -146,7 +135,6 @@ function validarRegistro() {
     }
   }
 
-  // Validación de fecha de nacimiento (edad mínima 18 años)
   if (!campos.fechaNacimiento.value) {
     mostrarError(
       campos.fechaNacimiento,
@@ -158,13 +146,11 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de género
   if (!campos.genero.value) {
     mostrarError(campos.genero, "Seleccione un género");
     esValido = false;
   }
 
-  // Validación de teléfono
   if (!campos.numero.value) {
     mostrarError(campos.numero, "El teléfono es obligatorio");
     esValido = false;
@@ -173,7 +159,6 @@ function validarRegistro() {
     esValido = false;
   }
 
-  // Validación de dirección
   if (!campos.direccion1.value.trim()) {
     mostrarError(campos.direccion1, "La dirección es obligatoria");
     esValido = false;
@@ -182,14 +167,10 @@ function validarRegistro() {
   return esValido;
 }
 
-// FUNCIONES DE VALIDACIÓN
-
 function mostrarError(input, mensaje) {
-  // Manipulación del DOM - agregar clases y mensajes de error
   const formGroup = input.closest(".auth-group");
   input.classList.add("input-error");
 
-  // Verificar si ya existe mensaje de error
   let errorMsg = formGroup.querySelector(".auth-error-msg");
   if (!errorMsg) {
     errorMsg = document.createElement("span");
@@ -200,15 +181,12 @@ function mostrarError(input, mensaje) {
 }
 
 function limpiarErrores() {
-  // Limpiar todos los mensajes de error y clases de error
   const errores = document.querySelectorAll(".auth-error-msg");
   errores.forEach((error) => error.remove());
 
   const inputsError = document.querySelectorAll(".input-error");
   inputsError.forEach((input) => input.classList.remove("input-error"));
 }
-
-// ============ FUNCIONES DE VALIDACIÓN ESPECÍFICAS ============
 
 function validarFormatoCorreo(correo) {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -221,7 +199,6 @@ function validarSoloLetras(texto) {
 }
 
 function validarPasswordFuerte(password) {
-  // Al menos una mayúscula y un número
   const tieneMayuscula = /[A-Z]/.test(password);
   const tieneNumero = /[0-9]/.test(password);
   return tieneMayuscula && tieneNumero;
@@ -256,35 +233,26 @@ function validarEdad(fechaNacimiento) {
   return edad >= 18;
 }
 
-// ============ EVENTOS EN TIEMPO REAL (onchange, oninput) ============
-
 // Inicializar eventos cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", function () {
-  // Validación en tiempo real para el formulario de registro
   const registroForm = document.getElementById("registroForm");
   if (registroForm) {
-    // Agregar eventos a todos los inputs del formulario de registro
     const inputs = registroForm.querySelectorAll("input, select");
     inputs.forEach((input) => {
-      // Evento oninput para validación en tiempo real
       input.addEventListener("input", function () {
-        // Limpiar error específico de este campo
         const errorMsg =
           this.closest(".auth-group")?.querySelector(".auth-error-msg");
         if (errorMsg) errorMsg.remove();
         this.classList.remove("input-error");
       });
 
-      // Evento onchange para validación al salir del campo
       input.addEventListener("change", function () {
         if (registroForm.onsubmit) {
-          // Trigger de validación suave
           validarRegistro();
         }
       });
     });
 
-    // Validación específica para DNI según tipo de documento
     const tipoDoc = document.getElementById("tipoDoc");
     const dniInput = document.getElementById("dni");
 
@@ -311,11 +279,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         dniInput.placeholder = placeholder;
         dniInput.maxLength = maxLength;
-        dniInput.value = ""; // Limpiar al cambiar tipo
+        dniInput.value = "";
       });
     }
 
-    // Validación de contraseña en tiempo real
     const passwordInput = document.getElementById("password");
     if (passwordInput) {
       passwordInput.addEventListener("input", function () {
@@ -349,7 +316,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Validación en tiempo real para login
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     const inputs = loginForm.querySelectorAll("input");

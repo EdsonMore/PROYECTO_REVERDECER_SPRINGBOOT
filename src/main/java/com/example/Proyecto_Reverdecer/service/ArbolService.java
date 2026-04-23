@@ -14,7 +14,6 @@ public class ArbolService {
     private List<Arbol> arboles = new ArrayList<>();
     private AtomicLong contadorId = new AtomicLong(1);
 
-    // Datos de ejemplo
     public ArbolService() {
         arboles.add(new Arbol(contadorId.getAndIncrement(), "Roble", "Parque Central", LocalDate.now().minusDays(5), "Bueno"));
         arboles.add(new Arbol(contadorId.getAndIncrement(), "Pino", "Av. Principal", LocalDate.now().minusDays(10), "Muy Bueno"));

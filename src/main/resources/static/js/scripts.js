@@ -1,30 +1,17 @@
-// scripts.js - Funcionalidades NATIVAS globales para todas las páginas
-
 document.addEventListener("DOMContentLoaded", function () {
-  // Inicializar funcionalidades globales
   inicializarFuncionesGlobales();
 });
 
-/**
- * Inicializa todas las funciones globales
- */
 function inicializarFuncionesGlobales() {
-  // Botón volver arriba
   inicializarBotonVolver();
 
-  // Animaciones simples para tarjetas
   animarTarjetas();
 
-  // Cerrar alerta automáticamente
   cerrarAlertasAutomaticamente();
 
-  // Efectos hover para tarjetas
   inicializarHoverTarjetas();
 }
 
-/**
- * Inicializa botón volver al inicio
- */
 function inicializarBotonVolver() {
   const btn = document.getElementById("backToTopBtn");
 
@@ -47,9 +34,6 @@ function inicializarBotonVolver() {
   });
 }
 
-/**
- * Anima las tarjetas al cargar
- */
 function animarTarjetas() {
   const tarjetas = document.querySelectorAll(".card");
   tarjetas.forEach((tarjeta, indice) => {
@@ -64,9 +48,6 @@ function animarTarjetas() {
   });
 }
 
-/**
- * Cierra alertas automáticamente después de 5 segundos
- */
 function cerrarAlertasAutomaticamente() {
   const alertas = document.querySelectorAll(".alert");
   alertas.forEach((alerta) => {
@@ -82,16 +63,10 @@ function cerrarAlertasAutomaticamente() {
   });
 }
 
-/**
- * Utilidad para mostrar confirmación antes de eliminar
- */
 function confirmarAccion(mensaje = "¿Estás seguro?") {
   return confirm(mensaje);
 }
 
-/**
- * Utilidad para desabilitar un botón temporalmente
- */
 function deshabilitarBotonTemporalmente(boton, tiempoMs = 2000) {
   const textOriginal = boton.textContent;
   boton.disabled = true;
@@ -102,9 +77,6 @@ function deshabilitarBotonTemporalmente(boton, tiempoMs = 2000) {
   }, tiempoMs);
 }
 
-/**
- * Inicializa efectos hover para tarjetas
- */
 function inicializarHoverTarjetas() {
   const hoverCards = document.querySelectorAll(
     ".hover-card, .team-card, .tree-card, .module-card",
@@ -120,7 +92,6 @@ function inicializarHoverTarjetas() {
   });
 }
 
-// Función para validar formularios con Bootstrap
 function validarFormulario(form) {
   if (!form.checkValidity()) {
     form.classList.add("was-validated");
