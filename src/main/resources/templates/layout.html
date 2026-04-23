@@ -3,6 +3,7 @@
   <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title
       th:text="${titulo} ?: 'ReVerdecer Piura - Plataforma IoT de Monitoreo de Árboles Urbanos'"
     >
@@ -11,7 +12,6 @@
 
     <!-- CSS global (YA INCLUYE TODOS LOS ESTILOS NECESARIOS) -->
     <link rel="stylesheet" th:href="@{/css/global.css}" />
-    <link rel="stylesheet" th:href="@{/css/auth.css}" />
 
     <!-- CSS específicos por página -->
     <link rel="stylesheet" th:href="@{/css/arboles/listado.css}" />
@@ -20,7 +20,6 @@
     <link rel="stylesheet" th:href="@{/css/contacto.css}" />
     <link rel="stylesheet" th:href="@{/css/sobrenosotros.css}" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
   </head>
 
@@ -29,14 +28,15 @@
     <nav class="navbar" th:fragment="navbar">
       <div class="nav-container">
         <a class="logo" th:href="@{/}">
-          <img th:src="@{/img/logo1.webp}" width="35" /> ReVerdecer Piura
+          <img th:src="@{/img/logo1.webp}" width="35" alt="Logo" />
+          ReVerdecer Piura
         </a>
 
         <ul class="nav-links">
           <li><a th:href="@{/}">Inicio</a></li>
-          <li><a th:href="@{/arboles}">Árboles</a></li>
           <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
           <li><a th:href="@{/contacto}">Contacto</a></li>
+          <li><a th:href="@{/arboles}">Mís Árboles</a></li>
         </ul>
 
         <!-- SI EL USUARIO ESTÁ LOGUEADO: Muestra nombre + botón cerrar sesión -->
@@ -87,7 +87,6 @@
       </div>
     </section>
 
-    <!-- Pie de página -->
     <footer class="footer" th:fragment="footer">
       <div class="footer-container">
         <div class="footer-col">
@@ -132,14 +131,11 @@
       </div>
     </footer>
 
-    <!-- Scripts bases -->
     <div th:fragment="scripts">
       <script th:src="@{/js/scripts.js}"></script>
+      <script th:src="@{/js/auth.js}"></script>
       <script th:src="@{/js/arboles/listado-registro.js}"></script>
-      <script th:src="@{/js/login-registro.js}"></script>
-      <script th:src="@{/js/perfil.js}"></script>
       <script th:src="@{/js/contacto.js}"></script>
-      <script th:src="@{/js/libro-reclamaciones.js}"></script>
     </div>
   </body>
 </html>

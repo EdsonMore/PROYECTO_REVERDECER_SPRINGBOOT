@@ -17,6 +17,9 @@ function inicializarFuncionesGlobales() {
 
   // Cerrar alerta automáticamente
   cerrarAlertasAutomaticamente();
+
+  // Efectos hover para tarjetas
+  inicializarHoverTarjetas();
 }
 
 /**
@@ -99,109 +102,12 @@ function deshabilitarBotonTemporalmente(boton, tiempoMs = 2000) {
   }, tiempoMs);
 }
 
-// Función para actualizar contador del carrito (global)
-function actualizarContadorCarrito() {
-  fetch("/carrito/info")
-    .then((response) => response.json())
-    .then((data) => {
-      const contador = document.getElementById("carrito-count");
-      if (contador) {
-        contador.textContent = data.cantidadTotal || 0;
-      }
-    })
-    .catch((error) => {
-      console.error("Error al actualizar contador:", error);
-      // En caso de error, mostrar 0
-      const contador = document.getElementById("carrito-count");
-      if (contador) {
-        contador.textContent = "0";
-      }
-    });
-}
-
-// Función para validar carrito antes de navegar (global)
-function validarCarritoClick() {
-  const contadorCarrito = document.getElementById("carrito-count");
-  const cantidadTotal = parseInt(contadorCarrito.textContent) || 0;
-
-  if (cantidadTotal === 0) {
-    mostrarToast("Debe agregar productos al carrito primero", "error");
-    return;
-  }
-
-  // Si tiene productos, redirigir al carrito
-  window.location.href = "/carrito";
-}
-
-// Función global para mostrar toasts/notificaciones
-function mostrarToast(mensaje, tipo = "info") {
-  // Crear elemento toast si no existe
-  let toastContainer = document.getElementById("toast-container");
-  if (!toastContainer) {
-    toastContainer = document.createElement("div");
-    toastContainer.id = "toast-container";
-    toastContainer.className = "position-fixed top-0 end-0 p-3";
-    toastContainer.style.zIndex = "1055";
-    document.body.appendChild(toastContainer);
-  }
-
-  const toastId = "toast-" + Date.now();
-  const bgColor = getBgColorForToast(tipo);
-
-  const toastHTML = `
-        <div id="${toastId}" class="toast align-items-center text-white ${bgColor} border-0 show" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi ${getIconForToast(tipo)} me-2"></i>
-                    ${mensaje}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    `;
-
-  toastContainer.insertAdjacentHTML("beforeend", toastHTML);
-
-  // Auto-eliminar después de 5 segundos
-  setTimeout(() => {
-    const toastElement = document.getElementById(toastId);
-    if (toastElement) {
-      toastElement.remove();
-    }
-  }, 5000);
-}
-
-// Funciones auxiliares para toasts
-function getBgColorForToast(tipo) {
-  switch (tipo) {
-    case "success":
-      return "bg-success";
-    case "error":
-      return "bg-danger";
-    case "warning":
-      return "bg-warning";
-    default:
-      return "bg-primary";
-  }
-}
-
-function getIconForToast(tipo) {
-  switch (tipo) {
-    case "success":
-      return "bi-check-circle";
-    case "error":
-      return "bi-x-circle";
-    case "warning":
-      return "bi-exclamation-triangle";
-    default:
-      return "bi-info-circle";
-  }
-}
-
-// Efectos hover globales para tarjetas con clase específica
-document.addEventListener("DOMContentLoaded", function () {
+/**
+ * Inicializa efectos hover para tarjetas
+ */
+function inicializarHoverTarjetas() {
   const hoverCards = document.querySelectorAll(
-    ".hover-card, .team-card, .producto-card",
+    ".hover-card, .team-card, .tree-card, .module-card",
   );
   hoverCards.forEach((card) => {
     card.addEventListener("mouseenter", function () {
@@ -212,11 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
       this.style.transform = "translateY(0)";
     });
   });
-});
-
-// Función para formatear precios (útil globalmente)
-function formatearPrecio(precio) {
-  return `S/. ${parseFloat(precio).toFixed(2)}`;
 }
 
 // Función para validar formularios con Bootstrap

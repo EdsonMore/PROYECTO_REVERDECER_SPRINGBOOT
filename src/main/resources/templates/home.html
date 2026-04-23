@@ -1,204 +1,259 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="layout :: head"
+    th:with="titulo='Home - ReVerdecer Piura'"
+  ></head>
 
-<head th:replace="layout :: head" th:with="titulo='Home - ReVerdecer Piura'"></head>
-
-<body>
+  <body>
     <!-- Navbar -->
     <nav th:replace="layout :: navbar"></nav>
 
     <main>
-        <!-- HERO PROPIO (no usar el del layout para evitar conflictos) -->
-        <section th:replace="layout :: hero(
+      <!-- HERO PROPIO (no usar el del layout para evitar conflictos) -->
+      <section
+        th:replace="layout :: hero(
     'ReVerdecer Piura',
     'Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT. Ayúdanos a reverdecer Piura.',
     true,
     ~{:: #vacio}
-)">
-            <div id="vacio"></div>
-        </section>
+)"
+      >
+        <div id="vacio"></div>
+      </section>
 
-        <!-- MÓDULOS (Grid CSS - Rúbrica) -->
-        <section class="modules-section">
-            <div class="modules-container">
-                <h2 class="section-title">Nuestros Módulos</h2>
-                <p class="section-subtitle">Tecnología IoT al servicio del medio ambiente</p>
-                <div class="modules-grid">
-                    <div class="module-card">
-                        <span class="module-icon"></span>
-                        <h3>Registro de Árboles</h3>
-                        <p>Especie, ubicación y estado</p>
-                    </div>
-                    <div class="module-card">
-                        <span class="module-icon"></span>
-                        <h3>Riego Automático</h3>
-                        <p>Activación inteligente</p>
-                    </div>
-                    <div class="module-card">
-                        <span class="module-icon"></span>
-                        <h3>Geolocalización</h3>
-                        <p>Mapa interactivo</p>
-                    </div>
-                    <div class="module-card">
-                        <span class="module-icon"></span>
-                        <h3>Análisis y Estadísticas</h3>
-                        <p>Gráficos en tiempo real</p>
-                    </div>
-                    <div class="module-card">
-                        <span class="module-icon"></span>
-                        <h3>Alertas</h3>
-                        <p>Mantenimiento preventivo</p>
-                    </div>
-                </div>
+      <!-- MÓDULOS (Grid CSS - Rúbrica) -->
+      <section class="modules-section">
+        <div class="modules-container">
+          <h2 class="section-title">Nuestros Módulos</h2>
+          <p class="section-subtitle">
+            Tecnología IoT al servicio del medio ambiente
+          </p>
+          <div class="modules-grid">
+            <div class="module-card">
+              <span class="module-icon"></span>
+              <h3>Registro de Árboles</h3>
+              <p>Especie, ubicación y estado</p>
             </div>
-        </section>
+            <div class="module-card">
+              <span class="module-icon"></span>
+              <h3>Riego Automático</h3>
+              <p>Activación inteligente</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon"></span>
+              <h3>Geolocalización</h3>
+              <p>Mapa interactivo</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon"></span>
+              <h3>Análisis y Estadísticas</h3>
+              <p>Gráficos en tiempo real</p>
+            </div>
+            <div class="module-card">
+              <span class="module-icon"></span>
+              <h3>Alertas</h3>
+              <p>Mantenimiento preventivo</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- ÁRBOLES DESTACADOS (Flexbox - Rúbrica) -->
-        <section class="trees-section">
-            <div class="trees-container">
-                <h2 class="section-title">Árboles Registrados</h2>
-                <p class="section-subtitle">Últimos árboles monitoreados en Piura</p>
-                <div class="trees-grid">
-                    <div th:each="arbol, iterStat : ${arboles}" th:if="${iterStat.index < 4}" class="tree-card">
-                        <div th:if="${arbol.humedadSuelo < 30}" class="tree-badge">
-                            <span class="badge-warning"> ¡Requiere riego!</span>
-                        </div>
-                        <div th:if="${arbol.estado == 'Enfermo'}" class="tree-badge">
-                            <span class="badge-danger"> Atención urgente</span>
-                        </div>
-                        <img class="tree-image" th:src="${arbol.imagen != null ? arbol.imagen : '/img/default-tree.jpg'}" th:alt="${arbol.especie}">
-                        <div class="tree-body">
-                            <h3 class="tree-title" th:text="${arbol.especie}">Especie</h3>
-                            <p class="tree-location"> <span th:text="${arbol.ubicacion}">Ubicación</span></p>
-                            <div class="tree-info">
-                                <span class="tree-status" th:text="${arbol.estado}">Estado</span>
-                                <span class="tree-humidity"> Humedad: <span class="humidity-value" th:text="${arbol.humedadSuelo}">0</span>%</span>
-                            </div>
-                            <p class="tree-date"> <span th:text="${#temporals.format(arbol.fechaPlantacion, 'dd/MM/yyyy')}">Fecha</span></p>
-                            <a th:href="@{/arbol/{id}(id=${arbol.id})}" class="btn-view">👁️ Ver detalles</a>
-                        </div>
-                    </div>
+      <!-- ÁRBOLES DESTACADOS (Flexbox - Rúbrica) -->
+      <section class="trees-section">
+        <div class="trees-container">
+          <h2 class="section-title">Árboles Registrados</h2>
+          <p class="section-subtitle">Últimos árboles monitoreados en Piura</p>
+          <div class="trees-grid">
+            <div
+              th:each="arbol, iterStat : ${arboles}"
+              th:if="${iterStat.index < 4}"
+              class="tree-card"
+            >
+              <div th:if="${arbol.humedadSuelo < 30}" class="tree-badge">
+                <span class="badge-warning"> ¡Requiere riego!</span>
+              </div>
+              <div th:if="${arbol.estado == 'Enfermo'}" class="tree-badge">
+                <span class="badge-danger"> Atención urgente</span>
+              </div>
+              <img
+                class="tree-image"
+                th:src="${arbol.imagen != null ? arbol.imagen : '/img/default-tree.jpg'}"
+                th:alt="${arbol.especie}"
+              />
+              <div class="tree-body">
+                <h3 class="tree-title" th:text="${arbol.especie}">Especie</h3>
+                <p class="tree-location">
+                  <span th:text="${arbol.ubicacion}">Ubicación</span>
+                </p>
+                <div class="tree-info">
+                  <span class="tree-status" th:text="${arbol.estado}"
+                    >Estado</span
+                  >
+                  <span class="tree-humidity">
+                    Humedad:
+                    <span class="humidity-value" th:text="${arbol.humedadSuelo}"
+                      >0</span
+                    >%</span
+                  >
                 </div>
-                <div class="btn-view-all">
-                    <a th:href="@{/arboles}" class="btn-success"> Ver Todos Los Árboles</a>
-                </div>
+                <p class="tree-date">
+                  <span
+                    th:text="${#temporals.format(arbol.fechaPlantacion, 'dd/MM/yyyy')}"
+                    >Fecha</span
+                  >
+                </p>
+                <a th:href="@{/arbol/{id}(id=${arbol.id})}" class="btn-view"
+                  >👁️ Ver detalles</a
+                >
+              </div>
             </div>
-        </section>
+          </div>
+          <div class="btn-view-all">
+            <a th:href="@{/arboles}" class="btn-success">
+              Ver Todos Los Árboles</a
+            >
+          </div>
+        </div>
+      </section>
 
-        <!-- BENEFICIOS (Grid - Rúbrica) -->
-        <section class="benefits-section">
-            <div class="benefits-container">
-                <h2 class="section-title">Beneficios del Sistema</h2>
-                <p class="section-subtitle">Tecnología IoT para un futuro más verde</p>
-                <div class="benefits-grid">
-                    <div class="benefit-card">
-                        <span class="benefit-icon"></span>
-                        <h3>Ahorro de Agua</h3>
-                        <p>Riego inteligente que activa solo cuando es necesario, optimizando el consumo de agua.</p>
-                    </div>
-                    <div class="benefit-card">
-                        <span class="benefit-icon"></span>
-                        <h3>Monitoreo en Tiempo Real</h3>
-                        <p>Datos de humedad y temperatura actualizados constantemente desde sensores Arduino.</p>
-                    </div>
-                    <div class="benefit-card">
-                        <span class="benefit-icon"></span>
-                        <h3>Alertas Preventivas</h3>
-                        <p>Notificaciones cuando un árbol requiere mantenimiento o atención especial.</p>
-                    </div>
-                </div>
+      <!-- BENEFICIOS (Grid - Rúbrica) -->
+      <section class="benefits-section">
+        <div class="benefits-container">
+          <h2 class="section-title">Beneficios del Sistema</h2>
+          <p class="section-subtitle">
+            Tecnología IoT para un futuro más verde
+          </p>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <span class="benefit-icon"></span>
+              <h3>Ahorro de Agua</h3>
+              <p>
+                Riego inteligente que activa solo cuando es necesario,
+                optimizando el consumo de agua.
+              </p>
             </div>
-        </section>
+            <div class="benefit-card">
+              <span class="benefit-icon"></span>
+              <h3>Monitoreo en Tiempo Real</h3>
+              <p>
+                Datos de humedad y temperatura actualizados constantemente desde
+                sensores Arduino.
+              </p>
+            </div>
+            <div class="benefit-card">
+              <span class="benefit-icon"></span>
+              <h3>Alertas Preventivas</h3>
+              <p>
+                Notificaciones cuando un árbol requiere mantenimiento o atención
+                especial.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- ESTADÍSTICAS (Flexbox - Rúbrica) -->
-        <section class="stats-section">
-            <div class="stats-container">
-                <h2 class="section-title">Impacto en Piura</h2>
-                <p class="section-subtitle">Resultados que hablan por sí mismos</p>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-icon"></span>
-                        <div class="stat-number" th:text="${totalArboles}">150+</div>
-                        <div class="stat-label">Árboles monitoreados</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon"></span>
-                        <div class="stat-number" th:text="${aguaAhorrada}">40%</div>
-                        <div class="stat-label">Ahorro de agua</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon"></span>
-                        <div class="stat-number" th:text="${usuariosActivos}">200+</div>
-                        <div class="stat-label">Usuarios registrados</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon"></span>
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Monitoreo continuo</div>
-                    </div>
-                </div>
+      <!-- ESTADÍSTICAS (Flexbox - Rúbrica) -->
+      <section class="stats-section">
+        <div class="stats-container">
+          <h2 class="section-title">Impacto en Piura</h2>
+          <p class="section-subtitle">Resultados que hablan por sí mismos</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-icon"></span>
+              <div class="stat-number" th:text="${totalArboles}">150+</div>
+              <div class="stat-label">Árboles monitoreados</div>
             </div>
-        </section>
+            <div class="stat-card">
+              <span class="stat-icon"></span>
+              <div class="stat-number" th:text="${aguaAhorrada}">40%</div>
+              <div class="stat-label">Ahorro de agua</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon"></span>
+              <div class="stat-number" th:text="${usuariosActivos}">200+</div>
+              <div class="stat-label">Usuarios registrados</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon"></span>
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Monitoreo continuo</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- TESTIMONIOS (Grid - Rúbrica) -->
-        <section class="testimonials-section">
-            <div class="testimonials-container">
-                <h2 class="section-title">Lo Que Dice Nuestra Comunidad</h2>
-                <p class="section-subtitle">Ciudadanos comprometidos con reverdecer Piura</p>
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Increíble poder ver en tiempo real cómo cuidan los árboles de mi barrio. El riego automático es una maravilla."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">MG</div>
-                            <div>
-                                <div class="author-name">María González</div>
-                                <div class="author-role">Vecina de Piura</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Me encanta poder reportar árboles y ver las estadísticas ambientales. Una iniciativa que toda ciudad debería tener."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">CM</div>
-                            <div>
-                                <div class="author-name">Carlos Mendoza</div>
-                                <div class="author-role">Voluntario ambiental</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Los sensores de humedad y el sistema de alertas nos han ayudado a salvar muchos árboles nuevos. Excelente proyecto."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">AP</div>
-                            <div>
-                                <div class="author-name">Ana Pérez</div>
-                                <div class="author-role">Activista ecológica</div>
-                            </div>
-                        </div>
-                    </div>
+      <!-- TESTIMONIOS (Grid - Rúbrica) -->
+      <section class="testimonials-section">
+        <div class="testimonials-container">
+          <h2 class="section-title">Lo Que Dice Nuestra Comunidad</h2>
+          <p class="section-subtitle">
+            Ciudadanos comprometidos con reverdecer Piura
+          </p>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "Increíble poder ver en tiempo real cómo cuidan los árboles de
+                mi barrio. El riego automático es una maravilla."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar">MG</div>
+                <div>
+                  <div class="author-name">María González</div>
+                  <div class="author-role">Vecina de Piura</div>
                 </div>
+              </div>
             </div>
-        </section>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "Me encanta poder reportar árboles y ver las estadísticas
+                ambientales. Una iniciativa que toda ciudad debería tener."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar">CM</div>
+                <div>
+                  <div class="author-name">Carlos Mendoza</div>
+                  <div class="author-role">Voluntario ambiental</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">
+                "Los sensores de humedad y el sistema de alertas nos han ayudado
+                a salvar muchos árboles nuevos. Excelente proyecto."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar">AP</div>
+                <div>
+                  <div class="author-name">Ana Pérez</div>
+                  <div class="author-role">Activista ecológica</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- CTA FINAL -->
-        <section class="cta-section">
-            <div class="cta-container">
-                <h2>¿Quieres participar en ReVerdecer Piura?</h2>
-                <p>Regístrate, reporta árboles, monitorea el estado de las áreas verdes y sé parte del cambio.</p>
-                <a th:href="@{/registro}" class="btn-light"> Regístrate Gratis</a>
-            </div>
-        </section>
+      <!-- CTA FINAL -->
+      <section class="cta-section">
+        <div class="cta-container">
+          <h2>¿Quieres participar en ReVerdecer Piura?</h2>
+          <p>
+            Regístrate, reporta árboles, monitorea el estado de las áreas verdes
+            y sé parte del cambio.
+          </p>
+          <a th:href="@{/registro}" class="btn-light"> Regístrate Gratis</a>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer th:replace="layout :: footer"></footer>
 
-
     <!-- Scripts -->
     <th:div th:replace="layout :: scripts"></th:div>
-</body>
-
+  </body>
 </html>

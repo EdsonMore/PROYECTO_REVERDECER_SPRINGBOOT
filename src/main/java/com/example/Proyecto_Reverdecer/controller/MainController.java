@@ -21,8 +21,4 @@ public class MainController {
         return "contacto";
     }
 
-    @GetMapping("/libro-reclamaciones")
-    public String libroReclamaciones() {
-        return "libro-reclamaciones";
-    }
 }
