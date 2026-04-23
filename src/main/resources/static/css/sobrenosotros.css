@@ -1,232 +1,492 @@
-/* ===== CONTENEDOR GENERAL ===== */
+.about-hero {
+    background: linear-gradient(135deg, #1b5e20, #4caf50);
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+}
 
-.container {
-    width: 90%;
+.about-hero-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.about-hero-subtitle {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+
+/* ===== CONTENEDOR ===== */
+
+.about-container {
     max-width: 1200px;
-    margin: auto;
-}
-
-section {
-    padding: 70px 0;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 
-/* ===== GRID ===== */
+/* ===== HISTORIA ===== */
 
-.row {
+.about-history {
+    padding: 60px 0;
+    background: white;
+}
+
+.about-history-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
     align-items: center;
 }
 
-.col-lg-6 {
+.about-history-image {
     flex: 1;
-    min-width: 300px;
+    min-width: 280px;
 }
 
-.col-md-6 {
-    flex: 1;
-    min-width: 260px;
+.about-image-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.col-lg-4 {
-    flex: 1;
-    min-width: 260px;
-}
-
-
-/* ===== IMAGEN HISTORIA ===== */
-
-.img-fluid {
+.about-image-wrapper img {
     width: 100%;
     height: auto;
+    display: block;
 }
 
-.rounded-4 {
-    border-radius: 16px;
+.about-image-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: #ffc107;
+    color: #1a3b2e;
+    padding: 8px 20px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 25px;
 }
 
-.shadow-lg {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+.about-history-content {
+    flex: 1;
+    min-width: 280px;
 }
 
-
-/* ===== TITULOS ===== */
-
-h2 {
+.about-title-green {
     font-size: 32px;
+    color: #2e7d32;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
-.text-success {
+.about-history-text {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    text-align: justify;
+    font-size: 15px;
+}
+
+
+/* ===== ESTADÍSTICAS ===== */
+
+.about-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: flex-start;
+}
+
+.about-stat-item {
+    text-align: center;
+    background: #f0f7f0;
+    padding: 12px 22px;
+    border-radius: 12px;
+    min-width: 90px;
+}
+
+.about-stat-number {
+    display: block;
+    font-size: 28px;
+    font-weight: bold;
     color: #2e7d32;
 }
 
-.text-primary {
-    color: #1565c0;
-}
-
-.text-warning {
-    color: #ff9800;
-}
-
-.text-muted {
-    color: #6c757d;
+.about-stat-label {
+    font-size: 11px;
+    color: #777;
 }
 
 
-/* ===== TARJETAS ===== */
+/* ===== VALORES ===== */
 
-.card {
+.about-values {
+    padding: 60px 0;
+    background: #f5f9f5;
+}
+
+.about-section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-section-title {
+    font-size: 32px;
+    color: #1a3b2e;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.about-section-subtitle {
+    color: #666;
+    font-size: 16px;
+}
+
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.about-value-card {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
-    height: 100%;
+    padding: 35px 25px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
 }
 
-.hover-card:hover {
-    transform: translateY(-8px);
+.about-value-card:hover {
+    transform: translateY(-5px);
 }
 
-.card-body {
-    padding: 20px;
-}
-
-.card-header {
-    padding: 15px;
-    border-radius: 10px 10px 0 0;
-}
-
-.border-success {
-    border: 2px solid #2e7d32;
-}
-
-
-/* ===== ICONOS REDONDOS ===== */
-
-.rounded-circle {
+.about-value-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: #e8f5e9;
     border-radius: 50%;
-}
-
-.bg-success {
-    background: #2e7d32;
-}
-
-.bg-primary {
-    background: #1976d2;
-}
-
-.bg-warning {
-    background: #f9a825;
-}
-
-.text-white {
-    color: white;
-}
-
-.d-inline-flex {
-    display: inline-flex;
-}
-
-.align-items-center {
+    display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.justify-content-center {
+.about-value-icon span {
+    font-size: 35px;
+}
+
+.about-value-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.about-value-card p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.about-value-success h3 {
+    color: #2e7d32;
+}
+
+.about-value-primary h3 {
+    color: #1976d2;
+}
+
+.about-value-warning h3 {
+    color: #f57c00;
+}
+
+
+/* ===== MISIÓN Y VISIÓN ===== */
+
+.about-mission-vision {
+    padding: 60px 0;
+    background: white;
+}
+
+.about-mv-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.about-mv-card {
+    flex: 1;
+    min-width: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.about-mv-header {
+    background: #2e7d32;
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+
+.about-mv-icon {
+    font-size: 28px;
+}
+
+.about-mv-header h3 {
+    font-size: 22px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.about-mv-body {
+    padding: 25px;
+}
+
+.about-mv-body p {
+    color: #555;
+    line-height: 1.7;
+    text-align: justify;
+    font-size: 15px;
 }
 
 
 /* ===== EQUIPO ===== */
 
-.team-card:hover {
-    transform: translateY(-10px);
+.about-team {
+    padding: 60px 0;
+    background: #f5f9f5;
 }
 
+.about-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
 
-/* ===== BOTONES ===== */
+.about-team-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
 
-.btn {
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
+.about-team-card:hover {
+    transform: translateY(-5px);
+}
+
+.about-team-avatar {
+    position: relative;
     display: inline-block;
-    font-weight: 500;
-    transition: 0.3s;
+    margin-bottom: 20px;
 }
 
-.btn-light {
-    background: white;
-    color: #2e7d32;
+.about-team-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2e7d32;
 }
 
-.btn-light:hover {
-    background: #f0f0f0;
-}
-
-.btn-outline-light {
-    border: 2px solid white;
-    color: white;
-}
-
-.btn-outline-light:hover {
-    background: white;
-    color: #2e7d32;
-}
-
-.btn-outline-success {
-    border: 2px solid #2e7d32;
-    color: #2e7d32;
-}
-
-.btn-outline-success:hover {
+.about-avatar-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
     background: #2e7d32;
     color: white;
 }
 
+.about-avatar-badge.about-bg-primary {
+    background: #1976d2;
+}
 
-/* ===== CENTRADO ===== */
+.about-avatar-badge.about-bg-warning {
+    background: #f57c00;
+}
 
-.text-center {
+.about-team-card h4 {
+    font-size: 20px;
+    color: #1a3b2e;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.about-team-role {
+    color: #2e7d32;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 12px;
+}
+
+.about-team-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* ===== CTA ===== */
+
+.about-cta {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: white;
     text-align: center;
 }
 
-.justify-content-center {
+.about-cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-cta h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.about-cta p {
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+.about-cta-buttons {
+    display: flex;
+    gap: 20px;
     justify-content: center;
-}
-
-.gap-3 {
-    gap: 15px;
-}
-
-.flex-wrap {
     flex-wrap: wrap;
 }
 
-
-/* ===== CTA FINAL ===== */
-
-.bg-success {
-    background: #2e7d32;
+.about-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 15px;
 }
 
-.lead {
-    font-size: 18px;
+.about-btn-light {
+    background: white;
+    color: #2e7d32;
 }
 
-.small {
-    font-size: 14px;
+.about-btn-light:hover {
+    background: #ffc107;
+    color: #1a3b2e;
+}
+
+.about-btn-outline {
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+}
+
+.about-btn-outline:hover {
+    background: white;
+    color: #2e7d32;
 }
 
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVIDAD ===== */
 
-@media(max-width:768px) {
-    .row {
+@media (max-width: 768px) {
+    .about-hero h1 {
+        font-size: 32px;
+    }
+    .about-hero-subtitle {
+        font-size: 16px;
+    }
+    .about-title-green,
+    .about-section-title {
+        font-size: 28px;
+    }
+    .about-history-grid {
         flex-direction: column;
+        gap: 30px;
+    }
+    .about-values-grid {
+        grid-template-columns: 1fr;
+    }
+    .about-mv-flex {
+        flex-direction: column;
+    }
+    .about-team-grid {
+        grid-template-columns: 1fr;
+    }
+    .about-stats-row {
+        justify-content: center;
+    }
+    .about-cta h2 {
+        font-size: 26px;
+    }
+    .about-cta p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-hero h1 {
+        font-size: 26px;
+    }
+    .about-section-title {
+        font-size: 24px;
+    }
+    .about-title-green {
+        font-size: 24px;
+    }
+    .about-value-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .about-value-icon span {
+        font-size: 30px;
+    }
+    .about-value-card h3 {
+        font-size: 20px;
+    }
+    .about-mv-header h3 {
+        font-size: 20px;
+    }
+    .about-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .about-btn {
+        width: 100%;
+        max-width: 220px;
         text-align: center;
+    }
+    .about-team-avatar img {
+        width: 100px;
+        height: 100px;
+    }
+    .about-avatar-badge {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
     }
 }

@@ -229,3 +229,94 @@ body {
     background: white;
     color: #1a3b2e;
 }
+
+
+/* ============================================
+   RESPONSIVIDAD GLOBAL
+   ============================================ */
+
+
+/* Tablets (768px a 992px) */
+
+@media (max-width: 992px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    .hero-section h1 {
+        font-size: 36px;
+    }
+    .hero-subtitle {
+        font-size: 16px;
+    }
+}
+
+
+/* Celulares (hasta 768px) */
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .nav-container {
+        width: 95%;
+    }
+    .hero-section {
+        padding: 50px 20px;
+    }
+    .hero-section h1 {
+        font-size: 28px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .btn-primary,
+    .btn-secondary {
+        display: inline-block;
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+    }
+    .footer {
+        margin-top: 40px;
+    }
+    .footer-col {
+        min-width: 100%;
+    }
+}
+
+
+/* Celulares pequeños (hasta 480px) */
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 18px;
+    }
+    .logo img {
+        width: 30px;
+        height: 30px;
+    }
+    .hero-section h1 {
+        font-size: 24px;
+    }
+    .hero-subtitle {
+        font-size: 14px;
+    }
+    .footer-copy {
+        font-size: 12px;
+    }
+}
