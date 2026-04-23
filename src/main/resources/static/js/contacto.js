@@ -1,151 +1,185 @@
-// contacto.js - Script NATIVO para formulario de contacto
+// Validación del formulario
+const form = document.getElementById('contactForm');
+const charCountSpan = document.getElementById('charCount');
+const mensajeTextarea = document.getElementById('mensaje');
 
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("contactForm");
-  const textarea = document.getElementById("mensaje");
-  const charCount = document.getElementById("charCount");
-  const MAX_CHARS = 500;
-
-  if (!form) return;
-
-  // Contador de caracteres
-  if (textarea && charCount) {
-    textarea.addEventListener("input", function () {
-      const count = this.value.length;
-      charCount.textContent = count + "/" + MAX_CHARS;
-
-      if (count > MAX_CHARS) {
-        this.value = this.value.substring(0, MAX_CHARS);
-        charCount.textContent = MAX_CHARS + "/" + MAX_CHARS;
-      }
-
-      // Cambiar color según el nivel
-      if (count > 450) {
-        charCount.style.color = "#dc3545"; // Rojo
-      } else if (count > 400) {
-        charCount.style.color = "#fd7e14"; // Naranja
-      } else {
-        charCount.style.color = "#6c757d"; // Gris
-      }
+// Contador de caracteres
+if (mensajeTextarea) {
+    mensajeTextarea.addEventListener('input', function() {
+        const count = this.value.length;
+        charCountSpan.textContent = count;
+        if (count > 500) {
+            this.value = this.value.substring(0, 500);
+            charCountSpan.textContent = 500;
+        }
     });
-  }
+}
 
-  // Validación del formulario
-  form.addEventListener("submit", function (event) {
-    if (!validarFormularioContacto(this)) {
-      event.preventDefault();
-      event.stopPropagation();
+// Validaciones
+function validateNombre() {
+    const nombre = document.getElementById('nombre');
+    const error = document.getElementById('nombreError');
+    const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
+    if (!nombre.value.trim()) {
+        error.textContent = 'El nombre es requerido';
+        nombre.classList.add('contact-input-error');
+        return false;
+    } else if (!regex.test(nombre.value)) {
+        error.textContent = 'Ingrese un nombre válido (solo letras)';
+        nombre.classList.add('contact-input-error');
+        return false;
+    } else {
+        error.textContent = '';
+        nombre.classList.remove('contact-input-error');
+        return true;
     }
-  });
+}
 
-  // Validación en tiempo real
-  const campos = form.querySelectorAll("input[required], textarea[required]");
-  campos.forEach((campo) => {
-    campo.addEventListener("blur", function () {
-      validarCampoContacto(this);
-    });
-  });
-});
-
-/**
- * Valida un campo del formulario de contacto
- */
-function validarCampoContacto(campo) {
-  const valor = campo.value.trim();
-  const tipo = campo.type;
-  const nombre = campo.name;
-
-  if (!valor && campo.required) {
-    mostrarErrorContacto(campo, "Este campo es requerido");
-    return false;
-  }
-
-  if (tipo === "email" && valor) {
+function validateCorreo() {
+    const correo = document.getElementById('correo');
+    const error = document.getElementById('correoError');
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(valor)) {
-      mostrarErrorContacto(campo, "Ingresa un email válido");
-      return false;
+    if (!correo.value.trim()) {
+        error.textContent = 'El correo es requerido';
+        correo.classList.add('contact-input-error');
+        return false;
+    } else if (!regex.test(correo.value)) {
+        error.textContent = 'Ingrese un correo válido';
+        correo.classList.add('contact-input-error');
+        return false;
+    } else {
+        error.textContent = '';
+        correo.classList.remove('contact-input-error');
+        return true;
     }
-  }
+}
 
-  if ((tipo === "tel" || nombre === "telefono") && valor) {
-    const soloNumeros = valor.replace(/\D/g, "");
-    if (soloNumeros.length < 7) {
-      mostrarErrorContacto(campo, "El teléfono debe tener al menos 7 dígitos");
-      return false;
+function validateAsunto() {
+    const asunto = document.getElementById('asunto');
+    const error = document.getElementById('asuntoError');
+    if (!asunto.value) {
+        error.textContent = 'Seleccione un asunto';
+        asunto.classList.add('contact-input-error');
+        return false;
+    } else {
+        error.textContent = '';
+        asunto.classList.remove('contact-input-error');
+        return true;
     }
-  }
-
-  limpiarErrorContacto(campo);
-  return true;
 }
 
-/**
- * Valida todo el formulario de contacto
- */
-function validarFormularioContacto(form) {
-  let valido = true;
-
-  const campos = form.querySelectorAll("input[required], textarea[required]");
-  campos.forEach((campo) => {
-    if (!validarCampoContacto(campo)) {
-      valido = false;
+function validateMensaje() {
+    const mensaje = document.getElementById('mensaje');
+    const error = document.getElementById('mensajeError');
+    if (!mensaje.value.trim()) {
+        error.textContent = 'El mensaje es requerido';
+        mensaje.classList.add('contact-input-error');
+        return false;
+    } else if (mensaje.value.trim().length < 10) {
+        error.textContent = 'El mensaje debe tener al menos 10 caracteres';
+        mensaje.classList.add('contact-input-error');
+        return false;
+    } else {
+        error.textContent = '';
+        mensaje.classList.remove('contact-input-error');
+        return true;
     }
-  });
-
-  if (valido) {
-    mostrarMensajeExitoContacto();
-  }
-
-  return valido;
 }
 
-/**
- * Muestra error
- */
-function mostrarErrorContacto(campo, mensaje) {
-  campo.classList.add("is-invalid");
-
-  let feedback = campo.nextElementSibling;
-  if (!feedback || !feedback.classList.contains("invalid-feedback")) {
-    feedback = document.createElement("div");
-    feedback.classList.add("invalid-feedback");
-    feedback.style.display = "block";
-    campo.parentNode.insertBefore(feedback, campo.nextSibling);
-  }
-  feedback.textContent = mensaje;
+function validateTerminos() {
+    const terminos = document.getElementById('terminos');
+    const error = document.getElementById('terminosError');
+    if (!terminos.checked) {
+        error.textContent = 'Debe aceptar los términos';
+        return false;
+    } else {
+        error.textContent = '';
+        return true;
+    }
 }
 
-/**
- * Limpia errores
- */
-function limpiarErrorContacto(campo) {
-  campo.classList.remove("is-invalid");
-  const feedback = campo.nextElementSibling;
-  if (feedback && feedback.classList.contains("invalid-feedback")) {
-    feedback.textContent = "";
-    feedback.style.display = "none";
-  }
+// Eventos - Versión corregida (sin optional chaining)
+const nombreInput = document.getElementById('nombre');
+const correoInput = document.getElementById('correo');
+const asuntoSelect = document.getElementById('asunto');
+const mensajeText = document.getElementById('mensaje');
+const terminosCheck = document.getElementById('terminos');
+
+if (nombreInput) {
+    nombreInput.addEventListener('input', validateNombre);
+}
+if (correoInput) {
+    correoInput.addEventListener('input', validateCorreo);
+}
+if (asuntoSelect) {
+    asuntoSelect.addEventListener('change', validateAsunto);
+}
+if (mensajeText) {
+    mensajeText.addEventListener('input', validateMensaje);
+}
+if (terminosCheck) {
+    terminosCheck.addEventListener('change', validateTerminos);
 }
 
-/**
- * Muestra mensaje de éxito
- */
-function mostrarMensajeExitoContacto() {
-  const alerta = document.createElement("div");
-  alerta.className =
-    "alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3";
-  alerta.style.zIndex = "9999";
-  alerta.style.width = "300px";
-  alerta.innerHTML = `
-        <strong>¡Éxito!</strong> Tu mensaje ha sido enviado correctamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
+// Submit
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const isValid = validateNombre() && validateCorreo() && validateAsunto() && validateMensaje() && validateTerminos();
 
-  document.body.appendChild(alerta);
+        if (isValid) {
+            const successMessage = document.getElementById('formSuccessMessage');
+            if (successMessage) {
+                successMessage.style.display = 'block';
+            }
+            form.reset();
+            if (charCountSpan) {
+                charCountSpan.textContent = '0';
+            }
+            setTimeout(function() {
+                if (successMessage) {
+                    successMessage.style.display = 'none';
+                }
+            }, 5000);
+        }
+    });
+}
 
-  // Remover automáticamente después de 5 segundos
-  setTimeout(() => {
-    alerta.remove();
-  }, 5000);
+// Reset
+const resetBtn = document.getElementById('resetBtn');
+if (resetBtn) {
+    resetBtn.addEventListener('click', function() {
+        setTimeout(function() {
+            if (charCountSpan && mensajeTextarea) {
+                charCountSpan.textContent = mensajeTextarea.value.length;
+            }
+            const errorInputs = document.querySelectorAll('.contact-input-error');
+            for (let i = 0; i < errorInputs.length; i++) {
+                errorInputs[i].classList.remove('contact-input-error');
+            }
+            const errorMessages = document.querySelectorAll('.contact-error-message');
+            for (let i = 0; i < errorMessages.length; i++) {
+                errorMessages[i].textContent = '';
+            }
+            const successMessage = document.getElementById('formSuccessMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 10);
+    });
+}
+
+// Toggle FAQ
+function toggleFaq(button) {
+    const faqItem = button.parentElement;
+    const isActive = faqItem.classList.contains('active');
+
+    const allFaqItems = document.querySelectorAll('.contact-faq-item');
+    for (let i = 0; i < allFaqItems.length; i++) {
+        allFaqItems[i].classList.remove('active');
+    }
+
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
 }

@@ -1,0 +1,14 @@
+[ {
+  "id" : 1,
+  "user" : null,
+  "password" : "vanalesa16",
+  "correo" : "valery@gmail.com",
+  "nombres" : "Valery",
+  "apellidoPaterno" : "leyva",
+  "apellidoMaterno" : "sanchez",
+  "direccion1" : "mi casa",
+  "direccion2" : null,
+  "numero" : 978451678,
+  "genero" : "Femenino",
+  "dni" : "75486789",
+  "fechaNacimiento"
