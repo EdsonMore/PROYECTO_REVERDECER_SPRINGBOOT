@@ -14,7 +14,6 @@ public class UsuarioService {
     private final List<Usuario> usuarios = new ArrayList<>();
     private Long nextId = 1L;
 
-    // Mejor ubicación para el archivo (dentro del directorio del usuario)
     private static final String DATA_DIR = System.getProperty("user.home") + "/.reverdecer/";
     private static final String DATA_FILE = DATA_DIR + "usuarios.dat";
 
@@ -181,7 +180,10 @@ public class UsuarioService {
         }
     }
 
-    private boolean validarTelefono(int numero) {
+    private boolean validarTelefono(Integer numero) {
+        if (numero == null) {
+            return false;
+        }   
         String telefonoStr = String.valueOf(numero);
         return telefonoStr.matches("\\d{9}");
     }
