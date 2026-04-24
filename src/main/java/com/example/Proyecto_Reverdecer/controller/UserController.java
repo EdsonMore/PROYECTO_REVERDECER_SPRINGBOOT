@@ -50,7 +50,7 @@ public class UserController {
     public String loginUsuario(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
         Usuario encontrado = usuarioService.autenticar(usuario.getCorreo(), usuario.getPassword());
         if (encontrado != null) {
-            session.setAttribute("usuario", encontrado);
+            session.setAttribute("usuario", encontrado); // ← ESTO ES CRUCIAL
             return "redirect:/";
         }
         model.addAttribute("errorLogin", "Credenciales incorrectas");

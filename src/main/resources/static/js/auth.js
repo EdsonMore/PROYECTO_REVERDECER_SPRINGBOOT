@@ -27,7 +27,7 @@ function validarLogin() {
   return esValido;
 }
 
-// ============ VALIDACIÓN DE REGISTRO ============
+//VALIDACIÓN DE REGISTRO
 function validarRegistro() {
   limpiarErrores();
 
@@ -182,7 +182,7 @@ function validarRegistro() {
   return esValido;
 }
 
-// ============ FUNCIONES DE VALIDACIÓN (DOM Manipulation) ============
+// FUNCIONES DE VALIDACIÓN
 
 function mostrarError(input, mensaje) {
   // Manipulación del DOM - agregar clases y mensajes de error
@@ -335,11 +335,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (existingHint) {
           if (valor.length >= 6 && /[A-Z]/.test(valor) && /[0-9]/.test(valor)) {
-            existingHint.innerHTML = "✅ Contraseña válida";
+            existingHint.innerHTML = "Contraseña válida";
             existingHint.style.color = "#2e7d32";
           } else if (valor.length > 0) {
             existingHint.innerHTML =
-              "⚠️ La contraseña debe tener: mínimo 6 caracteres, 1 mayúscula y 1 número";
+              "La contraseña debe tener: mínimo 6 caracteres, mayúsculas y números";
             existingHint.style.color = "#f57c00";
           } else {
             existingHint.remove();

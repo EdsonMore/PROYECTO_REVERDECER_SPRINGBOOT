@@ -9,22 +9,15 @@
       ReVerdecer Piura - Plataforma IoT de Monitoreo de Árboles Urbanos
     </title>
 
-    <!-- CSS global -->
+    <!-- CSS global (YA INCLUYE TODOS LOS ESTILOS NECESARIOS) -->
     <link rel="stylesheet" th:href="@{/css/global.css}" />
     <link rel="stylesheet" th:href="@{/css/auth.css}" />
 
-    <!-- CSS listado -->
+    <!-- CSS específicos por página -->
     <link rel="stylesheet" th:href="@{/css/arboles/listado.css}" />
-    <!-- CSS registro -->
     <link rel="stylesheet" th:href="@{/css/arboles/registro.css}" />
-
-    <!-- CSS home -->
     <link rel="stylesheet" th:href="@{/css/home.css}" />
-
-    <!-- CSS contacto -->
     <link rel="stylesheet" th:href="@{/css/contacto.css}" />
-
-    <!-- CSS sobre nosotros -->
     <link rel="stylesheet" th:href="@{/css/sobrenosotros.css}" />
 
     <!-- Favicon -->
@@ -32,7 +25,7 @@
   </head>
 
   <body>
-    <!-- Barra de navegación -->
+    <!-- Barra de navegación CON AUTENTICACIÓN INTEGRADA -->
     <nav class="navbar" th:fragment="navbar">
       <div class="nav-container">
         <a class="logo" th:href="@{/}">
@@ -46,35 +39,48 @@
           <li><a th:href="@{/contacto}">Contacto</a></li>
         </ul>
 
-        <button
-          class="login-btn"
-          th:onclick="|window.location='@{/auth/login}'|"
-        >
-          Iniciar sesión
-        </button>
+        <!-- SI EL USUARIO ESTÁ LOGUEADO: Muestra nombre + botón cerrar sesión -->
+        <div th:if="${session.usuario != null}" class="user-menu">
+          <div class="user-info">
+            <span class="user-name" th:text="${session.usuario.nombres}"></span>
+            <span class="user-email" th:text="${session.usuario.correo}"></span>
+          </div>
+          <button
+            class="logout-btn"
+            th:onclick="|window.location='@{/auth/logout}'|"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        <!-- SI EL USUARIO NO ESTÁ LOGUEADO: Muestra botón iniciar sesión -->
+        <div th:unless="${session.usuario != null}">
+          <button
+            class="login-btn"
+            th:onclick="|window.location='@{/auth/login}'|"
+          >
+            Iniciar sesión
+          </button>
+        </div>
       </div>
     </nav>
 
-    <!-- Fragmento de sección Hero (con botones opcionales) -->
+    <!-- Fragmento de sección Hero -->
     <section
       class="hero-section"
       th:fragment="hero(titulo, subtitulo, mostrarBotones, cuerpo)"
     >
       <div class="hero-container">
         <h1 th:text="${titulo}">Título por defecto</h1>
-
         <p class="hero-subtitle" th:text="${subtitulo}">
           Subtítulo por defecto
         </p>
-
         <div th:replace="${cuerpo}"></div>
-
         <div class="hero-buttons" th:if="${mostrarBotones}">
           <a href="#arboles-destacados" class="btn-primary">
             Ver Árboles Monitoreados
           </a>
-
-          <a th:href="@{/registro}" class="btn-secondary">
+          <a th:href="@{/auth/registro}" class="btn-secondary">
             Regístrate Gratis
           </a>
         </div>
@@ -84,25 +90,20 @@
     <!-- Pie de página -->
     <footer class="footer" th:fragment="footer">
       <div class="footer-container">
-        <!-- Información -->
         <div class="footer-col">
           <h3>ReVerdecer Piura</h3>
-
           <p>
             Plataforma inteligente de monitoreo y riego automático para árboles
             urbanos mediante IoT
           </p>
-
           <p>Piura, Perú</p>
           <p>+51 976487348</p>
           <p>info@reverdecerpiura.com</p>
           <p>Monitoreo 24/7</p>
         </div>
 
-        <!-- Enlaces -->
         <div class="footer-col">
           <h3>Enlaces rápidos</h3>
-
           <ul>
             <li><a th:href="@{/}">Inicio</a></li>
             <li><a th:href="@{/arboles}">Árboles</a></li>
@@ -112,18 +113,13 @@
           </ul>
         </div>
 
-        <!-- Redes -->
         <div class="footer-col">
           <h3>Síguenos</h3>
-
           <div class="social-icons">
             <a href="https://facebook.com">Facebook</a>
-
             <a href="https://instagram.com">Instagram</a>
-
             <a href="https://whatsApp.com">WhatsApp</a>
           </div>
-
           <p class="iot">IoT - Monitoreo ambiental en tiempo real</p>
         </div>
       </div>
@@ -131,15 +127,13 @@
       <hr />
 
       <div class="footer-copy">
-        ©
-        <span th:text="${#dates.year(#dates.createNow())}">2024</span>
+        © <span th:text="${#dates.year(#dates.createNow())}">2024</span>
         ReVerdecer Piura. Tecnología para un futuro más verde.
       </div>
     </footer>
 
     <!-- Scripts bases -->
     <div th:fragment="scripts">
-      <!-- Scripts del proyecto -->
       <script th:src="@{/js/scripts.js}"></script>
       <script th:src="@{/js/arboles/listado-registro.js}"></script>
       <script th:src="@{/js/login-registro.js}"></script>
