@@ -1,68 +1,63 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head
-    th:replace="layout :: head"
-    th:with="titulo='Home - ReVerdecer Piura'"
-  ></head>
 
-  <body>
+<head th:replace="layout :: head" th:with="titulo='Home - ReVerdecer Piura'"></head>
+
+<body>
     <nav th:replace="layout :: navbar"></nav>
 
     <main>
-      <section
-        th:replace="layout :: hero(
+        <section th:replace="layout :: hero(
     'ReVerdecer Piura',
     'Plataforma inteligente de monitoreo y riego automático para árboles urbanos mediante IoT. Ayúdanos a reverdecer Piura.',
     true,
     ~{:: #vacio}
-)"
-      >
-        <div id="vacio"></div>
-      </section>
+)">
+            <div id="vacio"></div>
+        </section>
 
-      <section class="modules-section">
-        <div class="modules-container">
-          <h2 class="section-title">Nuestros Módulos</h2>
-          <p class="section-subtitle">
-            Tecnología IoT al servicio del medio ambiente
-          </p>
-          <div class="modules-grid">
-            <div class="module-card">
-              <span class="module-icon"></span>
-              <h3>Registro de Árboles</h3>
-              <p>Especie, ubicación y estado</p>
+        <section class="modules-section">
+            <div class="modules-container">
+                <h2 class="section-title">Nuestros Módulos</h2>
+                <p class="section-subtitle">
+                    Tecnología IoT al servicio del medio ambiente
+                </p>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <span class="module-icon"></span>
+                        <h3>Registro de Árboles</h3>
+                        <p>Especie, ubicación y estado</p>
+                    </div>
+                    <div class="module-card">
+                        <span class="module-icon"></span>
+                        <h3>Riego Automático</h3>
+                        <p>Activación inteligente</p>
+                    </div>
+                    <div class="module-card">
+                        <span class="module-icon"></span>
+                        <h3>Geolocalización</h3>
+                        <p>Mapa interactivo</p>
+                    </div>
+                    <div class="module-card">
+                        <span class="module-icon"></span>
+                        <h3>Análisis y Estadísticas</h3>
+                        <p>Gráficos en tiempo real</p>
+                    </div>
+                    <div class="module-card">
+                        <span class="module-icon"></span>
+                        <h3>Alertas</h3>
+                        <p>Mantenimiento preventivo</p>
+                    </div>
+                </div>
             </div>
-            <div class="module-card">
-              <span class="module-icon"></span>
-              <h3>Riego Automático</h3>
-              <p>Activación inteligente</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon"></span>
-              <h3>Geolocalización</h3>
-              <p>Mapa interactivo</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon"></span>
-              <h3>Análisis y Estadísticas</h3>
-              <p>Gráficos en tiempo real</p>
-            </div>
-            <div class="module-card">
-              <span class="module-icon"></span>
-              <h3>Alertas</h3>
-              <p>Mantenimiento preventivo</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="trees-section">
-        <div class="trees-container">
-          <h2 class="section-title">Árboles Registrados</h2>
-          <p class="section-subtitle">Últimos árboles monitoreados en Piura</p>
-          <div class="btn-view-all">
-            <a th:href="@{/arboles}" class="btn-success"
-              >Ver Todos Los Árboles</a
+        <section class="trees-section">
+            <div class="trees-container">
+                <h2 class="section-title">Árboles Registrados</h2>
+                <p class="section-subtitle">Últimos árboles monitoreados en Piura</p>
+                <div class="btn-view-all">
+                    <a th:href="@{/arboles}" class="btn-success">Ver Todos Los Árboles</a
             >
           </div>
         </div>
@@ -209,13 +204,14 @@
             Regístrate, reporta árboles, monitorea el estado de las áreas verdes
             y sé parte del cambio.
           </p>
-          <a th:href="@{auth/registro}" class="btn-light"> Regístrate Gratis</a>
-        </div>
-      </section>
+          <a th:href="@{auth/registro}" class="btn-light" th:if="${session.usuario == null}"> Regístrate Gratis</a>
+                </div>
+        </section>
     </main>
 
     <footer th:replace="layout :: footer"></footer>
 
     <th:div th:replace="layout :: scripts"></th:div>
-  </body>
+</body>
+
 </html>
