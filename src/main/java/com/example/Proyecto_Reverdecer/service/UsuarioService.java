@@ -181,7 +181,10 @@ public class UsuarioService {
         }
     }
 
-    private boolean validarTelefono(int numero) {
+    private boolean validarTelefono(Integer numero) {
+        if (numero == null) {
+            return false;
+        }   
         String telefonoStr = String.valueOf(numero);
         return telefonoStr.matches("\\d{9}");
     }

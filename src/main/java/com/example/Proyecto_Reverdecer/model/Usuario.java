@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
     private String apellidoMaterno;
     private String direccion1;
     private String direccion2;
-    private int numero;
+    private Integer numero;
     private String genero;
     private String dni;
     private LocalDate fechaNacimiento;
@@ -100,11 +100,11 @@ public class Usuario implements Serializable {
         this.direccion2 = direccion2;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
