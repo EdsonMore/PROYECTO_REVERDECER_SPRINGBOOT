@@ -11,39 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  const filtroContainer = document.querySelector("header");
-  if (filtroContainer) {
-    const filtroEstado = document.createElement("select");
-    filtroEstado.className = "form-select w-auto d-inline-block ms-3";
-    filtroEstado.innerHTML = `
-            <option value="">Todos los estados</option>
-            <option value="Muy Bueno">🌳 Muy Bueno</option>
-            <option value="Bueno">🌿 Bueno</option>
-            <option value="Regular">🍂 Regular</option>
-            <option value="Malo">🍁 Malo</option>
-            <option value="Crítico">⚠️ Crítico</option>
-        `;
-    filtroContainer.appendChild(filtroEstado);
-
-    filtroEstado.addEventListener("change", function () {
-      const estadoSeleccionado = this.value;
-      document.querySelectorAll("tbody tr").forEach((fila) => {
-        const celdaEstado = fila.querySelector("td:nth-child(5) .badge");
-        if (celdaEstado) {
-          const matches =
-            estadoSeleccionado === "" ||
-            celdaEstado.textContent.trim() === estadoSeleccionado;
-          fila.style.display = matches ? "" : "none";
-        }
-      });
-    });
-  }
-
   const form = document.getElementById("registroForm");
   if (form) {
     const inputs = ["especie", "ubicacion", "fecha", "estado"];
 
-    // Fecha actual por defecto
     const fechaInput = document.getElementById("fecha");
     if (fechaInput && !fechaInput.value) {
       fechaInput.value = new Date().toISOString().split("T")[0];

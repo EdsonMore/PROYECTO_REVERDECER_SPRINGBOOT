@@ -15,9 +15,12 @@ public class ArbolService {
     private AtomicLong contadorId = new AtomicLong(1);
 
     public ArbolService() {
-        arboles.add(new Arbol(contadorId.getAndIncrement(), "Roble", "Parque Central", LocalDate.now().minusDays(5), "Bueno"));
-        arboles.add(new Arbol(contadorId.getAndIncrement(), "Pino", "Av. Principal", LocalDate.now().minusDays(10), "Muy Bueno"));
-        arboles.add(new Arbol(contadorId.getAndIncrement(), "Cedro", "Jardín Botánico", LocalDate.now().minusDays(2), "Regular"));
+        arboles.add(new Arbol(contadorId.getAndIncrement(), "Roble", "Parque Central", LocalDate.now().minusDays(5),
+                "Bueno"));
+        arboles.add(new Arbol(contadorId.getAndIncrement(), "Pino", "Av. Principal", LocalDate.now().minusDays(10),
+                "Muy Bueno"));
+        arboles.add(new Arbol(contadorId.getAndIncrement(), "Cedro", "Jardín Botánico", LocalDate.now().minusDays(2),
+                "Regular"));
     }
 
     public List<Arbol> listarTodos() {
