@@ -1,38 +1,45 @@
 .modules-section {
-    padding: 60px 0;
-    background: #ffffff;
+    padding: 10px 0;
+    background: transparent;
 }
 
 .section-title {
     text-align: center;
-    font-size: 32px;
-    margin-bottom: 15px;
+    font-size: 18px;
+    margin-bottom: 4px;
     color: #1a3b2e;
 }
 
 .section-subtitle {
     text-align: center;
     color: #666;
-    margin-bottom: 40px;
-    font-size: 18px;
+    margin-bottom: 10px;
+    font-size: 11px;
 }
 
 .modules-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
 }
 
 .module-card {
-    background: linear-gradient(135deg, #2e7d32, #1b5e20);
-    padding: 30px 20px;
-    text-align: center;
-    border-radius: 16px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20) !important;
+    padding: 8px 5px !important;
+    text-align: center !important;
+    border-radius: 4px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    cursor: pointer !important;
+    min-height: 55px !important;
+    max-height: 55px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
 }
 
 .module-card:hover {
@@ -57,20 +64,27 @@
 }
 
 .module-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-    display: block;
+    font-size: 0px;
+    margin-bottom: 0px;
+    display: none;
 }
 
 .module-card h3 {
-    color: white;
-    font-size: 18px;
-    margin-bottom: 10px;
+    color: white !important;
+    font-size: 11px !important;
+    margin-bottom: 2px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: bold !important;
+    line-height: 1.1 !important;
 }
 
 .module-card p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .trees-section {

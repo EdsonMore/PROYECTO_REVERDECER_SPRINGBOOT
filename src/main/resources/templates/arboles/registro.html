@@ -21,6 +21,13 @@
         class="registro-form"
       >
         <div class="registro-form-group">
+          <label for="nombre">Nombre del Árbol *</label>
+          <input type="text" id="nombre" name="nombre" required />
+          <small>Ej: Árbol del Parque Central, Mango de la Tía Rosa</small>
+          <div class="registro-invalid-feedback" id="error-nombre"></div>
+        </div>
+
+        <div class="registro-form-group">
           <label for="especie">Especie del Árbol *</label>
           <input type="text" id="especie" name="especie" required />
           <small>Ej: Mango, Tamarindo, Ficus, Roble, etc.</small>
@@ -28,24 +35,53 @@
         </div>
 
         <div class="registro-form-group">
-          <label for="ubicacion">Ubicación *</label>
+          <label for="ubicacion">Ubicación (Opcional)</label>
           <textarea
             id="ubicacion"
             name="ubicacion"
-            rows="3"
-            required
+            rows="2"
           ></textarea>
-          <small
-            >Describe dónde está ubicado el árbol (dirección, parque,
-            referencia)</small
-          >
+          <small>Notas adicionales: parque, referencia o detalles del lugar</small>
           <div class="registro-invalid-feedback" id="error-ubicacion"></div>
         </div>
 
         <div class="registro-form-group">
-          <label for="fecha">Fecha de Registro *</label>
-          <input type="date" id="fecha" name="fecha" required />
-          <div class="registro-invalid-feedback" id="error-fecha"></div>
+          <label for="descripcion">Descripción</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            rows="2"
+          ></textarea>
+          <small>Información adicional del árbol (altura, tamaño, estado particular)</small>
+          <div class="registro-invalid-feedback" id="error-descripcion"></div>
+        </div>
+
+        <div class="registro-form-group">
+          <label>Coordenadas *</label>
+          <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 10px;">
+            <button type="button" id="btnObtenerUbicacion" class="registro-btn-secondary" style="margin-top: 24px;">
+              📍 Mi Ubicación
+            </button>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="registro-form-group" style="margin-bottom: 0;">
+              <label for="latitud">Latitud *</label>
+              <input type="number" id="latitud" name="latitud" step="0.000001" required />
+              <div class="registro-invalid-feedback" id="error-latitud"></div>
+            </div>
+            <div class="registro-form-group" style="margin-bottom: 0;">
+              <label for="longitud">Longitud *</label>
+              <input type="number" id="longitud" name="longitud" step="0.000001" required />
+              <div class="registro-invalid-feedback" id="error-longitud"></div>
+            </div>
+          </div>
+          <small style="display: block; margin-top: 8px;">Presiona "Mi Ubicación" para auto-completar desde tu posición actual</small>
+        </div>
+
+        <div class="registro-form-group">
+          <label for="fechaPlantacion">Fecha de Plantación *</label>
+          <input type="date" id="fechaPlantacion" name="fechaPlantacion" required />
+          <div class="registro-invalid-feedback" id="error-fechaPlantacion"></div>
         </div>
 
         <div class="registro-form-group">
@@ -59,6 +95,13 @@
             <option value="Crítico">Crítico</option>
           </select>
           <div class="registro-invalid-feedback" id="error-estado"></div>
+        </div>
+
+        <div class="registro-form-group">
+          <label for="fotoUrl">URL de Foto</label>
+          <input type="url" id="fotoUrl" name="fotoUrl" />
+          <small>URL de una imagen del árbol (ej: https://ejemplo.com/foto.jpg)</small>
+          <div class="registro-invalid-feedback" id="error-fotoUrl"></div>
         </div>
 
         <div class="registro-buttons">
@@ -75,5 +118,8 @@
     <footer th:replace="layout :: footer"></footer>
 
     <th:div th:replace="layout :: scripts"></th:div>
+
+    <!-- Script de Geolocalización -->
+    <script th:src="@{/js/arboles/registro.js}"></script>
   </body>
 </html>

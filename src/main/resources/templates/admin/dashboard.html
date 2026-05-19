@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin - ReVerdecer Piura</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
+</head>
+
+<body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <section class="admin-section">
+        <div class="admin-container">
+            <!-- Header -->
+            <div class="admin-header">
+                <h2>
+                    <span>📊</span>
+                    Dashboard Administrativo
+                </h2>
+                <div class="admin-welcome">
+                    Bienvenido, <strong th:text="${usuario.nombres}"></strong>
+                </div>
+            </div>
+
+            <!-- Módulos Disponibles -->
+            <div class="modules-grid">
+                <!-- Módulo Productos -->
+                <div th:class="'module-card ' + ${puedeVerProductos ? 'enabled' : 'disabled'}">
+                    <span class="module-icon">📦</span>
+                    <h3 class="module-title">Gestión de Productos</h3>
+                    <p class="module-description">Administra productos, stock y categorías del sistema</p>
+                    <a th:if="${puedeVerProductos}" th:href="@{/admin/productos}" 
+                       class="module-btn module-btn-enabled">Acceder</a>
+                    <button th:unless="${puedeVerProductos}" class="module-btn module-btn-disabled" disabled>
+                        Sin acceso
+                    </button>
+                </div>
+
+                <!-- Módulo Usuarios -->
+                <div th:class="'module-card ' + ${puedeVerUsuarios ? 'enabled' : 'disabled'}">
+                    <span class="module-icon">👥</span>
+                    <h3 class="module-title">Gestión de Usuarios</h3>
+                    <p class="module-description">Administra usuarios, roles y permisos del sistema</p>
+                    <a th:if="${puedeVerUsuarios}" th:href="@{/admin/usuarios}" 
+                       class="module-btn module-btn-enabled">Acceder</a>
+                    <button th:unless="${puedeVerUsuarios}" class="module-btn module-btn-disabled" disabled>
+                        Sin acceso
+                    </button>
+                </div>
+
+                <!-- Módulo Reportes -->
+                <div th:class="'module-card ' + ${puedeVerReportes ? 'enabled' : 'disabled'}">
+                    <span class="module-icon">📈</span>
+                    <h3 class="module-title">Reportes</h3>
+                    <p class="module-description">Genera reportes y estadísticas del sistema</p>
+                    <a th:if="${puedeVerReportes}" th:href="@{/admin/reportes}" 
+                       class="module-btn module-btn-enabled">Acceder</a>
+                    <button th:unless="${puedeVerReportes}" class="module-btn module-btn-disabled" disabled>
+                        Sin acceso
+                    </button>
+                </div>
+            </div>
+
+            <!-- Información de Permisos -->
+            <div class="permissions-section">
+                <h3 class="permissions-header">
+                    <span>🔐</span>
+                    Tus Permisos Actuales
+                </h3>
+
+                <div class="permissions-grid">
+                    <!-- Módulos Accesibles -->
+                    <div class="permission-group">
+                        <h4>Módulos Accesibles</h4>
+                        <ul class="permission-list">
+                            <li th:class="'permission-item ' + ${puedeVerProductos ? 'granted' : 'denied'}">
+                                Productos
+                            </li>
+                            <li th:class="'permission-item ' + ${puedeVerUsuarios ? 'granted' : 'denied'}">
+                                Usuarios
+                            </li>
+                            <li th:class="'permission-item ' + ${puedeVerVentas ? 'granted' : 'denied'}">
+                                Ventas
+                            </li>
+                            <li th:class="'permission-item ' + ${puedeVerReportes ? 'granted' : 'denied'}">
+                                Reportes
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Acciones Permitidas en Productos -->
+                    <div class="permission-group">
+                        <h4>Acciones en Productos</h4>
+                        <ul class="permission-list">
+                            <li th:class="'permission-item ' + ${puedeCrear ? 'granted' : 'denied'}">
+                                Crear productos
+                            </li>
+                            <li th:class="'permission-item ' + ${puedeEditar ? 'granted' : 'denied'}">
+                                Editar productos
+                            </li>
+                            <li th:class="'permission-item ' + ${puedeEliminar ? 'granted' : 'denied'}">
+                                Eliminar productos
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+
+</html>

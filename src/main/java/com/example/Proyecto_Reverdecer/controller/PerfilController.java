@@ -8,69 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/auth")  
-public class UserController {
+@RequestMapping("/perfil")
+public class PerfilController {
 
     private final UsuarioService usuarioService;
 
-    public UserController(UsuarioService usuarioService) {
+    public PerfilController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/registro")
-    public String mostrarRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "registro";
-    }
-
-    @PostMapping("/registro")
-    public String registrarUsuario(@ModelAttribute Usuario usuario, Model model) {
-        boolean exito = usuarioService.registrar(usuario);
-        if (!exito) {
-            model.addAttribute("error", "El correo ya está registrado");
-            return "registro";
-        }
-        return "redirect:/auth/login?success";
-    }
-
-    @GetMapping("/login")
-    public String mostrarLogin(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String loginUsuario(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
-        System.out.println("\n=== LOGIN ===");
-        System.out.println("Intentando autenticar: " + usuario.getCorreo());
-
-        Usuario encontrado = usuarioService.autenticar(usuario.getCorreo(), usuario.getPassword());
-        
-        if (encontrado != null) {
-            System.out.println("✅ Autenticación exitosa");
-            System.out.println("ID del usuario: " + encontrado.getId());
-            System.out.println("Email: " + encontrado.getCorreo());
-            
-            // Guardar en sesión
-            session.setAttribute("usuario", encontrado);
-            System.out.println("✅ Usuario guardado en sesión");
-            
-            return "redirect:/";
-        }
-
-        System.out.println("❌ Autenticación fallida");
-        model.addAttribute("error", "Correo o contraseña incorrectos");
-        return "redirect:/auth/login?error=true";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/auth/login?logout";
-    }
-
     // Mostrar página de perfil del usuario
-    @GetMapping("/perfil")
+    @GetMapping
     public String mostrarPerfil(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) {
@@ -81,7 +29,7 @@ public class UserController {
     }
 
     // Actualizar perfil del usuario
-    @PostMapping("/perfil")
+    @PostMapping
     public String actualizarPerfil(@ModelAttribute Usuario usuarioActualizado, HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) {
