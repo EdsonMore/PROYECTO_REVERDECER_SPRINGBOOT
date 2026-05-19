@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head"></head>
+
+  <body>
+    <nav th:replace="layout :: navbar"></nav>
+
+    <main class="detalles-container">
+      <!-- Breadcrumb Navigation -->
+      <div class="breadcrumb-nav">
+        <a th:href="@{/}">🏠 Inicio</a>
+        <span class="separator">/</span>
+        <a th:href="@{/mapa/arboles}">🌳 Árboles</a>
+        <span class="separator">/</span>
+        <span class="current">Detalles</span>
+      </div>
+
+      <div class="detalles-wrapper">
+        <!-- COLUMNA PRINCIPAL -->
+        <div class="detalles-main">
+          <!-- Card de Imagen -->
+          <div class="image-card">
+            <div class="image-container">
+              <img th:if="${arbol.fotoUrl}" th:src="${arbol.fotoUrl}" alt="Foto del árbol" />
+              <div th:unless="${arbol.fotoUrl}" class="image-placeholder">🌱</div>
+            </div>
+            <div class="image-info" th:if="${arbol.fotoUrl}">
+              Última actualización: <span th:text="${#temporals.format(arbol.fechaRegistro, 'dd/MM/yyyy')}">fecha</span>
+            </div>
+          </div>
+
+          <!-- Card de Descripción -->
+          <div class="description-card">
+            <h3>📝 Descripción</h3>
+            <p class="description-text" th:text="${arbol.descripcion} ?: '(Sin descripción)'" th:class="${arbol.descripcion} ? 'description-text' : 'description-text no-description'">
+              Descripción del árbol
+            </p>
+          </div>
+
+          <!-- Card de Características -->
+          <div class="features-card">
+            <h3>🌿 Características</h3>
+            <div class="features-grid">
+              <div class="feature-item">
+                <div class="feature-label">Especie</div>
+                <div class="feature-value" th:text="${arbol.especie} ?: 'N/A'">Especie</div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-label">Edad Estimada</div>
+                <div class="feature-value">
+                  <span th:text="${edadEstimada}" th:text-append=" años">0 años</span>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-label">Estado</div>
+                <div class="feature-value" th:text="${arbol.estado} ?: 'Desconocido'">Estado</div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-label">Altura Aprox.</div>
+                <div class="feature-value">Variable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA LATERAL -->
+        <div class="detalles-sidebar">
+          <!-- Card de Información General -->
+          <div class="info-card">
+            <div class="info-card-header">📋 Información General</div>
+
+            <div class="info-row">
+              <span class="info-label">ID Registro:</span>
+              <span class="info-value" th:text="${arbol.id}">12345</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Nombre:</span>
+              <span class="info-value" th:text="${arbol.nombre} ?: 'S/N'">Nombre del árbol</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Especie:</span>
+              <span class="info-value" th:text="${arbol.especie}">Especie</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Ubicación:</span>
+              <span class="info-value" th:text="${arbol.ubicacion} ?: 'S/D'">Ubicación</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Fecha de Plantación:</span>
+              <span class="info-value" th:text="${#temporals.format(arbol.fechaPlantacion, 'dd/MM/yyyy')}">Fecha</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Fecha de Registro:</span>
+              <span class="info-value" th:text="${#temporals.format(arbol.fechaRegistro, 'dd/MM/yyyy')}">Fecha</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Estado:</span>
+              <div class="estado-badge" th:classappend="${arbol.estado == 'Activo'} ? 'activo' : 'inactivo'" th:text="${arbol.estado}">
+                Estado
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Ubicación -->
+          <div class="location-card">
+            <h4>📍 Coordenadas Geográficas</h4>
+            <div class="coordinates">
+              Latitud: <span th:text="${arbol.latitud}">-5.0000</span><br/>
+              Longitud: <span th:text="${arbol.longitud}">-80.0000</span>
+            </div>
+          </div>
+
+          <!-- Card del Usuario -->
+          <div class="user-card">
+            <h4>👤 Registrado por</h4>
+            <div class="user-info">
+              <div class="user-avatar">👤</div>
+              <div class="user-details">
+                <div class="user-name" th:text="|${arbol.usuario.nombres} ${arbol.usuario.apellidoPaterno}|">
+                  Nombre Usuario
+                </div>
+                <div class="user-email" th:text="${arbol.usuario.correo}">usuario@example.com</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Acciones -->
+          <div class="actions-card">
+            <button class="btn-action btn-primary" onclick="alert('⬅️ Compartir esta página'); return false;">
+              📤 Compartir
+            </button>
+            <button class="btn-action btn-outline" onclick="alert('❤️ Agregar a favoritos'); return false;">
+              💚 Favorito
+            </button>
+            <a th:href="@{/mapa/arboles}" class="btn-action btn-secondary">
+              🗺️ Ver en Mapa
+            </a>
+            <button class="btn-action btn-secondary" onclick="window.print(); return false;">
+              🖨️ Imprimir
+            </button>
+            <a th:if="${session.usuario.id == arbol.usuario.id}" th:href="@{/arboles/editar/{id}(id=${arbol.id})}" class="btn-action btn-outline">
+              ✏️ Editar
+            </a>
+            <button th:if="${session.usuario.id == arbol.usuario.id}" class="btn-action btn-danger" onclick="if(confirm('¿Eliminar este árbol?')) { location.href=''; } return false;">
+              🗑️ Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer th:replace="layout :: footer"></footer>
+    <th:div th:replace="layout :: scripts"></th:div>
+
+    <style>
+      /* ========================================
+         ESTILOS DE DETALLES ÁRBOL - CSS PURO
+         ======================================== */
+      .detalles-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px 20px;
+        min-height: calc(100vh - 150px);
+      }
+      .breadcrumb-nav {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        font-size: 14px;
+      }
+      .breadcrumb-nav a, .breadcrumb-nav span {
+        color: #28a745;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .breadcrumb-nav a:hover {
+        color: #1f7d31;
+        text-decoration: underline;
+      }
+      .breadcrumb-nav span.separator {
+        color: #ccc;
+        margin: 0 4px;
+      }
+      .breadcrumb-nav .current {
+        color: #666;
+      }
+      .detalles-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+      }
+      .detalles-main {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+      .image-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .image-container {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .image-placeholder {
+        font-size: 60px;
+        text-align: center;
+        color: #ccc;
+      }
+      .image-info {
+        padding: 15px 20px;
+        background: #f9f9f9;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #999;
+      }
+      .description-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .description-card h3 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin: 0 0 15px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #28a745;
+      }
+      .description-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+        white-space: pre-wrap;
+      }
+      .no-description {
+        font-style: italic;
+        color: #999;
+      }
+      .features-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .features-card h3 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin: 0 0 15px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #28a745;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+      }
+      .feature-item {
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        border-left: 4px solid #28a745;
+      }
+      .feature-label {
+        font-size: 12px;
+        color: #999;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+      .feature-value {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+      }
+      .detalles-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .info-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .info-card-header {
+        font-size: 14px;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 14px;
+      }
+      .info-row:last-child {
+        border-bottom: none;
+      }
+      .info-label {
+        color: #666;
+        font-weight: 500;
+      }
+      .info-value {
+        color: #333;
+        font-weight: bold;
+        text-align: right;
+      }
+      .estado-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+      }
+      .estado-badge.activo {
+        background: #d4edda;
+        color: #155724;
+      }
+      .estado-badge.inactivo {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .location-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .location-card h4 {
+        font-size: 14px;
+        font-weight: bold;
+        color: #28a745;
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .coordinates {
+        background: #f9f9f9;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-family: monospace;
+        color: #333;
+        word-break: break-all;
+      }
+      .user-card {
+        background: linear-gradient(135deg, #28a745 0%, #1f7d31 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .user-card h4 {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0 0 12px 0;
+        opacity: 0.9;
+      }
+      .user-info {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      .user-details {
+        flex: 1;
+      }
+      .user-name {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .user-email {
+        font-size: 12px;
+        opacity: 0.9;
+        margin-top: 4px;
+      }
+      .actions-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .btn-action {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s;
+        width: 100%;
+      }
+      .btn-action.btn-primary {
+        background: #28a745;
+        color: white;
+      }
+      .btn-action.btn-primary:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      }
+      .btn-action.btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+      .btn-action.btn-secondary:hover {
+        background: #5a6268;
+      }
+      .btn-action.btn-outline {
+        background: transparent;
+        border: 2px solid #28a745;
+        color: #28a745;
+      }
+      .btn-action.btn-outline:hover {
+        background: #28a745;
+        color: white;
+      }
+      .btn-action.btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+      .btn-action.btn-danger:hover {
+        background: #c82333;
+      }
+      @media (max-width: 768px) {
+        .detalles-wrapper {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .image-container {
+          height: 300px;
+        }
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .breadcrumb-nav {
+          font-size: 12px;
+        }
+      }
+      @media (max-width: 480px) {
+        .detalles-container {
+          padding: 15px 10px;
+        }
+        .image-container {
+          height: 250px;
+        }
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+        .feature-item {
+          padding: 12px;
+        }
+        .info-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
+        .info-value {
+          text-align: left;
+        }
+        .btn-action {
+          font-size: 12px;
+          padding: 10px 15px;
+        }
+      }
+    </style>
+  </body>
+</html>

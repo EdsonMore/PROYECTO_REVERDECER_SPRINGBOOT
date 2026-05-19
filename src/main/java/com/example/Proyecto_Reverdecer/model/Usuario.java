@@ -3,30 +3,80 @@ package com.example.Proyecto_Reverdecer.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable; 
+import java.io.Serializable;
 
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "usuarios", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "correo", name = "uk_usuario_correo"),
+    @UniqueConstraint(columnNames = "dni", name = "uk_usuario_dni"),
+    @UniqueConstraint(columnNames = "user", name = "uk_usuario_user")
+})
 public class Usuario implements Serializable {
     
-    private static final long serialVersionUID = 1L;  
+    private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false, length = 50, unique = true)
     private String user;
+    
+    @Column(nullable = false)
     private String password;
+    
+    @Column(nullable = false, unique = true, length = 100)
     private String correo;
+    
+    @Column(nullable = false, length = 100)
     private String nombres;
+    
+    @Column(nullable = false, length = 100)
     private String apellidoPaterno;
+    
+    @Column(length = 100)
     private String apellidoMaterno;
+    
+    @Column(length = 255)
     private String direccion1;
+    
+    @Column(length = 255)
     private String direccion2;
+    
+    @Column(length = 10)
     private Integer numero;
+    
+    @Column(length = 20)
     private String genero;
+    
+    @Column(nullable = false, unique = true, length = 20)
     private String dni;
+    
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_doc", length = 50)
     private TipoDoc tipoDoc;
+    
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+    
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin = false;
+    
+    @Column(name = "fecha_registro")
+    private LocalDate fechaRegistro;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Arbol> arboles = new ArrayList<>();
 
-        public Usuario() {
-        }
+    public Usuario() {
+    }
     // Getters y Setters
     public Long getId() {
         return id;
@@ -138,6 +188,30 @@ public class Usuario implements Serializable {
 
     public void setTipoDoc(TipoDoc tipoDoc) {
         this.tipoDoc = tipoDoc;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public LocalDate getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public List<Arbol> getArboles() {

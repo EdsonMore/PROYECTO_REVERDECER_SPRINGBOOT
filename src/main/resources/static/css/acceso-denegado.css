@@ -1,0 +1,166 @@
+.acceso-denegado-section {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f0f7f0 0%, #e8f5e9 100%);
+}
+
+.acceso-container {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.acceso-header {
+  background: linear-gradient(135deg, #d32f2f, #b71c1c);
+  padding: 40px 30px;
+  text-align: center;
+  color: white;
+}
+
+.acceso-header h2 {
+  font-size: 28px;
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.lock-icon {
+  font-size: 32px;
+}
+
+.acceso-body {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.acceso-icon {
+  font-size: 72px;
+  color: #d32f2f;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.acceso-body h3 {
+  color: #d32f2f;
+  font-size: 22px;
+  margin: 15px 0;
+  font-weight: 600;
+}
+
+.acceso-body p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.acceso-actions {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.btn-acceso {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-acceso-primary {
+  background: #2e7d32;
+  color: white;
+}
+
+.btn-acceso-primary:hover {
+  background: #1b5e20;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+}
+
+.btn-acceso-secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 2px solid #ddd;
+}
+
+.btn-acceso-secondary:hover {
+  background: #eeeeee;
+  border-color: #999;
+  transform: translateY(-2px);
+}
+
+.permisos-info {
+  background: #f9f9f9;
+  border-left: 4px solid #d32f2f;
+  padding: 20px;
+  border-radius: 6px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.permisos-info h4 {
+  color: #1a3b2e;
+  font-size: 16px;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.permisos-info p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .acceso-container {
+    max-width: 100%;
+  }
+
+  .acceso-header {
+    padding: 30px 20px;
+  }
+
+  .acceso-header h2 {
+    font-size: 24px;
+  }
+
+  .acceso-body {
+    padding: 30px 20px;
+  }
+
+  .acceso-icon {
+    font-size: 60px;
+  }
+
+  .acceso-body h3 {
+    font-size: 20px;
+  }
+
+  .acceso-actions {
+    flex-direction: column;
+  }
+
+  .btn-acceso {
+    width: 100%;
+  }
+}

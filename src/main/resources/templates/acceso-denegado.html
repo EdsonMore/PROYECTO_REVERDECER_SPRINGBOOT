@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acceso Denegado - ReVerdecer Piura</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/acceso-denegado.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
+</head>
+
+<body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <section class="acceso-denegado-section">
+        <div class="acceso-container">
+            <div class="acceso-header">
+                <h2>
+                    <span class="lock-icon">🔒</span>
+                    Acceso Denegado
+                </h2>
+            </div>
+
+            <div class="acceso-body">
+                <span class="acceso-icon">⛔</span>
+                <h3>No tienes permisos para acceder a esta página</h3>
+                <p>
+                    Parece que estás intentando acceder a una sección que requiere permisos especiales.
+                    Si crees que esto es un error, contacta al administrador.
+                </p>
+
+                <div class="acceso-actions">
+                    <a th:href="@{/}" class="btn-acceso btn-acceso-primary">
+                        <span>🏠</span>
+                        Ir al Inicio
+                    </a>
+                    <a th:href="@{/auth/logout}" class="btn-acceso btn-acceso-secondary">
+                        <span>↪️</span>
+                        Cerrar Sesión
+                    </a>
+                </div>
+
+                <div class="permisos-info">
+                    <h4>¿Necesitas acceso?</h4>
+                    <p>
+                        Si necesitas acceso a esta funcionalidad, contacta con el administrador del sistema
+                        en <strong>info@reverdecerpiura.com</strong> o llama al <strong>+51 976487348</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+
+</html>

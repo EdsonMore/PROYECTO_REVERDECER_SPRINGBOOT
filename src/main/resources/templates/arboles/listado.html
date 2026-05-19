@@ -36,7 +36,7 @@
                 <td th:text="${arbol.especie}"></td>
                 <td th:text="${arbol.ubicacion}"></td>
                 <td
-                  th:text="${#temporals.format(arbol.fecha, 'dd/MM/yyyy')}"
+                  th:text="${#temporals.format(arbol.fechaPlantacion, 'dd/MM/yyyy')}"
                 ></td>
                 <td>
                   <span
@@ -66,12 +66,29 @@
                   ></span>
                 </td>
                 <td>
-                  <a
-                    th:href="@{/arboles/eliminar/{id}(id=${arbol.id})}"
-                    class="arboles-btn-danger btn-eliminar"
-                  >
-                    <i class="bi bi-trash"></i> Eliminar
-                  </a>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a
+                      th:href="@{/arboles/detalles/{id}(id=${arbol.id})}"
+                      class="arboles-btn-info"
+                      title="Ver detalles completos"
+                    >
+                      <i class="bi bi-eye"></i> Detalles
+                    </a>
+                    <a
+                      th:href="@{/arboles/editar/{id}(id=${arbol.id})}"
+                      class="arboles-btn-warning"
+                      title="Editar árbol"
+                    >
+                      <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a
+                      th:href="@{/arboles/eliminar/{id}(id=${arbol.id})}"
+                      class="arboles-btn-danger btn-eliminar"
+                      title="Eliminar árbol"
+                    >
+                      <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                  </div>
                 </td>
               </tr>
             </tbody>

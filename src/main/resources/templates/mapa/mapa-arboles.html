@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head"></head>
+
+  <body class="mapa-body">
+    <nav th:replace="layout :: navbar"></nav>
+
+    <main class="mapa-main">
+      <div class="mapa-wrapper">
+        <!-- Sidebar izquierdo -->
+        <aside class="mapa-sidebar">
+          <div class="sidebar-content">
+            <h3 class="sidebar-title">
+              🌳 <span th:text="${titulo} ?: 'Mapa de Árboles'">Mapa de Árboles</span>
+            </h3>
+
+            <!-- Filtros -->
+            <section class="control-section">
+              <h4 class="section-title"> Filtros</h4>
+              <input
+                type="text"
+                id="filterEspecie"
+                class="filter-input"
+                placeholder="Filtrar por especie..."
+              />
+            </section>
+
+            <!-- Botones de Control -->
+            <section class="control-section">
+              <h4 class="section-title">Controles</h4>
+              <div class="button-group">
+                <button class="btn-control" id="btnGetLocation">
+                  📍 Mi Ubicación
+                </button>
+                <button class="btn-control" id="btnCenterMap">
+                  Centrar en Árboles
+                </button>
+              </div>
+            </section>
+
+            <!-- Estadísticas -->
+            <section class="control-section">
+              <h4 class="section-title">Estadísticas</h4>
+              <div class="stats-box">
+                <p class="stat-item">
+                  <strong>Total árboles:</strong>
+                  <span id="totalArboles">0</span>
+                </p>
+              </div>
+            </section>
+
+            <!-- Lista de Árboles -->
+            <!-- Mi usuario -->
+            <section class="control-section" th:if="${session.usuario != null}" id="miSection">
+              <h4 class="section-title">🌳 Mis Árboles</h4>
+              <div id="misArboles" class="markers-list">
+                <p class="empty-message">Sin árboles propios</p>
+              </div>
+            </section>
+
+            <!-- Árboles de todos (siempre visible) -->
+            <section class="control-section" id="otrosSection">
+              <h4 class="section-title" th:if="${session.usuario != null}">👥 Árboles de Otros Usuarios</h4>
+              <h4 class="section-title" th:unless="${session.usuario != null}">📍 Todos los Árboles Registrados</h4>
+              <div id="otrosArboles" class="markers-list">
+                <p class="empty-message">Cargando árboles...</p>
+              </div>
+            </section>
+          </div>
+        </aside>
+
+        <!-- Mapa principal -->
+        <main class="mapa-content">
+          <div id="map" class="map-container"></div>
+        </main>
+      </div>
+
+      <!-- Toast container -->
+      <div id="toastContainer" class="toast-container"></div>
+
+      <!-- Modal detalles del árbol -->
+      <div id="detalleArbolModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modalTitle">🌿 Detalle del Árbol</h5>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+          </div>
+          <div id="modalBody" class="modal-body">
+            <!-- Contenido dinámico -->
+          </div>
+          <div class="modal-footer">
+            <button class="btn-close-modal" onclick="closeModal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Guardar ID del usuario actual para usar en JavaScript -->
+    <script th:inline="javascript">
+      let currentUserId = /*[[${session.usuario != null ? session.usuario.id : null}]]*/ null;
+    </script>
+
+    <!-- Leaflet CSS y JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Scripts del layout -->
+    <div th:replace="layout :: scripts"></div>
+
+    <!-- Script específico del mapa -->
+    <script th:src="@{/js/mapa-arboles.js}"></script>
+
+    <script>
+      function closeModal() {
+        document.getElementById('detalleArbolModal').classList.remove('active');
+      }
+
+      document.getElementById('detalleArbolModal').addEventListener('click', (e) => {
+        if (e.target.id === 'detalleArbolModal') closeModal();
+      });
+    </script>
+  </body>
+</html>

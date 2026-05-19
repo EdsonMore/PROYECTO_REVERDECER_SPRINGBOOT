@@ -13,10 +13,14 @@
 
     <link rel="stylesheet" th:href="@{/css/arboles/listado.css}" />
     <link rel="stylesheet" th:href="@{/css/arboles/registro.css}" />
+    <link rel="stylesheet" th:href="@{/css/arboles/editar.css}" />
     <link rel="stylesheet" th:href="@{/css/home.css}" />
     <link rel="stylesheet" th:href="@{/css/contacto.css}" />
     <link rel="stylesheet" th:href="@{/css/sobrenosotros.css}" />
     <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <link rel="stylesheet" th:href="@{/css/mapa.css}" />
+    <link rel="stylesheet" th:href="@{/css/acceso-denegado.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}" />
 
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
 </head>
@@ -28,27 +32,46 @@
                 <img th:src="@{/img/logo1.webp}" width="35" alt="Logo" /> ReVerdecer Piura
             </a>
 
-            <ul class="nav-links">
+            <!-- Navegación para Usuario Común -->
+            <ul class="nav-links" th:if="${session.usuario != null && (session.usuario.isAdmin == null || !session.usuario.isAdmin)}">
                 <li><a th:href="@{/}">Inicio</a></li>
                 <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
                 <li><a th:href="@{/contacto}">Contacto</a></li>
+                <li><a th:href="@{/mapa/arboles}">Mapa Geológico</a></li>
                 <li><a th:href="@{/arboles}">Mís Árboles</a></li>
             </ul>
 
+            <!-- Navegación para Admin -->
+            <ul class="nav-links" th:if="${session.usuario != null && session.usuario.isAdmin}">
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/admin/dashboard}">Dashboard</a></li>
+            </ul>
+
+            <!-- Navegación para Usuario No Autenticado -->
+            <ul class="nav-links" th:if="${session.usuario == null}">
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/mapa/arboles}">Mapa Geológico</a></li>
+                <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+                <li><a th:href="@{/contacto}">Contacto</a></li>
+            </ul>
+
+            <!-- Menú de Usuario -->
             <div th:if="${session.usuario != null}" class="user-menu">
                 <div class="user-info">
                     <span class="user-name" th:text="${session.usuario.nombres}"></span>
                     <span class="user-email" th:text="${session.usuario.correo}"></span>
                 </div>
+                <a th:href="@{/perfil}" class="perfil-link" th:if="${session.usuario.isAdmin == null || !session.usuario.isAdmin}">Mi Perfil</a>
                 <button class="logout-btn" th:onclick="|window.location='@{/auth/logout}'|">
-            Cerrar sesión
-          </button>
+                    Cerrar sesión
+                </button>
             </div>
 
+            <!-- Botón de Login -->
             <div th:unless="${session.usuario != null}">
                 <button class="login-btn" th:onclick="|window.location='@{/auth/login}'|">
-            Iniciar sesión
-          </button>
+                    Iniciar sesión
+                </button>
             </div>
         </div>
     </nav>

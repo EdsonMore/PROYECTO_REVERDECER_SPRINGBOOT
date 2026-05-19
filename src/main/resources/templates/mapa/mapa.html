@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+
+<body class="mapa-body">
+    <nav th:replace="layout :: navbar"></nav>
+
+    <main class="mapa-main">
+        <div class="mapa-wrapper">
+            <!-- Sidebar izquierdo -->
+            <aside class="mapa-sidebar">
+                <div class="sidebar-content">
+                    <h3 class="sidebar-title">
+                        📍 <span th:text="${titulo}">Mapa Interactivo</span>
+                    </h3>
+
+                    <!-- Controles -->
+                    <section class="control-section">
+                        <h4 class="section-title">🎮 Controles</h4>
+                        <div class="button-group">
+                            <button class="btn-control" id="btnGetLocation">
+                                📍 Mi Ubicación
+                            </button>
+                            <button class="btn-control" id="btnClearMarkers">
+                                🗑️ Limpiar Marcadores
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Información -->
+                    <section class="control-section">
+                        <h4 class="section-title">ℹ️ Información</h4>
+                        <div id="coordsInfo" class="info-box">
+                            <p class="empty-message">Haz clic en el mapa para seleccionar una ubicación</p>
+                        </div>
+                    </section>
+
+                    <!-- Lista de Marcadores -->
+                    <section class="control-section">
+                        <h4 class="section-title">📌 Marcadores</h4>
+                        <div id="markersList" class="markers-list">
+                            <p class="empty-message">No hay marcadores</p>
+                        </div>
+                    </section>
+                </div>
+            </aside>
+
+            <!-- Mapa principal -->
+            <main class="mapa-content">
+                <div id="map" class="map-container"></div>
+            </main>
+        </div>
+
+        <!-- Toast container -->
+        <div id="toastContainer" class="toast-container"></div>
+    </main>
+
+
+    <!-- Leaflet CSS y JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Scripts del layout -->
+    <div th:replace="layout :: scripts"></div>
+
+    <!-- Script específico del mapa -->
+    <script th:src="@{/js/mapa.js}"></script>
+</body>
+</html>
