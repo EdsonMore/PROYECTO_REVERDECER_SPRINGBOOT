@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes Ambientales - ReVerdecer Piura</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/gestor-dashboard.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
+  </head>
+
+  <body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <section class="gestor-section">
+      <div class="gestor-container">
+        <!-- Header -->
+        <div class="gestor-header">
+          <h2><span>📋</span> Reporte Ambiental Consolidado</h2>
+          <div class="gestor-welcome">
+            <strong th:text="${usuario.nombres}"></strong>
+            &nbsp;·&nbsp; Generado el
+            <span
+              th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}"
+            ></span>
+          </div>
+        </div>
+
+        <!-- Botón imprimir (window.print nativo) -->
+        <div style="text-align: right; margin-bottom: 20px">
+          <button
+            onclick="window.print()"
+            class="module-btn"
+            style="padding: 10px 22px; font-size: 14px"
+          >
+            🖨️ Imprimir / Guardar PDF
+          </button>
+        </div>
+
+        <!-- ── SECCIÓN 1: Resumen Ejecutivo ── -->
+        <div class="content-section">
+          <h3 class="section-header"><span>📊</span> 1. Resumen Ejecutivo</h3>
+          <div class="metrics-grid" style="margin-bottom: 0">
+            <div class="metric-card">
+              <span class="metric-icon">🌳</span>
+              <div class="metric-value" th:text="${resumen['totalArboles']}">
+                0
+              </div>
+              <div class="metric-label">Total Árboles</div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-icon">✅</span>
+              <div class="metric-value" th:text="${resumen['arbolesActivos']}">
+                0
+              </div>
+              <div class="metric-label">Saludables</div>
+            </div>
+            <div class="metric-card advertencia">
+              <span class="metric-icon">⚠️</span>
+              <div class="metric-value" th:text="${resumen['arbolesEnRiesgo']}">
+                0
+              </div>
+              <div class="metric-label">En Riesgo</div>
+            </div>
+            <div class="metric-card alerta">
+              <span class="metric-icon">💀</span>
+              <div class="metric-value" th:text="${resumen['arbolesMuertos']}">
+                0
+              </div>
+              <div class="metric-label">Muertos</div>
+            </div>
+            <div class="metric-card advertencia">
+              <span class="metric-icon">📉</span>
+              <div
+                class="metric-value"
+                th:text="${resumen['porcentajeRiesgo'] + '%'}"
+              >
+                0%
+              </div>
+              <div class="metric-label">Índice de Riesgo</div>
+            </div>
+            <div class="metric-card info">
+              <span class="metric-icon">🚨</span>
+              <div class="metric-value" th:text="${resumen['totalAlertas']}">
+                0
+              </div>
+              <div class="metric-label">Alertas Activas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECCIÓN 2: Distribución por Especie ── -->
+        <div class="content-section">
+          <h3 class="section-header">
+            <span>🌿</span> 2. Distribución por Especie
+          </h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Especie</th>
+                <th>Cantidad</th>
+                <th>% del Total</th>
+                <th>Supervivencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="entry, iterStat : ${arbolesPorEspecie}">
+                <td th:text="${iterStat.count}">1</td>
+                <td th:text="${entry.key}">Especie</td>
+                <td th:text="${entry.value}">0</td>
+                <td
+                  th:text="${resumen['totalArboles'] > 0 ? #numbers.formatDecimal(entry.value * 100.0 / resumen['totalArboles'], 1, 1) + '%' : '0%'}"
+                >
+                  0%
+                </td>
+                <td>
+                  <span
+                    th:with="sv=${especiesSupervivencia.get(entry.key) ?: 0}"
+                    th:class="'badge ' + (${sv >= 75} ? 'badge-verde' : (${sv >= 40} ? 'badge-naranja' : 'badge-rojo'))"
+                    th:text="${sv + '%'}"
+                    >—</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ── SECCIÓN 3: Zonas Críticas ── -->
+        <div class="content-section">
+          <h3 class="section-header">
+            <span>⚠️</span> 3. Zonas Críticas Identificadas
+          </h3>
+          <div th:if="${zonasCriticas.isEmpty()}">
+            <p
+              style="
+                color: #2e7d32;
+                text-align: center;
+                padding: 20px 0;
+                font-weight: 600;
+              "
+            >
+              ✅ No se identificaron zonas críticas en este periodo.
+            </p>
+          </div>
+          <table class="data-table" th:if="${!zonasCriticas.isEmpty()}">
+            <thead>
+              <tr>
+                <th>Zona / Distrito</th>
+                <th>Árboles en Riesgo</th>
+                <th>Árboles Totales en Zona</th>
+                <th>Nivel de Alerta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="entry : ${zonasCriticas}">
+                <td><strong th:text="${entry.key}">Zona</strong></td>
+                <td>
+                  <span
+                    style="color: #e53935; font-weight: 600"
+                    th:text="${entry.value}"
+                    >0</span
+                  >
+                </td>
+                <td th:text="${arbolesPorZona.get(entry.key) ?: '—'}">—</td>
+                <td>
+                  <span
+                    th:with="total=${arbolesPorZona.get(entry.key) ?: 1},
+                                              pct=${entry.value * 100 / (arbolesPorZona.get(entry.key) ?: 1)}"
+                    th:class="'badge ' + (${pct >= 50} ? 'badge-rojo' : (${pct >= 25} ? 'badge-naranja' : 'badge-azul'))"
+                    th:text="${pct >= 50 ? 'CRÍTICO' : (pct >= 25 ? 'ALERTA' : 'VIGILANCIA')}"
+                  >
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ── SECCIÓN 4: Árboles con Alertas ── -->
+        <div class="content-section">
+          <h3 class="section-header">
+            <span>🚨</span> 4. Árboles con Alertas Activas
+            <span
+              th:text="'(' + ${arbolesConAlertas.size()} + ')'"
+              style="font-size: 15px; color: #e53935; margin-left: 8px"
+            ></span>
+          </h3>
+          <div th:if="${arbolesConAlertas.isEmpty()}">
+            <p
+              style="
+                color: #2e7d32;
+                text-align: center;
+                padding: 20px 0;
+                font-weight: 600;
+              "
+            >
+              ✅ Sin alertas activas al momento del reporte.
+            </p>
+          </div>
+          <table class="data-table" th:if="${!arbolesConAlertas.isEmpty()}">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre / Especie</th>
+                <th>Ubicación</th>
+                <th>Estado</th>
+                <th>Registrado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="arbol : ${arbolesConAlertas}">
+                <td th:text="${arbol.id}">—</td>
+                <td>
+                  <strong
+                    th:text="${arbol.nombre != null ? arbol.nombre : arbol.especie}"
+                    >—</strong
+                  >
+                  <br /><small style="color: #888" th:text="${arbol.especie}"
+                    >—</small
+                  >
+                </td>
+                <td th:text="${arbol.ubicacion}">—</td>
+                <td>
+                  <span
+                    th:class="'badge ' + (${arbol.estado == 'MUERTO' or arbol.estado == 'CRITICO'} ? 'badge-rojo' : 'badge-naranja')"
+                    th:text="${arbol.estado}"
+                    >—</span
+                  >
+                </td>
+                <td th:text="${arbol.fechaRegistro}">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pie del reporte -->
+        <div
+          style="
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 10px;
+            padding-bottom: 20px;
+          "
+        >
+          Reporte generado por el sistema ReVerdecer Piura ·
+          ROLE_GESTOR_AMBIENTAL ·
+          <span
+            th:text="${usuario.nombres + ' ' + usuario.apellidoPaterno}"
+          ></span>
+        </div>
+      </div>
+    </section>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+  </body>
+</html>
