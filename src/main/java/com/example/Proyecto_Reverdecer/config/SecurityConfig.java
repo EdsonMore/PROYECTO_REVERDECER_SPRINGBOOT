@@ -24,7 +24,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
@@ -34,38 +35,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            
             .authorizeHttpRequests(authz -> authz
-                // Recursos estáticos - acceso público
-                .requestMatchers(
-                    "/css/**",
-                    "/js/**",
-                    "/img/**",
-                    "/webjars/**",
-                    "/favicon.ico")
-                .permitAll()
-
-                // Páginas públicas
-                .requestMatchers(
-                    "/",
-                    "/home",
-                    "/index",
-                    "/arboles/**",
-                    "/mapa/**",
-                    "/sobre-nosotros",
-                    "/contacto",
-                    "/auth/**",
-                    "/error/**",
-                    "/api/**",
-                    "/perfil/**")
-                .permitAll()
-
-                // Rutas autenticadas - solo usuarios registrados
-                .requestMatchers(
-                    "/perfil/**",
-                    "/mis-arboles/**")
-                .authenticated()
-
-                .anyRequest().permitAll())
+                .anyRequest().permitAll()   
+            )
             .csrf(csrf -> csrf.disable())
             .logout(logout -> logout
                 .logoutUrl("/auth/logout")
@@ -75,7 +48,7 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll())
             .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/error/403"));
+                .accessDeniedPage("/acceso-denegado"));
 
         return http.build();
     }
@@ -85,4 +58,3 @@ public class SecurityConfig {
         return new org.springframework.security.web.session.HttpSessionEventPublisher();
     }
 }
-

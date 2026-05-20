@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Gestor Ambiental - ReVerdecer Piura</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/gestor-dashboard.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
+  </head>
+
+  <body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <section class="gestor-section">
+      <div class="gestor-container">
+        <!-- Header -->
+        <div class="gestor-header">
+          <h2>
+            <span>🌿</span>
+            Dashboard Gestor Ambiental
+          </h2>
+          <div class="gestor-welcome">
+            Bienvenido,
+            <strong th:text="${usuario.nombres}"></strong> &nbsp;·&nbsp;
+            <span
+              th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"
+            ></span>
+          </div>
+        </div>
+        <!-- KPI Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-icon">🌳</span>
+            <div class="metric-value" th:text="${resumen['totalArboles']}">
+              0
+            </div>
+            <div class="metric-label">Total Árboles</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">✅</span>
+            <div class="metric-value" th:text="${resumen['arbolesActivos']}">
+              0
+            </div>
+            <div class="metric-label">Árboles Saludables</div>
+          </div>
+          <div class="metric-card advertencia">
+            <span class="metric-icon">⚠️</span>
+            <div class="metric-value" th:text="${resumen['arbolesEnRiesgo']}">
+              0
+            </div>
+            <div class="metric-label">En Riesgo</div>
+          </div>
+          <div class="metric-card alerta">
+            <span class="metric-icon">💀</span>
+            <div class="metric-value" th:text="${resumen['arbolesMuertos']}">
+              0
+            </div>
+            <div class="metric-label">Árboles Muertos</div>
+          </div>
+          <div class="metric-card info">
+            <span class="metric-icon">🗺️</span>
+            <div class="metric-value" th:text="${resumen['totalZonas']}">0</div>
+            <div class="metric-label">Zonas Monitoreadas</div>
+          </div>
+          <div class="metric-card info">
+            <span class="metric-icon">🔬</span>
+            <div class="metric-value" th:text="${resumen['totalEspecies']}">
+              0
+            </div>
+            <div class="metric-label">Especies Distintas</div>
+          </div>
+          <div class="metric-card alerta">
+            <span class="metric-icon">🚨</span>
+            <div class="metric-value" th:text="${resumen['totalAlertas']}">
+              0
+            </div>
+            <div class="metric-label">Alertas Activas</div>
+          </div>
+          <div class="metric-card advertencia">
+            <span class="metric-icon">📉</span>
+            <div
+              class="metric-value"
+              th:text="${resumen['porcentajeRiesgo'] + '%'}"
+            >
+              0%
+            </div>
+            <div class="metric-label">% en Riesgo</div>
+          </div>
+        </div>
+
+        <!-- Grid: Estado de árboles + Alertas por zona -->
+        <div class="two-col-grid">
+          <!-- Estado general -->
+          <div class="content-section">
+            <h3 class="section-header">
+              <span>📊</span> Distribución por Estado
+            </h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th>Cantidad</th>
+                  <th>Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="entry : ${arbolesPorEstado}">
+                  <td>
+                    <span
+                      th:class="'badge ' + (${entry.key == 'BUENO' or entry.key == 'SALUDABLE' or entry.key == 'EXCELENTE'} ? 'badge-verde' :
+                                                                (${entry.key == 'MUERTO'} ? 'badge-rojo' :
+                                                                (${entry.key == 'ENFERMO' or entry.key == 'CRITICO'} ? 'badge-naranja' : 'badge-gris')))"
+                      th:text="${entry.key}"
+                      >Estado</span
+                    >
+                  </td>
+                  <td th:text="${entry.value}">0</td>
+                  <td>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-bar-fill"
+                          th:style="'width: ' + (${resumen['totalArboles'] > 0 ? entry.value * 100 / resumen['totalArboles'] : 0}) + '%'"
+                        ></div>
+                      </div>
+                      <span
+                        class="progress-value"
+                        th:text="${resumen['totalArboles'] > 0 ? #numbers.formatDecimal(entry.value * 100.0 / resumen['totalArboles'], 1, 1) + '%' : '0%'}"
+                      >
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Alertas por zona -->
+          <div class="content-section">
+            <h3 class="section-header"><span>🚨</span> Alertas por Zona</h3>
+            <div th:if="${alertasPorZona.isEmpty()}">
+              <p style="color: #888; text-align: center; padding: 20px 0">
+                No hay alertas activas 🎉
+              </p>
+            </div>
+            <div th:each="entry : ${alertasPorZona}" class="zona-critica-item">
+              <span class="zona-nombre" th:text="${entry.key}">Zona</span>
+              <span class="zona-alertas" th:text="${entry.value + ' alertas'}"
+                >0 alertas</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Módulos disponibles -->
+        <div class="content-section">
+          <h3 class="section-header"><span>🗂️</span> Módulos de Análisis</h3>
+          <div class="modules-grid">
+            <div class="module-card">
+              <span class="module-icon">📊</span>
+              <h3 class="module-title">Estadísticas Ambientales</h3>
+              <p class="module-description">
+                Distribución por especie, zona y estado. Tendencias generales
+                del arbolado urbano.
+              </p>
+              <a th:href="@{/gestor/estadisticas}" class="module-btn"
+                >Ver estadísticas</a
+              >
+            </div>
+            <div class="module-card">
+              <span class="module-icon">⚠️</span>
+              <h3 class="module-title">Zonas Críticas</h3>
+              <p class="module-description">
+                Identifica las zonas con mayor concentración de árboles en
+                riesgo y alertas activas.
+              </p>
+              <a th:href="@{/gestor/zonas-criticas}" class="module-btn"
+                >Analizar zonas</a
+              >
+            </div>
+            <div class="module-card">
+              <span class="module-icon">🌳</span>
+              <h3 class="module-title">Análisis de Especies</h3>
+              <p class="module-description">
+                Compara tasas de supervivencia entre especies y ranking de
+                adaptación al entorno.
+              </p>
+              <a th:href="@{/gestor/analisis-especies}" class="module-btn"
+                >Ver especies</a
+              >
+            </div>
+            <div class="module-card">
+              <span class="module-icon">📋</span>
+              <h3 class="module-title">Reportes</h3>
+              <p class="module-description">
+                Resumen ejecutivo consolidado con todos los indicadores
+                ambientales del sistema.
+              </p>
+              <a th:href="@{/gestor/reportes}" class="module-btn"
+                >Generar reporte</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+  </body>
+</html>

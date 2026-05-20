@@ -10,74 +10,82 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "correo", name = "uk_usuario_correo"),
-    @UniqueConstraint(columnNames = "dni", name = "uk_usuario_dni"),
-    @UniqueConstraint(columnNames = "user", name = "uk_usuario_user")
+        @UniqueConstraint(columnNames = "correo", name = "uk_usuario_correo"),
+        @UniqueConstraint(columnNames = "dni", name = "uk_usuario_dni"),
+        @UniqueConstraint(columnNames = "user", name = "uk_usuario_user")
 })
 public class Usuario implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false, length = 50, unique = true)
     private String user;
-    
+
     @Column(nullable = false)
     private String password;
-    
+
     @Column(nullable = false, unique = true, length = 100)
     private String correo;
-    
+
     @Column(nullable = false, length = 100)
     private String nombres;
-    
+
     @Column(nullable = false, length = 100)
     private String apellidoPaterno;
-    
+
     @Column(length = 100)
     private String apellidoMaterno;
-    
+
     @Column(length = 255)
     private String direccion1;
-    
+
     @Column(length = 255)
     private String direccion2;
-    
+
     @Column(length = 10)
     private Integer numero;
-    
+
     @Column(length = 20)
     private String genero;
-    
+
     @Column(nullable = false, unique = true, length = 20)
     private String dni;
-    
+
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_doc", length = 50)
     private TipoDoc tipoDoc;
-    
+
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
-    
+
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin = false;
-    
+
+    /**
+     * Rol del usuario en el sistema.
+     * Valores posibles: ROLE_USER, ROLE_ADMIN, ROLE_GESTOR_AMBIENTAL
+     */
+    @Column(name = "rol", length = 50, nullable = false)
+    private String rol = "ROLE_USER";
+
     @Column(name = "fecha_registro")
     private LocalDate fechaRegistro;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Arbol> arboles = new ArrayList<>();
 
     public Usuario() {
     }
-    // Getters y Setters
+
+    // Getters y Setters 
     public Long getId() {
         return id;
     }
@@ -214,6 +222,14 @@ public class Usuario implements Serializable {
         this.isAdmin = isAdmin;
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     public List<Arbol> getArboles() {
         return arboles;
     }
@@ -221,4 +237,13 @@ public class Usuario implements Serializable {
     public void setArboles(List<Arbol> arboles) {
         this.arboles = arboles;
     }
+
+    public boolean esAdmin() {
+        return Boolean.TRUE.equals(isAdmin) || "ROLE_ADMIN".equals(rol);
+    }
+
+    public boolean esGestorAmbiental() {
+        return "ROLE_GESTOR_AMBIENTAL".equals(rol);
+    }
+
 }

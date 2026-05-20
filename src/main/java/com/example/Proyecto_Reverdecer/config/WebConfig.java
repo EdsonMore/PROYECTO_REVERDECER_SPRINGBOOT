@@ -12,10 +12,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private AdminInterceptor adminInterceptor;
 
+    @Autowired
+    private GestorAmbientalInterceptor gestorAmbientalInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
                 .addPathPatterns("/admin/**");
+
+        registry.addInterceptor(gestorAmbientalInterceptor)
+                .addPathPatterns("/gestor/**");
     }
 
     @Override

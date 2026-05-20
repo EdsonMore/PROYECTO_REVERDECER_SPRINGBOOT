@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estadísticas Ambientales - ReVerdecer Piura</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/gestor-dashboard.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo1.webp}" />
+  </head>
+
+  <body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <section class="gestor-section">
+      <div class="gestor-container">
+        <!-- Header -->
+        <div class="gestor-header">
+          <h2><span>📊</span> Estadísticas Ambientales</h2>
+          <div class="gestor-welcome">
+            <strong th:text="${usuario.nombres}"></strong> · Gestor Ambiental
+          </div>
+        </div>
+
+        <!-- KPIs rápidos -->
+        <div class="metrics-grid" style="margin-bottom: 30px">
+          <div class="metric-card">
+            <span class="metric-icon">🌳</span>
+            <div class="metric-value" th:text="${totalArboles}">0</div>
+            <div class="metric-label">Total de Árboles</div>
+          </div>
+          <div class="metric-card info">
+            <span class="metric-icon">🔬</span>
+            <div class="metric-value" th:text="${arbolesPorEspecie.size()}">
+              0
+            </div>
+            <div class="metric-label">Especies Registradas</div>
+          </div>
+          <div class="metric-card info">
+            <span class="metric-icon">🗺️</span>
+            <div class="metric-value" th:text="${arbolesPorZona.size()}">0</div>
+            <div class="metric-label">Zonas Monitoreadas</div>
+          </div>
+          <div class="metric-card advertencia">
+            <span class="metric-icon">📉</span>
+            <div class="metric-value" th:text="${porcentajeRiesgo + '%'}">
+              0%
+            </div>
+            <div class="metric-label">Árboles en Riesgo</div>
+          </div>
+        </div>
+
+        <div class="two-col-grid">
+          <!-- Árboles por especie -->
+          <div class="content-section">
+            <h3 class="section-header"><span>🌿</span> Árboles por Especie</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Especie</th>
+                  <th>Cantidad</th>
+                  <th>Distribución</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="entry, iterStat : ${arbolesPorEspecie}">
+                  <td th:text="${iterStat.count}">1</td>
+                  <td th:text="${entry.key}">Especie</td>
+                  <td th:text="${entry.value}">0</td>
+                  <td>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-bar-fill"
+                          th:style="'width: ' + (${totalArboles > 0 ? entry.value * 100 / totalArboles : 0}) + '%'"
+                        ></div>
+                      </div>
+                      <span
+                        class="progress-value"
+                        th:text="${totalArboles > 0 ? #numbers.formatDecimal(entry.value * 100.0 / totalArboles, 1, 1) + '%' : '0%'}"
+                      >
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Árboles por zona -->
+          <div class="content-section">
+            <h3 class="section-header"><span>🗺️</span> Árboles por Zona</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Zona / Distrito</th>
+                  <th>Cantidad</th>
+                  <th>Distribución</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="entry : ${arbolesPorZona}">
+                  <td th:text="${entry.key}">Zona</td>
+                  <td th:text="${entry.value}">0</td>
+                  <td>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-bar-fill"
+                          th:style="'width: ' + (${totalArboles > 0 ? entry.value * 100 / totalArboles : 0}) + '%'"
+                        ></div>
+                      </div>
+                      <span
+                        class="progress-value"
+                        th:text="${totalArboles > 0 ? #numbers.formatDecimal(entry.value * 100.0 / totalArboles, 1, 1) + '%' : '0%'}"
+                      >
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Estado general -->
+        <div class="content-section">
+          <h3 class="section-header">
+            <span>📈</span> Estado General del Arbolado
+          </h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Cantidad</th>
+                <th>% del Total</th>
+                <th>Barra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="entry : ${arbolesPorEstado}">
+                <td>
+                  <span
+                    th:class="'badge ' + (${entry.key == 'BUENO' or entry.key == 'SALUDABLE' or entry.key == 'EXCELENTE' or entry.key == 'ACTIVO'} ? 'badge-verde' :
+                                                            (${entry.key == 'MUERTO'} ? 'badge-rojo' :
+                                                            (${entry.key == 'ENFERMO' or entry.key == 'CRITICO' or entry.key == 'EN_RIESGO'} ? 'badge-naranja' : 'badge-gris')))"
+                    th:text="${entry.key}"
+                    >Estado</span
+                  >
+                </td>
+                <td th:text="${entry.value}">0</td>
+                <td
+                  th:text="${totalArboles > 0 ? #numbers.formatDecimal(entry.value * 100.0 / totalArboles, 1, 1) + '%' : '0%'}"
+                >
+                  0%
+                </td>
+                <td>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar">
+                      <div
+                        th:class="'progress-bar-fill ' + (${entry.key == 'MUERTO' or entry.key == 'CRITICO'} ? 'riesgo' : (${entry.key == 'ENFERMO' or entry.key == 'EN_RIESGO'} ? 'advertencia' : ''))"
+                        th:style="'width: ' + (${totalArboles > 0 ? entry.value * 100 / totalArboles : 0}) + '%'"
+                      ></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+  </body>
+</html>
