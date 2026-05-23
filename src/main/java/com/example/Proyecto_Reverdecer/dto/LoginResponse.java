@@ -3,11 +3,8 @@ package com.example.Proyecto_Reverdecer.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-/**
- * DTO para respuesta de login con JWT, para retorna el token y datos del
- * usuario
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +17,7 @@ public class LoginResponse {
     private String rol;
     private String mensaje;
 
+    // Constructor para login exitoso (sin mensaje)
     public LoginResponse(String token, String username, Long userId, String correo, String rol) {
         this.token = token;
         this.username = username;
@@ -28,6 +26,7 @@ public class LoginResponse {
         this.rol = rol;
     }
 
+    // Constructor para error (solo mensaje)
     public LoginResponse(String mensaje) {
         this.mensaje = mensaje;
     }

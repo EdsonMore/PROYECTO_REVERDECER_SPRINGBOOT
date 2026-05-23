@@ -9,9 +9,11 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
         @UniqueConstraint(columnNames = "correo", name = "uk_usuario_correo"),
@@ -72,10 +74,6 @@ public class Usuario implements Serializable {
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin = false;
 
-    /**
-     * Rol del usuario en el sistema.
-     * Valores posibles: ROLE_USER, ROLE_ADMIN, ROLE_GESTOR_AMBIENTAL
-     */
     @Column(name = "rol", length = 50, nullable = false)
     private String rol = "ROLE_USER";
 
@@ -86,6 +84,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Arbol> arboles = new ArrayList<>();
 
+    // Estos métodos SÍ los escribes tú (Lombok no los genera)
     public boolean esAdmin() {
         return Boolean.TRUE.equals(isAdmin) || "ROLE_ADMIN".equals(rol);
     }
@@ -93,5 +92,4 @@ public class Usuario implements Serializable {
     public boolean esGestorAmbiental() {
         return "ROLE_GESTOR_AMBIENTAL".equals(rol);
     }
-
 }
