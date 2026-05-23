@@ -93,6 +93,16 @@ public class UsuarioService {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuario.setActivo(true);
         usuario.setFechaRegistro(LocalDate.now());
+        
+        // Asignar rol por defecto si no tiene
+        if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
+            usuario.setRol("ROLE_USER");
+        }
+        
+        // Asignar isAdmin por defecto si no tiene
+        if (usuario.getIsAdmin() == null) {
+            usuario.setIsAdmin(false);
+        }
 
         try {
             Usuario savedUsuario = usuarioRepository.save(usuario);
