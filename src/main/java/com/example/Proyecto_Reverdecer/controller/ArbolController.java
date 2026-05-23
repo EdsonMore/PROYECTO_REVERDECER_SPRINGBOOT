@@ -75,7 +75,6 @@ public class ArbolController {
         System.out.println("Usuario ID desde sesión: " + usuario.getId());
         System.out.println("Usuario Email: " + usuario.getCorreo());
 
-        // Re-cargar el usuario desde la BD para asegurar que tiene todas las propiedades
         if (usuario.getId() != null) {
             Usuario usuarioRecargado = usuarioService.buscarPorId(usuario.getId());
             if (usuarioRecargado != null) {
@@ -85,7 +84,7 @@ public class ArbolController {
         }
 
         if (usuario.getId() == null) {
-            System.err.println("❌ El usuario en sesión no tiene ID válido");
+            System.err.println("El usuario en sesión no tiene ID válido");
             model.addAttribute("error", "Error: Usuario no válido. Por favor, inicia sesión nuevamente.");
             return "arboles/registro";
         }
@@ -108,9 +107,9 @@ public class ArbolController {
         // Guardar en base de datos
         try {
             arbolService.guardar(arbol);
-            System.out.println("✅ Árbol registrado exitosamente");
+            System.out.println("Árbol registrado exitosamente");
         } catch (Exception e) {
-            System.err.println("❌ Error al guardar árbol: " + e.getMessage());
+            System.err.println("Error al guardar árbol: " + e.getMessage());
             e.printStackTrace();
             model.addAttribute("error", "Error al registrar el árbol: " + e.getMessage());
             return "arboles/registro";
@@ -200,10 +199,10 @@ public class ArbolController {
             // Guardar cambios
             arbolService.guardar(arbolExistente);
             
-            System.out.println("✅ Árbol " + id + " actualizado correctamente");
+            System.out.println("Árbol " + id + " actualizado correctamente");
             return "redirect:/arboles/listado?success=1";
         } catch (Exception e) {
-            System.err.println("❌ Error al editar árbol: " + e.getMessage());
+            System.err.println("Error al editar árbol: " + e.getMessage());
             model.addAttribute("error", "Error al guardar los cambios: " + e.getMessage());
             model.addAttribute("arbol", arbolService.obtenerPorId(id));
             return "arboles/editar";
@@ -240,13 +239,13 @@ public class ArbolController {
     public ResponseEntity<List<Arbol>> obtenerArbolesAPI() {
         try {
             List<Arbol> arboles = arbolService.listarTodos();
-            System.out.println("✅ API /arboles/api - Retornando " + (arboles != null ? arboles.size() : 0) + " árboles");
+            System.out.println("API /arboles/api - Retornando " + (arboles != null ? arboles.size() : 0) + " árboles");
             if (arboles == null) {
                 arboles = new ArrayList<>();
             }
             return ResponseEntity.ok(arboles);
         } catch (Exception e) {
-            System.err.println("❌ ERROR en /arboles/api: " + e.getMessage());
+            System.err.println("ERROR en /arboles/api: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(500).body(new ArrayList<>());
         }

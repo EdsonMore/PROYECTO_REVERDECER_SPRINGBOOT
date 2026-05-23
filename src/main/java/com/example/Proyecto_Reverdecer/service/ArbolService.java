@@ -11,9 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Servicio para gestionar árboles con JPA
- */
 @Service
 public class ArbolService {
 
@@ -23,9 +20,7 @@ public class ArbolService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    /**
-     * Registra un nuevo árbol
-     */
+    // Registra árbol nuevo asociado a un usuario
     public boolean registrar(Arbol arbol, Long usuarioId) {
         System.out.println("\n=== SERVICE: REGISTRO ÁRBOL ===");
 
@@ -58,51 +53,41 @@ public class ArbolService {
         }
     }
 
-    /**
-     * Obtiene todos los árboles de un usuario
-     */
+    // Árboles de un usuario (ordenados por fecha)
     public List<Arbol> obtenerPorUsuario(Long usuarioId) {
         return arbolRepository.findByUsuarioIdOrderByFecha(usuarioId);
     }
 
-    /**
-     * Obtiene un árbol por ID
-     */
+    // Buscar por ID
     public Arbol obtenerPorId(Long id) {
         return arbolRepository.findById(id).orElse(null);
     }
 
-    /**
-     * Lista todos los árboles (método compatible con código anterior)
-     */
+    // Todos los árboles
     public List<Arbol> listarTodos() {
         return arbolRepository.findAll();
     }
 
-    /**
-     * Lista árboles por estado
-     */
+    // Filtrar por estado
     public List<Arbol> listarPorEstado(String estado) {
         return arbolRepository.findByEstado(estado);
     }
 
-    /**
-     * Guarda un árbol (método compatible con código anterior)
-     */
+    // Guardar (compatible con código legacy)
     public Arbol guardar(Arbol arbol) {
         System.out.println("\n=== SERVICE: GUARDAR ÁRBOL ===");
         System.out.println("Nombre: " + arbol.getNombre());
         System.out.println("Especie: " + arbol.getEspecie());
         System.out.println("Usuario: " + (arbol.getUsuario() != null ? arbol.getUsuario().getNombres() : "NULL"));
         System.out.println("Usuario ID: " + (arbol.getUsuario() != null ? arbol.getUsuario().getId() : "NULL"));
-        
+
         if (arbol.getUsuario() == null) {
-            System.err.println("❌ ERROR: El árbol no tiene usuario asignado");
+            System.err.println("ERROR: El árbol no tiene usuario asignado");
             throw new RuntimeException("No se puede guardar un árbol sin usuario");
         }
-        
+
         if (arbol.getUsuario().getId() == null) {
-            System.err.println("❌ ERROR: El usuario del árbol no tiene ID válido");
+            System.err.println("ERROR: El usuario del árbol no tiene ID válido");
             throw new RuntimeException("El usuario del árbol no tiene ID válido");
         }
 
@@ -110,21 +95,19 @@ public class ArbolService {
             arbol.setFechaPlantacion(LocalDate.now());
             arbol.setFechaRegistro(LocalDate.now());
         }
-        
+
         try {
             Arbol guardado = arbolRepository.save(arbol);
-            System.out.println("✅ Árbol guardado con ID: " + guardado.getId());
+            System.out.println("Árbol guardado con ID: " + guardado.getId());
             return guardado;
         } catch (Exception e) {
-            System.err.println("❌ Error al guardar árbol: " + e.getMessage());
+            System.err.println("ERROR: Error al guardar árbol: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }
     }
 
-    /**
-     * Actualiza un árbol existente
-     */
+    // Actualizar árbol existente
     public boolean actualizar(Arbol arbol) {
         if (arbol.getId() == null) {
             return false;
@@ -142,9 +125,7 @@ public class ArbolService {
         }
     }
 
-    /**
-     * Elimina un árbol
-     */
+    // Eliminar por ID
     public boolean eliminar(Long id) {
         try {
             if (arbolRepository.existsById(id)) {
@@ -158,30 +139,22 @@ public class ArbolService {
         }
     }
 
-    /**
-     * Obtiene árboles por especie
-     */
+    // Buscar por especie
     public List<Arbol> obtenerPorEspecie(String especie) {
         return arbolRepository.findByEspecie(especie);
     }
 
-    /**
-     * Obtiene todos los árboles activos
-     */
+    // Solo árboles activos (no muertos)
     public List<Arbol> obtenerActivos() {
         return arbolRepository.findAllActivos();
     }
 
-    /**
-     * Cuenta los árboles de un usuario
-     */
+    // Cuántos árboles tiene un usuario
     public long contar(Long usuarioId) {
         return arbolRepository.countByUsuarioId(usuarioId);
     }
 
-    /**
-     * Valida campos mínimos del árbol
-     */
+    // Validación básica
     private boolean validarCamposMinimos(Arbol arbol) {
         if (arbol.getEspecie() == null || arbol.getEspecie().trim().isEmpty()) {
             System.out.println("Especie es obligatoria");

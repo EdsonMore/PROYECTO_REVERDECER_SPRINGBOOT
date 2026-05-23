@@ -1,3 +1,4 @@
+// UserController.java - Solo maneja autenticación
 package com.example.Proyecto_Reverdecer.controller;
 
 import com.example.Proyecto_Reverdecer.model.Usuario;
@@ -8,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/auth")  
+@RequestMapping("/auth")
 public class UserController {
 
     private final UsuarioService usuarioService;
@@ -41,73 +42,27 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUsuario(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
-        System.out.println("\n=== LOGIN ===");
-        System.out.println("Intentando autenticar: " + usuario.getCorreo());
-
         Usuario encontrado = usuarioService.autenticar(usuario.getCorreo(), usuario.getPassword());
-        
+
         if (encontrado != null) {
-            System.out.println("✅ Autenticación exitosa");
-            System.out.println("ID del usuario: " + encontrado.getId());
-            System.out.println("Email: " + encontrado.getCorreo());
-            
-            // Guardar en sesión
             session.setAttribute("usuario", encontrado);
-            System.out.println("✅ Usuario guardado en sesión");
-            
+
+            if (Boolean.TRUE.equals(encontrado.getIsAdmin())) {
+                return "redirect:/admin/dashboard";
+            } else if ("ROLE_GESTOR_AMBIENTAL".equals(encontrado.getRol())) {
+                return "redirect:/gestor/dashboard";
+            }
             return "redirect:/";
         }
 
-        System.out.println("❌ Autenticación fallida");
-        model.addAttribute("error", "Correo o contraseña incorrectos");
-        return "redirect:/auth/login?error=true";
+        model.addAttribute("errorLogin", "Correo o contraseña incorrectos");
+        model.addAttribute("usuario", new Usuario());
+        return "login";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/auth/login?logout";
-    }
-
-    // Mostrar página de perfil del usuario
-    @GetMapping("/perfil")
-    public String mostrarPerfil(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null) {
-            return "redirect:/auth/login";
-        }
-        model.addAttribute("usuario", usuario);
-        return "perfil";
-    }
-
-    // Actualizar perfil del usuario
-    @PostMapping("/perfil")
-    public String actualizarPerfil(@ModelAttribute Usuario usuarioActualizado, HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null) {
-            return "redirect:/auth/login";
-        }
-        
-        try {
-            // Actualizar datos del usuario (mantener ID)
-            usuarioActualizado.setId(usuario.getId());
-            usuarioActualizado.setTipoDoc(usuario.getTipoDoc()); // No permitir cambiar
-            usuarioActualizado.setDni(usuario.getDni()); // No permitir cambiar
-            usuarioActualizado.setFechaNacimiento(usuario.getFechaNacimiento()); // No permitir cambiar
-            usuarioActualizado.setFechaRegistro(usuario.getFechaRegistro()); // No permitir cambiar
-            
-            if (usuarioService.actualizar(usuarioActualizado)) {
-                // Recargar usuario desde BD
-                Usuario usuarioRecargado = usuarioService.buscarPorId(usuario.getId());
-                session.setAttribute("usuario", usuarioRecargado);
-                model.addAttribute("success", "Perfil actualizado correctamente");
-            }
-            
-            return "redirect:/perfil?success";
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al actualizar el perfil: " + e.getMessage());
-            model.addAttribute("usuario", usuario);
-            return "perfil";
-        }
     }
 }

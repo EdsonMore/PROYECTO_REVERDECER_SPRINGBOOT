@@ -14,29 +14,20 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
-        if (usuario == null) {
-            return "redirect:/auth/login";
-        }
-
-        // Verificar si es admin
-        if (usuario.getIsAdmin() == null || !usuario.getIsAdmin()) {
-            return "redirect:/acceso-denegado";
-        }
 
         // Permisos de módulos (admin tiene todos)
         model.addAttribute("puedeVerProductos", true);
         model.addAttribute("puedeVerUsuarios", true);
         model.addAttribute("puedeVerReportes", true);
-        
+
         // Permisos de acciones (admin tiene todos)
         model.addAttribute("puedeCrear", true);
         model.addAttribute("puedeEditar", true);
         model.addAttribute("puedeEliminar", true);
         model.addAttribute("puedeVerVentas", true);
-        
+
         model.addAttribute("usuario", usuario);
-        
+
         return "admin/dashboard";
     }
 }
