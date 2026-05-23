@@ -13,6 +13,6 @@ public class LoginRequest {
     private String correo;
 
     @NotBlank(message = "La contraseña es requerida")
-    @ToString.Exclude// Solo esto, simple y funciona
+    @ToString.Exclude
     private String password;
 }
