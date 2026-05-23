@@ -2,11 +2,17 @@ package com.example.Proyecto_Reverdecer.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * DTO para recibir credenciales de login en API REST, aca lo usamos para el
  * login con JWT en ApiAuthController
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginRequest {
 
     @NotBlank(message = "El correo es requerido")
@@ -15,31 +21,6 @@ public class LoginRequest {
 
     @NotBlank(message = "La contraseña es requerida")
     private String password;
-
-    // Constructores
-    public LoginRequest() {
-    }
-
-    public LoginRequest(String correo, String password) {
-        this.correo = correo;
-        this.password = password;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public String toString() {
