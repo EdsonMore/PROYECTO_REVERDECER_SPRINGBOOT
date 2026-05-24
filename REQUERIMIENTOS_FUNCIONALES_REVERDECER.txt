@@ -1,0 +1,801 @@
+REQUERIMIENTOS FUNCIONALES PROPUESTOS Y POR PROPONER
+Proyecto: ReVerdecer Piura
+Sistema: Plataforma Inteligente de Monitoreo y Riego Automatico para Arboles Urbanos mediante IoT
+
+Nota:
+- "Propuesto" indica que el requerimiento aparece en el documento del proyecto o ya esta encaminado en el sistema actual.
+- "Por proponer" indica una mejora funcional recomendada para que el sistema cumpla mejor su objetivo y destaque en su ambito.
+
+============================================================
+REQUERIMIENTOS FUNCIONALES PROPUESTOS
+============================================================
+
+Campo Descripcion / Ejemplo
+ID RF-001
+Nombre Registro de usuarios
+Descripcion El sistema debera permitir que nuevos usuarios se registren ingresando sus datos personales, correo, usuario, documento de identidad y contrasena.
+Prioridad (MoSCoW) Must Have
+Actor principal Ciudadano / Usuario
+Precondicion El usuario no debe tener una cuenta registrada con el mismo correo, DNI o nombre de usuario.
+Postcondicion La cuenta queda almacenada en la base de datos y disponible para iniciar sesion.
+Criterio de aceptacion El sistema permite registrar un usuario valido y muestra un mensaje o redireccion de registro exitoso.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-002
+Nombre Inicio de sesion
+Descripcion El sistema debera permitir que los usuarios autenticados ingresen mediante correo y contrasena.
+Prioridad (MoSCoW) Must Have
+Actor principal Usuario registrado
+Precondicion El usuario debe tener una cuenta activa en el sistema.
+Postcondicion El usuario accede al sistema segun su rol.
+Criterio de aceptacion El sistema valida las credenciales y redirige al usuario a la pantalla correspondiente.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-003
+Nombre Cierre de sesion
+Descripcion El sistema debera permitir que el usuario cierre su sesion de forma segura.
+Prioridad (MoSCoW) Must Have
+Actor principal Usuario registrado
+Precondicion El usuario debe haber iniciado sesion.
+Postcondicion La sesion queda invalidada y el usuario vuelve a la pantalla de login.
+Criterio de aceptacion Al cerrar sesion, el usuario no puede acceder a pantallas protegidas sin autenticarse nuevamente.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-004
+Nombre Gestion de perfil de usuario
+Descripcion El sistema debera permitir que el usuario consulte y actualice sus datos personales.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado
+Precondicion El usuario debe estar autenticado en el sistema.
+Postcondicion Los datos actualizados quedan guardados en la base de datos.
+Criterio de aceptacion El sistema muestra el perfil del usuario y permite guardar cambios validos.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-005
+Nombre Registro de arboles urbanos
+Descripcion El sistema debera permitir registrar arboles indicando nombre, especie, ubicacion, latitud, longitud, fecha de plantacion, estado, descripcion y foto.
+Prioridad (MoSCoW) Must Have
+Actor principal Usuario registrado
+Precondicion El usuario debe estar autenticado en el sistema.
+Postcondicion El arbol queda almacenado y asociado al usuario que lo registro.
+Criterio de aceptacion El sistema registra el arbol y este aparece en el listado y en el mapa con sus datos correctamente guardados.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-006
+Nombre Listado de arboles registrados
+Descripcion El sistema debera mostrar al usuario el listado de arboles registrados con sus datos principales.
+Prioridad (MoSCoW) Must Have
+Actor principal Usuario registrado
+Precondicion Debe existir al menos un arbol registrado o el sistema debe mostrar una lista vacia.
+Postcondicion El usuario visualiza la informacion disponible de los arboles.
+Criterio de aceptacion El sistema muestra los arboles registrados con nombre, especie, ubicacion, fecha y estado.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-007
+Nombre Edicion de arboles registrados
+Descripcion El sistema debera permitir actualizar los datos de un arbol previamente registrado.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado
+Precondicion El usuario debe estar autenticado y el arbol debe existir.
+Postcondicion Los datos del arbol quedan actualizados en la base de datos.
+Criterio de aceptacion El sistema permite editar un arbol y muestra los nuevos datos en el listado.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-008
+Nombre Eliminacion de arboles registrados
+Descripcion El sistema debera permitir eliminar registros de arboles cuando se hayan creado por error o ya no correspondan al monitoreo.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado / Administrador
+Precondicion El usuario debe estar autenticado y el arbol debe existir.
+Postcondicion El arbol deja de mostrarse en el listado y en el mapa.
+Criterio de aceptacion El sistema elimina el arbol seleccionado y actualiza las vistas relacionadas.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-009
+Nombre Consulta de detalles de arbol
+Descripcion El sistema debera permitir consultar la ficha completa de un arbol, incluyendo especie, ubicacion, estado, fecha de plantacion, edad estimada, descripcion y foto.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado / Gestor ambiental
+Precondicion El arbol debe existir en el sistema.
+Postcondicion El usuario visualiza la informacion detallada del arbol.
+Criterio de aceptacion Al seleccionar un arbol, el sistema muestra una pantalla con todos sus datos principales.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-010
+Nombre Visualizacion de arboles en mapa interactivo
+Descripcion El sistema debera mostrar en un mapa la ubicacion geografica de los arboles registrados.
+Prioridad (MoSCoW) Must Have
+Actor principal Usuario registrado / Ciudadano / Gestor ambiental
+Precondicion Los arboles deben tener latitud y longitud registradas.
+Postcondicion El usuario visualiza los arboles georreferenciados.
+Criterio de aceptacion El mapa muestra marcadores de arboles y permite consultar informacion basica de cada uno.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-011
+Nombre API de consulta de arboles
+Descripcion El sistema debera exponer una API que entregue los arboles registrados en formato JSON para ser consumida por el mapa u otros modulos.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion Deben existir registros de arboles o el sistema debe devolver una lista vacia.
+Postcondicion Los datos quedan disponibles para componentes frontend o integraciones.
+Criterio de aceptacion La API responde correctamente con la lista de arboles y sus coordenadas.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-012
+Nombre Recepcion de datos de sensores IoT
+Descripcion El sistema debera recibir datos enviados desde Arduino, como humedad del suelo y temperatura ambiental.
+Prioridad (MoSCoW) Must Have
+Actor principal Dispositivo Arduino / Sensor IoT
+Precondicion El dispositivo debe estar registrado y conectado al sistema.
+Postcondicion Los datos ambientales quedan almacenados y asociados al arbol correspondiente.
+Criterio de aceptacion El sistema recibe una lectura valida y la guarda con fecha, hora, sensor y arbol asociado.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-013
+Nombre Monitoreo de humedad del suelo
+Descripcion El sistema debera analizar las lecturas de humedad del suelo para identificar si el arbol requiere riego.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion Deben existir datos de humedad recibidos desde el sensor.
+Postcondicion El sistema determina el estado de humedad del arbol.
+Criterio de aceptacion Si la humedad esta por debajo del umbral definido, el sistema clasifica el arbol como necesitado de riego.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-014
+Nombre Monitoreo de temperatura ambiental
+Descripcion El sistema debera registrar y consultar la temperatura ambiental enviada por los sensores IoT.
+Prioridad (MoSCoW) Should Have
+Actor principal Dispositivo Arduino / Gestor ambiental
+Precondicion El sensor de temperatura debe estar operativo.
+Postcondicion La temperatura queda almacenada para analisis ambiental.
+Criterio de aceptacion El sistema guarda la temperatura recibida y la muestra en el historial ambiental del arbol.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-015
+Nombre Activacion automatica de riego
+Descripcion El sistema debera activar automaticamente el mecanismo de riego cuando la humedad del suelo sea inferior al nivel requerido.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web / Arduino
+Precondicion El sensor debe reportar humedad baja y el modulo de riego debe estar disponible.
+Postcondicion El sistema envia la orden de riego al dispositivo Arduino.
+Criterio de aceptacion Cuando la humedad baja del umbral, el sistema genera una orden de riego y registra la accion realizada.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-016
+Nombre Registro de eventos de riego
+Descripcion El sistema debera guardar cada activacion de riego indicando arbol, fecha, hora, duracion, humedad previa y resultado.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion Debe ejecutarse un riego automatico o manual.
+Postcondicion El evento queda disponible para auditoria y estadisticas.
+Criterio de aceptacion Cada riego realizado aparece en el historial del arbol con sus datos completos.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-017
+Nombre Generacion de alertas de mantenimiento
+Descripcion El sistema debera generar alertas cuando un arbol necesite mantenimiento por humedad baja, estado critico, enfermedad, falta de riego o condiciones ambientales adversas.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion Deben existir datos del arbol o lecturas ambientales que indiquen riesgo.
+Postcondicion La alerta queda registrada y visible para el gestor ambiental.
+Criterio de aceptacion El sistema genera una alerta cuando detecta una condicion de riesgo y la muestra en el panel correspondiente.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-018
+Nombre Dashboard de gestor ambiental
+Descripcion El sistema debera mostrar al gestor ambiental un resumen de arboles, especies, zonas, alertas y porcentaje de riesgo.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental
+Precondicion El gestor ambiental debe estar autenticado.
+Postcondicion El gestor visualiza indicadores clave para tomar decisiones.
+Criterio de aceptacion El dashboard muestra total de arboles, arboles en riesgo, especies, zonas y alertas activas.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-019
+Nombre Estadisticas de arboles por especie
+Descripcion El sistema debera mostrar estadisticas sobre la cantidad de arboles registrados por especie.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir arboles registrados con especie definida.
+Postcondicion El gestor visualiza la distribucion de especies.
+Criterio de aceptacion El sistema genera una grafica o tabla con el conteo de arboles por especie.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-020
+Nombre Estadisticas de arboles por zona
+Descripcion El sistema debera mostrar la cantidad de arboles registrados por zona o ubicacion.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Los arboles deben tener ubicacion registrada.
+Postcondicion El gestor identifica las zonas con mayor o menor cobertura verde.
+Criterio de aceptacion El sistema muestra una tabla o grafica con arboles agrupados por zona.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-021
+Nombre Estadisticas de arboles por estado
+Descripcion El sistema debera mostrar la cantidad de arboles segun su estado, como saludable, enfermo, critico o muerto.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental
+Precondicion Los arboles deben tener un estado registrado.
+Postcondicion El gestor conoce la situacion general del arbolado urbano.
+Criterio de aceptacion El sistema muestra el conteo de arboles por estado y el porcentaje de riesgo.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-022
+Nombre Identificacion de zonas criticas
+Descripcion El sistema debera identificar zonas con mayor concentracion de arboles en riesgo.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental
+Precondicion Deben existir arboles con estado de riesgo y ubicacion registrada.
+Postcondicion El gestor visualiza las zonas prioritarias para intervencion.
+Criterio de aceptacion El sistema ordena las zonas por cantidad o porcentaje de arboles en riesgo.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-023
+Nombre Analisis de supervivencia por especie
+Descripcion El sistema debera analizar que especies presentan mejores condiciones de supervivencia segun su estado registrado.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental
+Precondicion Deben existir arboles registrados por especie y estado.
+Postcondicion El gestor obtiene informacion para futuras campanas de reforestacion.
+Criterio de aceptacion El sistema muestra el porcentaje de arboles saludables por especie.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-024
+Nombre Generacion de reportes ambientales
+Descripcion El sistema debera permitir consultar reportes sobre arboles, especies, zonas criticas, alertas y estado general del proyecto.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir datos registrados en el sistema.
+Postcondicion El usuario visualiza informacion consolidada para gestion ambiental.
+Criterio de aceptacion El sistema muestra un reporte con resumen, estadisticas y arboles en alerta.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-025
+Nombre Control de acceso por roles
+Descripcion El sistema debera restringir funcionalidades segun el rol del usuario: ciudadano, gestor ambiental y administrador.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion El usuario debe iniciar sesion.
+Postcondicion El usuario accede solo a las funciones permitidas para su rol.
+Criterio de aceptacion Un usuario comun no puede ingresar a pantallas de administrador o gestor ambiental sin permisos.
+Estado Propuesto
+
+Campo Descripcion / Ejemplo
+ID RF-026
+Nombre Panel de administrador
+Descripcion El sistema debera permitir al administrador acceder a un panel general con permisos completos sobre usuarios, reportes y modulos del sistema.
+Prioridad (MoSCoW) Should Have
+Actor principal Administrador
+Precondicion El administrador debe estar autenticado.
+Postcondicion El administrador visualiza opciones de gestion global.
+Criterio de aceptacion El sistema muestra el dashboard administrativo solo a usuarios con rol de administrador.
+Estado Propuesto
+
+============================================================
+REQUERIMIENTOS FUNCIONALES POR PROPONER
+============================================================
+
+Campo Descripcion / Ejemplo
+ID RF-027
+Nombre Registro de dispositivos IoT
+Descripcion El sistema debera permitir registrar dispositivos Arduino indicando codigo, ubicacion, arbol asociado, sensores instalados y estado operativo.
+Prioridad (MoSCoW) Must Have
+Actor principal Administrador / Gestor ambiental
+Precondicion El usuario debe estar autenticado con permisos de gestion.
+Postcondicion El dispositivo queda asociado a uno o varios arboles monitoreados.
+Criterio de aceptacion El sistema registra el dispositivo y permite identificar de que arbol provienen sus lecturas.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-028
+Nombre Autenticacion de dispositivos IoT
+Descripcion El sistema debera validar que cada lectura recibida provenga de un dispositivo autorizado mediante token, clave o identificador seguro.
+Prioridad (MoSCoW) Must Have
+Actor principal Dispositivo Arduino / Sistema web
+Precondicion El dispositivo debe estar registrado y activo.
+Postcondicion Solo se aceptan datos provenientes de dispositivos confiables.
+Criterio de aceptacion El sistema rechaza lecturas sin credenciales validas y registra el intento fallido.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-029
+Nombre Historial de lecturas ambientales
+Descripcion El sistema debera permitir consultar el historial de humedad, temperatura y otros sensores por arbol, fecha y rango horario.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir lecturas ambientales registradas.
+Postcondicion El usuario visualiza la evolucion ambiental del arbol.
+Criterio de aceptacion El sistema filtra lecturas por arbol y rango de fechas, mostrando tabla y grafica.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-030
+Nombre Configuracion de umbrales de humedad
+Descripcion El sistema debera permitir configurar los niveles minimos y optimos de humedad por especie, zona o tipo de suelo.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental / Administrador
+Precondicion El usuario debe tener permisos de configuracion.
+Postcondicion Los umbrales quedan guardados y se usan para alertas y riego automatico.
+Criterio de aceptacion El sistema aplica el umbral configurado al analizar nuevas lecturas de humedad.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-031
+Nombre Riego manual remoto
+Descripcion El sistema debera permitir al gestor ambiental activar o cancelar el riego manualmente desde la plataforma.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental
+Precondicion El dispositivo de riego debe estar conectado y disponible.
+Postcondicion El sistema envia la orden manual al Arduino y registra la accion.
+Criterio de aceptacion El gestor activa el riego desde la web y el evento queda registrado en el historial.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-032
+Nombre Programacion de riego
+Descripcion El sistema debera permitir programar horarios, frecuencia y duracion de riego por arbol, zona o especie.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental
+Precondicion Debe existir un dispositivo de riego asociado.
+Postcondicion El sistema ejecuta riegos segun la programacion configurada.
+Criterio de aceptacion El gestor crea una programacion y el sistema la ejecuta en el horario establecido.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-033
+Nombre Bloqueo de riego por condiciones no seguras
+Descripcion El sistema debera impedir el riego automatico cuando el sensor reporte error, el tanque no tenga agua, exista mantenimiento activo o el dispositivo este desconectado.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web / Arduino
+Precondicion Debe existir informacion del estado del dispositivo o sistema de riego.
+Postcondicion El riego se bloquea y se genera una alerta tecnica.
+Criterio de aceptacion El sistema no activa el riego si detecta una condicion no segura y registra el motivo.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-034
+Nombre Confirmacion de riego ejecutado
+Descripcion El sistema debera recibir confirmacion del Arduino despues de activar el riego, indicando si la accion fue exitosa o fallida.
+Prioridad (MoSCoW) Must Have
+Actor principal Arduino / Sistema web
+Precondicion El sistema debe haber enviado una orden de riego.
+Postcondicion El evento de riego queda marcado como exitoso o fallido.
+Criterio de aceptacion El sistema actualiza el estado del evento segun la respuesta recibida del dispositivo.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-035
+Nombre Gestion de alertas
+Descripcion El sistema debera permitir revisar, asignar, atender, cerrar y comentar alertas de mantenimiento o fallas IoT.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental
+Precondicion Debe existir una alerta generada.
+Postcondicion La alerta queda con estado actualizado y trazabilidad de atencion.
+Criterio de aceptacion El gestor cambia una alerta de pendiente a atendida y registra una observacion.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-036
+Nombre Notificaciones por correo
+Descripcion El sistema debera enviar notificaciones por correo cuando exista una alerta critica, falla de sensor o riego no ejecutado.
+Prioridad (MoSCoW) Should Have
+Actor principal Sistema web
+Precondicion El usuario responsable debe tener correo registrado.
+Postcondicion El responsable recibe una notificacion con informacion del problema.
+Criterio de aceptacion Al generarse una alerta critica, el sistema envia un correo al gestor asignado.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-037
+Nombre Notificaciones en la plataforma
+Descripcion El sistema debera mostrar notificaciones internas sobre alertas recientes, sensores desconectados, arboles criticos y acciones pendientes.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado / Gestor ambiental
+Precondicion El usuario debe iniciar sesion.
+Postcondicion El usuario visualiza avisos relevantes en su panel.
+Criterio de aceptacion El sistema muestra una notificacion cuando existe una alerta activa relacionada con su rol.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-038
+Nombre Clasificacion automatica del estado del arbol
+Descripcion El sistema debera actualizar o sugerir el estado del arbol segun humedad, temperatura, frecuencia de riego, alertas y observaciones registradas.
+Prioridad (MoSCoW) Should Have
+Actor principal Sistema web
+Precondicion Deben existir datos ambientales o de mantenimiento suficientes.
+Postcondicion El sistema sugiere o actualiza el estado del arbol.
+Criterio de aceptacion Si un arbol presenta humedad baja recurrente, el sistema lo clasifica como en riesgo o genera una recomendacion.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-039
+Nombre Registro de mantenimiento de arboles
+Descripcion El sistema debera permitir registrar actividades de mantenimiento como poda, fertilizacion, revision sanitaria, cambio de sensor o riego manual.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental
+Precondicion El arbol debe existir en el sistema.
+Postcondicion La actividad queda registrada en el historial del arbol.
+Criterio de aceptacion El gestor registra una actividad y esta aparece en la ficha historica del arbol.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-040
+Nombre Asignacion de responsables de mantenimiento
+Descripcion El sistema debera permitir asignar alertas o tareas de mantenimiento a gestores ambientales o personal responsable.
+Prioridad (MoSCoW) Should Have
+Actor principal Administrador / Gestor ambiental
+Precondicion Debe existir una alerta o tarea pendiente.
+Postcondicion La tarea queda asignada a un responsable.
+Criterio de aceptacion El sistema muestra el responsable asignado y permite dar seguimiento al avance.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-041
+Nombre Seguimiento de tareas de mantenimiento
+Descripcion El sistema debera permitir visualizar tareas pendientes, en proceso, vencidas y atendidas.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir tareas creadas o asignadas.
+Postcondicion El usuario conoce el avance operativo de mantenimiento.
+Criterio de aceptacion El sistema permite filtrar tareas por estado, responsable, zona y prioridad.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-042
+Nombre Busqueda y filtrado avanzado de arboles
+Descripcion El sistema debera permitir buscar y filtrar arboles por especie, estado, zona, fecha de plantacion, responsable, nivel de riesgo o humedad.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado / Gestor ambiental
+Precondicion Deben existir arboles registrados.
+Postcondicion El usuario obtiene una lista segmentada de arboles.
+Criterio de aceptacion El sistema aplica los filtros seleccionados y muestra solo los arboles que cumplen los criterios.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-043
+Nombre Filtros en el mapa interactivo
+Descripcion El sistema debera permitir filtrar los marcadores del mapa por especie, estado, zona, humedad o alertas activas.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental / Ciudadano
+Precondicion El mapa debe tener arboles georreferenciados.
+Postcondicion El mapa muestra solo los arboles filtrados.
+Criterio de aceptacion Al seleccionar "arboles criticos", el mapa muestra unicamente los arboles en estado critico o con alerta.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-044
+Nombre Capas de riesgo ambiental en el mapa
+Descripcion El sistema debera mostrar capas visuales o colores en el mapa para representar zonas con mayor riesgo, baja humedad o alta frecuencia de alertas.
+Prioridad (MoSCoW) Could Have
+Actor principal Gestor ambiental
+Precondicion Deben existir datos geograficos y ambientales suficientes.
+Postcondicion El gestor identifica visualmente zonas prioritarias.
+Criterio de aceptacion El mapa representa las zonas criticas con colores o indicadores diferenciados.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-045
+Nombre Registro ciudadano de incidencias
+Descripcion El sistema debera permitir que ciudadanos reporten problemas en arboles, como sequedad, dano, plagas, vandalismo o falta de riego.
+Prioridad (MoSCoW) Should Have
+Actor principal Ciudadano / Usuario registrado
+Precondicion El ciudadano debe seleccionar un arbol o ubicacion.
+Postcondicion La incidencia queda registrada como alerta o reporte para revision.
+Criterio de aceptacion El ciudadano envia un reporte con descripcion, foto opcional y ubicacion, y el gestor lo visualiza.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-046
+Nombre Validacion de reportes ciudadanos
+Descripcion El sistema debera permitir que el gestor ambiental revise, apruebe, rechace o convierta reportes ciudadanos en tareas de mantenimiento.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental
+Precondicion Debe existir un reporte ciudadano pendiente.
+Postcondicion El reporte queda clasificado y se genera una accion si corresponde.
+Criterio de aceptacion El gestor aprueba un reporte y el sistema crea una alerta o tarea vinculada.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-047
+Nombre Carga de evidencia fotografica
+Descripcion El sistema debera permitir adjuntar fotografias de arboles, incidencias, mantenimientos y estado antes/despues.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado / Gestor ambiental
+Precondicion Debe existir un arbol, reporte o actividad relacionada.
+Postcondicion La imagen queda asociada al registro correspondiente.
+Criterio de aceptacion El sistema permite subir una foto y visualizarla en la ficha del arbol o incidencia.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-048
+Nombre Trazabilidad historica del arbol
+Descripcion El sistema debera mostrar una linea de tiempo con registros de plantacion, lecturas, riegos, alertas, mantenimientos, fotos y cambios de estado.
+Prioridad (MoSCoW) Must Have
+Actor principal Gestor ambiental / Administrador
+Precondicion El arbol debe tener eventos historicos registrados.
+Postcondicion El usuario visualiza la evolucion completa del arbol.
+Criterio de aceptacion La ficha del arbol muestra una cronologia ordenada por fecha con todos sus eventos relevantes.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-049
+Nombre Prediccion de riesgo de arboles
+Descripcion El sistema debera analizar tendencias de humedad, temperatura, estado y mantenimiento para predecir arboles con mayor probabilidad de deterioro.
+Prioridad (MoSCoW) Could Have
+Actor principal Sistema web / Gestor ambiental
+Precondicion Deben existir datos historicos suficientes.
+Postcondicion El sistema genera una lista priorizada de arboles en riesgo futuro.
+Criterio de aceptacion El sistema muestra un ranking de arboles con riesgo alto, medio o bajo basado en datos historicos.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-050
+Nombre Recomendaciones de mantenimiento
+Descripcion El sistema debera sugerir acciones de mantenimiento segun especie, edad, humedad, temperatura, estado y frecuencia de riego.
+Prioridad (MoSCoW) Could Have
+Actor principal Sistema web / Gestor ambiental
+Precondicion El sistema debe contar con reglas o parametros de recomendacion.
+Postcondicion El gestor recibe sugerencias para mejorar el cuidado del arbol.
+Criterio de aceptacion Para un arbol con humedad baja recurrente, el sistema recomienda revisar riego, suelo o sensor.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-051
+Nombre Gestion de catalogo de especies
+Descripcion El sistema debera permitir administrar especies de arboles con nombre comun, nombre cientifico, humedad recomendada, temperatura tolerada y cuidados sugeridos.
+Prioridad (MoSCoW) Should Have
+Actor principal Administrador / Gestor ambiental
+Precondicion El usuario debe tener permisos de administracion.
+Postcondicion La especie queda disponible para el registro y analisis de arboles.
+Criterio de aceptacion El sistema permite crear, editar y consultar especies con parametros ambientales.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-052
+Nombre Gestion de zonas urbanas
+Descripcion El sistema debera permitir registrar zonas, parques, urbanizaciones o sectores de Piura para organizar los arboles y alertas.
+Prioridad (MoSCoW) Should Have
+Actor principal Administrador / Gestor ambiental
+Precondicion El usuario debe tener permisos de gestion.
+Postcondicion Las zonas quedan disponibles para asociarlas a arboles, sensores y reportes.
+Criterio de aceptacion El sistema permite crear zonas y agrupar arboles por cada una.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-053
+Nombre Exportacion de reportes
+Descripcion El sistema debera permitir exportar reportes ambientales en PDF, Excel o CSV.
+Prioridad (MoSCoW) Could Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Debe existir informacion para generar el reporte.
+Postcondicion El usuario descarga el archivo del reporte.
+Criterio de aceptacion El sistema genera y descarga un reporte con datos filtrados por fecha, zona o estado.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-054
+Nombre Indicadores de ahorro de agua
+Descripcion El sistema debera calcular el ahorro estimado de agua comparando riego automatizado con riego manual o programado fijo.
+Prioridad (MoSCoW) Could Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir datos de riego y parametros de consumo.
+Postcondicion El sistema muestra indicadores de eficiencia hidrica.
+Criterio de aceptacion El reporte muestra litros usados, riegos evitados y ahorro estimado por zona o periodo.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-055
+Nombre Gestion de usuarios por administrador
+Descripcion El sistema debera permitir al administrador listar, activar, desactivar, editar roles y consultar usuarios registrados.
+Prioridad (MoSCoW) Must Have
+Actor principal Administrador
+Precondicion El administrador debe estar autenticado.
+Postcondicion Los cambios de usuarios y roles quedan guardados.
+Criterio de aceptacion El administrador cambia el rol de un usuario y el sistema aplica sus nuevos permisos.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-056
+Nombre Recuperacion de contrasena
+Descripcion El sistema debera permitir recuperar o restablecer la contrasena mediante correo electronico.
+Prioridad (MoSCoW) Should Have
+Actor principal Usuario registrado
+Precondicion El usuario debe tener un correo registrado y activo.
+Postcondicion El usuario puede definir una nueva contrasena segura.
+Criterio de aceptacion El sistema envia un enlace o codigo de recuperacion y permite actualizar la contrasena.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-057
+Nombre Bitacora de auditoria
+Descripcion El sistema debera registrar acciones importantes como inicio de sesion, registro de arboles, cambios de estado, activacion de riego, cierre de alertas y cambios de roles.
+Prioridad (MoSCoW) Should Have
+Actor principal Sistema web / Administrador
+Precondicion Debe ejecutarse una accion relevante en el sistema.
+Postcondicion La accion queda registrada con usuario, fecha, hora y detalle.
+Criterio de aceptacion El administrador consulta la bitacora y filtra acciones por usuario, fecha o modulo.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-058
+Nombre Panel publico de impacto ambiental
+Descripcion El sistema debera mostrar informacion publica sobre cantidad de arboles registrados, zonas reforestadas, alertas atendidas y ahorro de agua.
+Prioridad (MoSCoW) Could Have
+Actor principal Ciudadano / Visitante
+Precondicion Deben existir datos consolidados del proyecto.
+Postcondicion El visitante conoce el impacto de ReVerdecer Piura.
+Criterio de aceptacion La pagina publica muestra indicadores actualizados sin exponer datos privados.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-059
+Nombre Ranking de participacion ciudadana
+Descripcion El sistema debera reconocer a usuarios que registren arboles, reporten incidencias validas o participen en acciones de mantenimiento.
+Prioridad (MoSCoW) Could Have
+Actor principal Ciudadano / Usuario registrado
+Precondicion El usuario debe realizar acciones verificables en el sistema.
+Postcondicion El sistema actualiza su puntaje o nivel de participacion.
+Criterio de aceptacion El sistema muestra un ranking o insignias de participacion ambiental.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-060
+Nombre Integracion con estaciones meteorologicas o clima externo
+Descripcion El sistema debera integrar datos de clima externo, como lluvia, humedad ambiental o temperatura, para mejorar decisiones de riego.
+Prioridad (MoSCoW) Could Have
+Actor principal Sistema web
+Precondicion Debe existir una fuente de datos climatica disponible.
+Postcondicion El sistema ajusta recomendaciones o riegos segun condiciones climaticas.
+Criterio de aceptacion Si se pronostica lluvia, el sistema recomienda posponer o reducir el riego automatico.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-061
+Nombre Modo de operacion sin conexion temporal
+Descripcion El sistema debera permitir que el dispositivo IoT almacene lecturas temporalmente cuando no tenga conexion y las envie al restablecerse la comunicacion.
+Prioridad (MoSCoW) Should Have
+Actor principal Dispositivo Arduino / Sistema web
+Precondicion El dispositivo debe poder almacenar lecturas localmente.
+Postcondicion Las lecturas pendientes se sincronizan sin perder informacion.
+Criterio de aceptacion Al recuperar conexion, el sistema recibe lecturas atrasadas con fecha y hora originales.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-062
+Nombre Deteccion de sensores inactivos
+Descripcion El sistema debera detectar cuando un sensor o dispositivo deja de enviar datos durante un periodo definido.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion El dispositivo debe estar registrado y tener una frecuencia esperada de envio.
+Postcondicion Se genera una alerta tecnica por sensor inactivo.
+Criterio de aceptacion Si el sensor no envia datos dentro del tiempo maximo, el sistema genera una alerta visible para el gestor.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-063
+Nombre Validacion de datos ambientales anomalos
+Descripcion El sistema debera detectar lecturas fuera de rango, duplicadas o inconsistentes para evitar decisiones incorrectas de riego.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion El sistema debe recibir una lectura ambiental.
+Postcondicion La lectura se acepta, se marca como sospechosa o se rechaza segun reglas de validacion.
+Criterio de aceptacion El sistema rechaza una humedad negativa o una temperatura imposible y registra el error.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-064
+Nombre Gestion de parametros del sistema
+Descripcion El sistema debera permitir configurar parametros generales como frecuencia de lectura, tiempo maximo sin datos, duracion maxima de riego y niveles de prioridad de alertas.
+Prioridad (MoSCoW) Should Have
+Actor principal Administrador
+Precondicion El administrador debe estar autenticado.
+Postcondicion Los parametros quedan guardados y son aplicados por el sistema.
+Criterio de aceptacion El administrador actualiza un parametro y el sistema lo utiliza en las siguientes evaluaciones.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-065
+Nombre Priorizacion automatica de intervenciones
+Descripcion El sistema debera ordenar arboles o zonas segun urgencia considerando estado, humedad, dias sin riego, alertas y valor ambiental.
+Prioridad (MoSCoW) Should Have
+Actor principal Sistema web / Gestor ambiental
+Precondicion Deben existir datos suficientes para calcular prioridad.
+Postcondicion El gestor obtiene una lista ordenada de atencion.
+Criterio de aceptacion El sistema muestra primero los arboles con riesgo critico, humedad baja y mayor tiempo sin mantenimiento.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-066
+Nombre Compatibilidad con multiples tipos de sensores
+Descripcion El sistema debera permitir recibir y almacenar datos de sensores adicionales como luz, pH del suelo, nivel de agua, lluvia o calidad del aire.
+Prioridad (MoSCoW) Could Have
+Actor principal Administrador / Dispositivo IoT
+Precondicion El sensor debe estar registrado y asociado a un dispositivo.
+Postcondicion Las nuevas variables quedan disponibles para analisis.
+Criterio de aceptacion El sistema registra una nueva variable ambiental sin afectar las lecturas existentes.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-067
+Nombre Evaluacion de crecimiento del arbol
+Descripcion El sistema debera permitir registrar medidas de crecimiento como altura, diametro del tronco, copa y observaciones periodicas.
+Prioridad (MoSCoW) Should Have
+Actor principal Gestor ambiental
+Precondicion El arbol debe existir en el sistema.
+Postcondicion El crecimiento queda registrado para analisis historico.
+Criterio de aceptacion El gestor registra una medicion y el sistema muestra la evolucion en el tiempo.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-068
+Nombre Comparacion entre zonas reforestadas
+Descripcion El sistema debera permitir comparar zonas por cantidad de arboles, supervivencia, alertas, humedad promedio y frecuencia de riego.
+Prioridad (MoSCoW) Could Have
+Actor principal Gestor ambiental / Administrador
+Precondicion Deben existir datos de varias zonas.
+Postcondicion El usuario identifica que zonas tienen mejor o peor desempeno ambiental.
+Criterio de aceptacion El sistema muestra una comparacion grafica o tabular entre dos o mas zonas.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-069
+Nombre Gestion de campanas de reforestacion
+Descripcion El sistema debera permitir crear campanas de plantacion indicando fecha, zona, especies, participantes, objetivos y arboles asociados.
+Prioridad (MoSCoW) Could Have
+Actor principal Administrador / Gestor ambiental
+Precondicion El usuario debe tener permisos de gestion.
+Postcondicion La campana queda registrada y vinculada a los arboles plantados.
+Criterio de aceptacion El sistema permite consultar los arboles y resultados de una campana de reforestacion.
+Estado Por proponer
+
+Campo Descripcion / Ejemplo
+ID RF-070
+Nombre Control de calidad de datos de arboles
+Descripcion El sistema debera validar campos obligatorios, coordenadas validas, fechas coherentes, especies existentes y estados permitidos al registrar o editar arboles.
+Prioridad (MoSCoW) Must Have
+Actor principal Sistema web
+Precondicion El usuario debe enviar un formulario de registro o edicion.
+Postcondicion Solo se guardan registros correctos y completos.
+Criterio de aceptacion El sistema impide guardar un arbol sin especie, sin ubicacion o con coordenadas invalidas.
+Estado Por proponer
+
+============================================================
+RESUMEN DE PRIORIZACION
+============================================================
+
+Must Have:
+RF-001, RF-002, RF-003, RF-005, RF-006, RF-010, RF-011, RF-012, RF-013, RF-015, RF-016, RF-017, RF-018, RF-021, RF-022, RF-025, RF-027, RF-028, RF-029, RF-030, RF-033, RF-034, RF-035, RF-039, RF-048, RF-055, RF-062, RF-063, RF-070
+
+Should Have:
+RF-004, RF-007, RF-008, RF-009, RF-014, RF-019, RF-020, RF-023, RF-024, RF-026, RF-031, RF-032, RF-036, RF-037, RF-038, RF-040, RF-041, RF-042, RF-043, RF-045, RF-046, RF-047, RF-051, RF-052, RF-056, RF-057, RF-061, RF-064, RF-065, RF-067
+
+Could Have:
+RF-044, RF-049, RF-050, RF-053, RF-054, RF-058, RF-059, RF-060, RF-066, RF-068, RF-069
+
+Won't Have por ahora:
+No se propone excluir funcionalidades clave. Las funcionalidades Could Have pueden implementarse en una segunda etapa si el tiempo del proyecto es limitado.

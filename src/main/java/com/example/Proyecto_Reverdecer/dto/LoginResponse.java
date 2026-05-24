@@ -1,9 +1,13 @@
 package com.example.Proyecto_Reverdecer.dto;
 
-/**
- * DTO para respuesta de login con JWT, para retorna el token y datos del
- * usuario
- */
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginResponse {
 
     private String token;
@@ -13,68 +17,17 @@ public class LoginResponse {
     private String rol;
     private String mensaje;
 
-    // Constructores
-    public LoginResponse() {
-    }
-
+    // Constructor para login exitoso (sin mensaje)
     public LoginResponse(String token, String username, Long userId, String correo, String rol) {
         this.token = token;
         this.username = username;
         this.userId = userId;
         this.correo = correo;
         this.rol = rol;
-        this.mensaje = "Login exitoso";
     }
 
+    // Constructor para error (solo mensaje)
     public LoginResponse(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
 }
