@@ -1,39 +1,21 @@
 package com.example.Proyecto_Reverdecer.config;
 
 import com.example.Proyecto_Reverdecer.model.Usuario;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 
+/**
+ * Interceptor para proteger rutas del gestor
+ */
 @Component
-public class GestorAmbientalInterceptor implements HandlerInterceptor {
+public class GestorAmbientalInterceptor extends BaseRoleInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    protected String getPathPrefix() {
+        return "/gestor";
+    }
 
-        if (!request.getRequestURI().startsWith("/gestor")) {
-            return true;
-        }
-
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-        if (usuario == null) {
-            response.sendRedirect("/auth/login");
-            return false;
-        }
-
-        // Verificar rol ROLE_GESTOR_AMBIENTAL
-        boolean esGestor = "ROLE_GESTOR_AMBIENTAL".equals(usuario.getRol());
-
-        if (!esGestor) {
-            response.sendRedirect("/acceso-denegado");
-            return false;
-        }
-
-        return true;
+    @Override
+    protected boolean hasPermission(Usuario usuario) {
+        return "ROLE_GESTOR_AMBIENTAL".equals(usuario.getRol());
     }
 }

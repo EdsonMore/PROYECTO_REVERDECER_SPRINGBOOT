@@ -21,4 +21,9 @@ public class MainController {
         return "contacto";
     }
 
+    @GetMapping("/acceso-denegado")
+    public String accesoDenegado() {
+        return "acceso-denegado";
+    }
+
 }

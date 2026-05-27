@@ -35,21 +35,7 @@
           Piura
         </a>
 
-        <!-- Navegación para Usuario Común -->
-        <ul
-          class="nav-links"
-          th:if="${session.usuario != null
-                         and (session.usuario.isAdmin == null or !session.usuario.isAdmin)
-                         and (session.usuario.rol == null or session.usuario.rol == 'ROLE_USER')}"
-        >
-          <li><a th:href="@{/}">Inicio</a></li>
-          <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
-          <li><a th:href="@{/contacto}">Contacto</a></li>
-          <li><a th:href="@{/mapa/arboles}">Mapa Geológico</a></li>
-          <li><a th:href="@{/arboles}">Mís Árboles</a></li>
-        </ul>
-
-        <!-- Navegación para Admin -->
+        <!-- Navegación para Admin (se evalúa PRIMERO) -->
         <ul
           class="nav-links"
           th:if="${session.usuario != null and session.usuario.isAdmin}"
@@ -62,12 +48,26 @@
         <ul
           class="nav-links"
           th:if="${session.usuario != null
-                         and session.usuario.rol == 'ROLE_GESTOR_AMBIENTAL'
-                         and (session.usuario.isAdmin == null or !session.usuario.isAdmin)}"
+                         and !session.usuario.isAdmin
+                         and session.usuario.rol == 'ROLE_GESTOR_AMBIENTAL'}"
         >
           <li><a th:href="@{/}">Inicio</a></li>
           <li><a th:href="@{/gestor/estadisticas}">Estadísticas</a></li>
           <li><a th:href="@{/gestor/zonas-criticas}">Zonas Críticas</a></li>
+        </ul>
+
+        <!-- Navegación para Usuario Común (ROLE_USER) -->
+        <ul
+          class="nav-links"
+          th:if="${session.usuario != null
+                         and !session.usuario.isAdmin
+                         and session.usuario.rol == 'ROLE_USER'}"
+        >
+          <li><a th:href="@{/}">Inicio</a></li>
+          <li><a th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+          <li><a th:href="@{/contacto}">Contacto</a></li>
+          <li><a th:href="@{/mapa/arboles}">Mapa Geológico</a></li>
+          <li><a th:href="@{/arboles}">Mís Árboles</a></li>
         </ul>
 
         <!-- Navegación para Usuario No Autenticado -->

@@ -28,8 +28,9 @@ public class GestorAmbientalController {
 
     @GetMapping("/estadisticas")
     public String estadisticas(HttpSession session, Model model) {
-        Usuario usuario = verificarAcceso(session);
-        if (usuario == null) return "redirect:/auth/login";
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null)
+            return "redirect:/auth/login";
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("arbolesPorEspecie", gestorService.arbolesPorEspecie());
@@ -41,12 +42,11 @@ public class GestorAmbientalController {
         return "gestor/estadisticas";
     }
 
-    //   /gestor/zonas-criticas 
-
     @GetMapping("/zonas-criticas")
     public String zonasCriticas(HttpSession session, Model model) {
-        Usuario usuario = verificarAcceso(session);
-        if (usuario == null) return "redirect:/auth/login";
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null)
+            return "redirect:/auth/login";
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("zonasCriticas", gestorService.zonasCriticas());

@@ -9,51 +9,32 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repositorio JPA para la entidad Usuario
- */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    /**
-     * Busca un usuario por correo electrónico
-     */
+    // Buscar por correo
     Optional<Usuario> findByCorreo(String correo);
 
-    /**
-     * Busca un usuario por nombre de usuario (user)
-     */
+    // Buscar por nombre de usuario
     Optional<Usuario> findByUser(String user);
 
-    /**
-     * Busca un usuario por DNI
-     */
+    // Buscar por DNI
     Optional<Usuario> findByDni(String dni);
 
-    /**
-     * Obtiene todos los usuarios activos
-     */
+    // Todos los usuarios activos ordenados por nombre
     @Query("SELECT u FROM Usuario u WHERE u.activo = true ORDER BY u.nombres ASC")
     List<Usuario> findAllActivos();
 
-    /**
-     * Verifica si existe un usuario con ese correo
-     */
+    // Verifica si ya existe ese correo
     boolean existsByCorreo(String correo);
 
-    /**
-     * Verifica si existe un usuario con ese DNI
-     */
+    // Verifica si ya existe ese DNI
     boolean existsByDni(String dni);
 
-    /**
-     * Verifica si existe un usuario con ese user
-     */
+    // Verifica si ya existe ese nombre de usuario
     boolean existsByUser(String user);
 
-    /**
-     * Busca usuarios por nombre (parcial)
-     */
+    // Buscar por nombre (parcial, sin importar mayúsculas)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nombres) LIKE LOWER(CONCAT('%', :nombre, '%')) AND u.activo = true")
     List<Usuario> findByNombresContaining(@Param("nombre") String nombre);
 }
