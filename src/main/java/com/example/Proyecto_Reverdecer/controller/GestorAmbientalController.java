@@ -16,19 +16,15 @@ public class GestorAmbientalController {
     @Autowired
     private GestorAmbientalService gestorService;
 
-    @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model) {
+    // Verificación de acceso reutilizable 
+    private Usuario verificarAcceso(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null)
-            return "redirect:/auth/login";
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("resumen", gestorService.resumenDashboard());
-        model.addAttribute("arbolesPorEstado", gestorService.arbolesPorEstado());
-        model.addAttribute("alertasPorZona", gestorService.alertasPorZona());
-
-        return "gestor/dashboardGestor";
+        if (usuario == null) return null;
+        if (!usuario.esGestorAmbiental()) return null;
+        return usuario;
     }
+
+    //  /gestor/estadisticas 
 
     @GetMapping("/estadisticas")
     public String estadisticas(HttpSession session, Model model) {
@@ -59,36 +55,5 @@ public class GestorAmbientalController {
         model.addAttribute("arbolesConAlertas", gestorService.arbolesConAlertas());
 
         return "gestor/zonas-criticas";
-    }
-
-    @GetMapping("/analisis-especies")
-    public String analisisEspecies(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null)
-            return "redirect:/auth/login";
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("especiesSupervivencia", gestorService.especiesConMejorSupervivencia());
-        model.addAttribute("especiesActivas", gestorService.especiesActivasPorConteo());
-        model.addAttribute("arbolesPorEspecie", gestorService.arbolesPorEspecie());
-
-        return "gestor/analisis-especies";
-    }
-
-    @GetMapping("/reportes")
-    public String reportes(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null)
-            return "redirect:/auth/login";
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("resumen", gestorService.resumenDashboard());
-        model.addAttribute("arbolesPorEspecie", gestorService.arbolesPorEspecie());
-        model.addAttribute("arbolesPorZona", gestorService.arbolesPorZona());
-        model.addAttribute("zonasCriticas", gestorService.zonasCriticas());
-        model.addAttribute("especiesSupervivencia", gestorService.especiesConMejorSupervivencia());
-        model.addAttribute("arbolesConAlertas", gestorService.arbolesConAlertas());
-
-        return "gestor/reportes";
     }
 }

@@ -16,7 +16,7 @@
       <div class="gestor-container">
         <!-- Header -->
         <div class="gestor-header">
-          <h2><span>⚠️</span> Análisis de Zonas Críticas</h2>
+          <h2>Análisis de Zonas Críticas</h2>
           <div class="gestor-welcome">
             <strong th:text="${usuario.nombres}"></strong> · Gestor Ambiental
           </div>
@@ -25,12 +25,10 @@
         <div class="two-col-grid">
           <!-- Ranking de zonas con más alertas -->
           <div class="content-section">
-            <h3 class="section-header">
-              <span>🚨</span> Ranking de Zonas por Alertas
-            </h3>
+            <h3 class="section-header">Ranking de Zonas por Alertas</h3>
             <div th:if="${zonasCriticas.isEmpty()}">
               <p style="color: #888; text-align: center; padding: 20px 0">
-                No hay zonas críticas actualmente 🎉
+                No hay zonas críticas actualmente
               </p>
             </div>
             <div
@@ -52,9 +50,7 @@
 
           <!-- % de riesgo por zona -->
           <div class="content-section">
-            <h3 class="section-header">
-              <span>📉</span> Porcentaje de Riesgo por Zona
-            </h3>
+            <h3 class="section-header">Porcentaje de Riesgo por Zona</h3>
             <table class="data-table">
               <thead>
                 <tr>
@@ -97,7 +93,7 @@
         <!-- Listado completo de árboles con alertas -->
         <div class="content-section">
           <h3 class="section-header">
-            <span>🌳</span> Árboles con Alertas Activas
+            Árboles con Alertas Activas
             <span
               th:text="'(' + ${arbolesConAlertas.size()} + ')'"
               style="font-size: 15px; color: #e53935; margin-left: 8px"
@@ -105,7 +101,7 @@
           </h3>
           <div th:if="${arbolesConAlertas.isEmpty()}">
             <p style="color: #888; text-align: center; padding: 30px 0">
-              ✅ No hay árboles con alertas activas en este momento.
+              No hay árboles con alertas activas en este momento.
             </p>
           </div>
           <table class="data-table" th:if="${!arbolesConAlertas.isEmpty()}">
