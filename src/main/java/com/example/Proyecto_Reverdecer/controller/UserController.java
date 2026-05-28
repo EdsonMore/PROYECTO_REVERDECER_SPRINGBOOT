@@ -50,7 +50,7 @@ public class UserController {
             if (Boolean.TRUE.equals(encontrado.getIsAdmin())) {
                 return "redirect:/admin/dashboard";
             } else if ("ROLE_GESTOR_AMBIENTAL".equals(encontrado.getRol())) {
-                return "redirect:/gestor/dashboard";
+                return "redirect:/gestor/estadisticas";
             }
             return "redirect:/";
         }
