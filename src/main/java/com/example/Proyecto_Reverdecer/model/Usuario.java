@@ -84,7 +84,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Arbol> arboles = new ArrayList<>();
 
-    // Estos métodos SÍ los escribes tú (Lombok no los genera)
+    
     public boolean esAdmin() {
         return Boolean.TRUE.equals(isAdmin) || "ROLE_ADMIN".equals(rol);
     }

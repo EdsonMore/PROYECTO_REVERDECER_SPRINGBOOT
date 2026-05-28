@@ -12,29 +12,29 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    // Buscar por correo
+    // Buscamos por correo
     Optional<Usuario> findByCorreo(String correo);
 
-    // Buscar por nombre de usuario
+    // Buscamos por nombre de usuario
     Optional<Usuario> findByUser(String user);
 
-    // Buscar por DNI
+    // Buscamos por DNI
     Optional<Usuario> findByDni(String dni);
 
     // Todos los usuarios activos ordenados por nombre
     @Query("SELECT u FROM Usuario u WHERE u.activo = true ORDER BY u.nombres ASC")
     List<Usuario> findAllActivos();
 
-    // Verifica si ya existe ese correo
+    // Verificamos si ya existe ese correo
     boolean existsByCorreo(String correo);
 
-    // Verifica si ya existe ese DNI
+    // Verificamos si ya existe ese DNI
     boolean existsByDni(String dni);
 
-    // Verifica si ya existe ese nombre de usuario
+    // Verificamos si ya existe ese nombre de usuario
     boolean existsByUser(String user);
 
-    // Buscar por nombre (parcial, sin importar mayúsculas)
+    // Buscamos por nombre sin importar mayúsculas
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nombres) LIKE LOWER(CONCAT('%', :nombre, '%')) AND u.activo = true")
     List<Usuario> findByNombresContaining(@Param("nombre") String nombre);
 }

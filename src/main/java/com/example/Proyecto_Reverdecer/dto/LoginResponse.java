@@ -17,7 +17,7 @@ public class LoginResponse {
     private String rol;
     private String mensaje;
 
-    // Constructor para login exitoso (sin mensaje)
+    // Constructor para login exitos
     public LoginResponse(String token, String username, Long userId, String correo, String rol) {
         this.token = token;
         this.username = username;

@@ -10,10 +10,10 @@ import java.util.Date;
 @Service
 public class JwtSecurity {
 
-    // Clave fija para firmar tokens
+    //clave fija para los tokens
     private final SecretKey key = Keys.hmacShaKeyFor("Leyva-expondrá-1234567890-PROYECTO-REVERDECER".getBytes());
 
-    // Genera token solo con email
+    // Generamos token solo con email
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -35,7 +35,7 @@ public class JwtSecurity {
                 .compact();
     }
 
-    // Verifica si el token es válido
+    // Verificamis si el token es válido
     public boolean validarToken(String token) {
         try {
             Jwts.parser()
@@ -49,7 +49,7 @@ public class JwtSecurity {
         }
     }
 
-    // Obtiene el email del token
+    // Obtienemos el email del token
     public String extractUsername(String token) {
         try {
             return Jwts.parser()
@@ -64,7 +64,7 @@ public class JwtSecurity {
         }
     }
 
-    // Extrae cualquier campo del token
+    // Extraemos cualquier campo del token
     public Object extractClaim(String token, String claimName) {
         try {
             return Jwts.parser()

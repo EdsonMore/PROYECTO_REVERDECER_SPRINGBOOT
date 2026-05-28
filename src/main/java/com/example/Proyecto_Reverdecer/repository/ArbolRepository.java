@@ -22,7 +22,6 @@ public interface ArbolRepository extends JpaRepository<Arbol, Long> {
     // Por especie exacta
     List<Arbol> findByEspecie(String especie);
 
-    // Por estado (VIVO, MUERTO, EN_RIESGO)
     List<Arbol> findByEstado(String estado);
 
     // Por ubicación (búsqueda parcial sin importar mayúsculas)

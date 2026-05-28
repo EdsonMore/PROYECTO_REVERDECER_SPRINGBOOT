@@ -20,7 +20,7 @@ public class ArbolService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Registra árbol nuevo asociado a un usuario
+    // Registramos el árbol por usuario 
     public boolean registrar(Arbol arbol, Long usuarioId) {
         System.out.println("\n=== SERVICE: REGISTRO ÁRBOL ===");
 
@@ -53,27 +53,27 @@ public class ArbolService {
         }
     }
 
-    // Árboles de un usuario (ordenados por fecha)
+    // arboles de cada usuario
     public List<Arbol> obtenerPorUsuario(Long usuarioId) {
         return arbolRepository.findByUsuarioIdOrderByFecha(usuarioId);
     }
 
-    // Buscar por ID
+    // buscamos por ID
     public Arbol obtenerPorId(Long id) {
         return arbolRepository.findById(id).orElse(null);
     }
 
-    // Todos los árboles
+    // todos los árboles
     public List<Arbol> listarTodos() {
         return arbolRepository.findAll();
     }
 
-    // Filtrar por estado
+    // Filtramos por estado
     public List<Arbol> listarPorEstado(String estado) {
         return arbolRepository.findByEstado(estado);
     }
 
-    // Guardar (compatible con código legacy)
+    // Guardamos
     public Arbol guardar(Arbol arbol) {
         System.out.println("\n=== SERVICE: GUARDAR ÁRBOL ===");
         System.out.println("Nombre: " + arbol.getNombre());
@@ -107,7 +107,7 @@ public class ArbolService {
         }
     }
 
-    // Actualizar árbol existente
+    // Actualizamos árbol existente
     public boolean actualizar(Arbol arbol) {
         if (arbol.getId() == null) {
             return false;
@@ -125,7 +125,7 @@ public class ArbolService {
         }
     }
 
-    // Eliminar por ID
+    // Eliminamos por ID
     public boolean eliminar(Long id) {
         try {
             if (arbolRepository.existsById(id)) {
