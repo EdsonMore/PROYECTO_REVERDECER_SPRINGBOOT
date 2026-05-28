@@ -25,7 +25,6 @@ public class GestorAmbientalService {
                         Collectors.counting()));
     }
 
-    /** Árboles agrupados por zona/ubicación (primer segmento de ubicación) */
     public Map<String, Long> arbolesPorZona() {
         return arbolRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
@@ -33,7 +32,6 @@ public class GestorAmbientalService {
                         Collectors.counting()));
     }
 
-    /** Árboles agrupados por estado */
     public Map<String, Long> arbolesPorEstado() {
         return arbolRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
@@ -67,7 +65,6 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
-    /** Porcentaje de riesgo por zona */
     public Map<String, Double> porcentajeRiesgoPorZona() {
         Map<String, Long> totalPorZona = arbolesPorZona();
         Map<String, Long> riesgoPorZona = zonasCriticas();
@@ -90,7 +87,6 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
-    //  Análisis de especies 
     public Map<String, Double> especiesConMejorSupervivencia() {
         Map<String, List<Arbol>> porEspecie = arbolRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
@@ -116,7 +112,7 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
-    /** Conteo de árboles activos (no muertos) por especie */
+    
     public Map<String, Long> especiesActivasPorConteo() {
         return arbolRepository.findAll().stream()
                 .filter(a -> !"MUERTO".equalsIgnoreCase(a.getEstado()))
@@ -142,7 +138,6 @@ public class GestorAmbientalService {
                 .collect(Collectors.toList());
     }
 
-    /** Cantidad de alertas por zona/distrito */
     public Map<String, Long> alertasPorZona() {
         return arbolRepository.findAll().stream()
                 .filter(a -> esEstadoRiesgo(a.getEstado()))
@@ -158,7 +153,7 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
-    //  Resumen general para dashboard 
+    //  Resumen general del dashboard 
 
     public Map<String, Object> resumenDashboard() {
         Map<String, Object> resumen = new LinkedHashMap<>();
@@ -184,7 +179,6 @@ public class GestorAmbientalService {
         return resumen;
     }
 
-    //  Helpers privados 
 
     private String extraerZona(String ubicacion) {
         if (ubicacion == null || ubicacion.isBlank()) return "Sin zona";

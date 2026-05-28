@@ -67,7 +67,7 @@ public class ArbolController {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) {
-            System.err.println("❌ Usuario en sesión es NULL");
+            System.err.println(" Usuario en sesión es NULL");
             return "redirect:/auth/login";
         }
 

@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        // Asignar rol según el campo rol o isAdmin
+        // aca asignamos rol según el campo rol o isAdmin
         if (Boolean.TRUE.equals(usuario.getIsAdmin())) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else if ("ROLE_GESTOR_AMBIENTAL".equals(usuario.getRol())) {

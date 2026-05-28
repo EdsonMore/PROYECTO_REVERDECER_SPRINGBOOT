@@ -133,17 +133,17 @@ public class UsuarioService {
             System.out.println("  - Activo: " + usuario.getActivo());
 
             if (!usuario.getActivo()) {
-                System.out.println("❌ Usuario inactivo");
+                System.out.println("Usuario inactivo");
                 return null;
             }
             if (passwordEncoder.matches(password, usuario.getPassword())) {
-                System.out.println("✓ Contraseña correcta");
-                System.out.println("✓ Retornando usuario con ID: " + usuario.getId());
+                System.out.println("Contraseña correcta");
+                System.out.println("Retornando usuario con ID: " + usuario.getId());
                 return usuario;
             }
-            System.out.println("❌ Contraseña incorrecta");
+            System.out.println("Contraseña incorrecta");
         } else {
-            System.out.println("❌ Usuario NO encontrado en BD");
+            System.out.println("Usuario NO encontrado en BD");
         }
 
         System.out.println("Usuario NO encontrado o contraseña incorrecta");

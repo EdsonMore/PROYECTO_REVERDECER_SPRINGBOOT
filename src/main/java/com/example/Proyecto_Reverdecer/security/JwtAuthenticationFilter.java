@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Solo para rutas /api (API REST)
+        // Solo para rutas de la api rest
         if (path.startsWith("/api/")) {
             try {
                 String token = extractToken(request);
@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Saca el token del header "Authorization: Bearer xxxxx"
+    
     private String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader(AUTHORIZATION_HEADER);
 

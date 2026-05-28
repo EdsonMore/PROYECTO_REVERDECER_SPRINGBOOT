@@ -16,7 +16,7 @@ public class GestorAmbientalController {
     @Autowired
     private GestorAmbientalService gestorService;
 
-    // Verificación de acceso reutilizable 
+    
     private Usuario verificarAcceso(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) return null;
