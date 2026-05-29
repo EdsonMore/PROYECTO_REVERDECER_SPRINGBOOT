@@ -11,19 +11,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controlador REST para autenticación con JWT
- * Proporciona endpoints para obtener tokens JWT
- * Compatible con la autenticación tradicional del proyecto
- */
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ApiAuthController {
 
+
+//autentica usuarios
     @Autowired
     private UsuarioService usuarioService;
 
+//clase que genera y valida tokens JWT
     @Autowired
     private JwtSecurity jwtSecurity;
 

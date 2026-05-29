@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/gestor")
 public class GestorAmbientalController {
 
+
+    //servicio para las estadisticas
     @Autowired
     private GestorAmbientalService gestorService;
 
-    
+    //verifica que el usuario es gestor ambiental
     private Usuario verificarAcceso(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) return null;
@@ -24,7 +26,7 @@ public class GestorAmbientalController {
         return usuario;
     }
 
-    //  /gestor/estadisticas 
+    //muestra estadisticas generales de los arboles
 
     @GetMapping("/estadisticas")
     public String estadisticas(HttpSession session, Model model) {
@@ -41,6 +43,8 @@ public class GestorAmbientalController {
 
         return "gestor/estadisticas";
     }
+
+    //muestra zonas criticas 
 
     @GetMapping("/zonas-criticas")
     public String zonasCriticas(HttpSession session, Model model) {

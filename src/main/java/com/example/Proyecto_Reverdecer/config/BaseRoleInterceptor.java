@@ -6,9 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-/**
- * Aca tenemso la lógica común para validar roles y proteger rutas.
- */
+// Aca tenemso la lógica común para validar roles y proteger rutas.
+ 
 public abstract class BaseRoleInterceptor implements HandlerInterceptor {
 
     protected abstract String getPathPrefix();
