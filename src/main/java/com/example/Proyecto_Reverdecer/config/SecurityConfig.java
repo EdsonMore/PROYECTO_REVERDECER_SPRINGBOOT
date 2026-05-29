@@ -18,15 +18,19 @@ import com.example.Proyecto_Reverdecer.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
+// Servicio que obtiene los usuarios desde la base de datos
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+  // Encargado de cifrar y validar contraseñas   
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // Filtro para validar tokens JWT en cada solicitud
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    //configura el admin de autenticacion
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
@@ -37,6 +41,7 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
+    //define permisos de acceso y seguridad general
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -87,6 +92,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    //gestiona eventos relacionados con la sesion
     @Bean
     public org.springframework.security.web.session.HttpSessionEventPublisher httpSessionEventPublisher() {
         return new org.springframework.security.web.session.HttpSessionEventPublisher();

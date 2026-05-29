@@ -9,12 +9,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+   //interceptor para validar acceso de los roles     
     @Autowired
     private AdminInterceptor adminInterceptor;
+
 
     @Autowired
     private GestorAmbientalInterceptor gestorAmbientalInterceptor;
 
+
+    //registra los interceptores segun la ruta
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
@@ -24,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/gestor/**");
     }
 
+    //configura las rutas para los recursos estaticos
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")

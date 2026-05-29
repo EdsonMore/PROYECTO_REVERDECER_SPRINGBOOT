@@ -16,12 +16,16 @@ import java.util.ArrayList;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    //clase que genera y valida tokens JWT
     @Autowired
     private JwtSecurity jwtSecurity;
 
+
+    //constantes para extraer el token del header
     private static final String BEARER_PREFIX = "Bearer ";
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
+    //filtra cada petición para validar el token JWT
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -53,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    
+    //extrae el token del header
     private String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader(AUTHORIZATION_HEADER);
 

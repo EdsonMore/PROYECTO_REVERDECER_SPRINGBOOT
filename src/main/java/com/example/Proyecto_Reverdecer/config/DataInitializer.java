@@ -9,9 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
-/**
- * Aca estams creando usuarios de prueba por defecto, como admin y gestor
- */
+
+//Aca estams creando usuarios de prueba por defecto, como admin y gestor
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -79,9 +78,9 @@ public class DataInitializer implements CommandLineRunner {
         guardarUsuario(gestor, "Gestor Ambiental");
     }
 
-    /**
-     * Crea un usuario con datos básicos
-     */
+    
+     // Crea un usuario con datos básicos
+     
     private Usuario crearUsuario(String user, String password, String correo,
             String nombres, String apellidoPaterno,
             String apellidoMaterno, String dni) {
@@ -102,9 +101,9 @@ public class DataInitializer implements CommandLineRunner {
         return usuario;
     }
 
-    /**
-     * Guarda un usuario y muestra mensajes
-     */
+    
+     // Guarda un usuario y muestra mensajes
+     
     private void guardarUsuario(Usuario usuario, String tipo) {
         try {
             usuarioRepository.save(usuario);

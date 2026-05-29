@@ -21,9 +21,9 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Registra un nuevo usuario en la base de datos
-     */
+    
+    //Registra un nuevo usuario en la base de datos
+     
     public boolean registrar(Usuario usuario) {
         System.out.println("\n=== SERVICE: REGISTRO ===");
 
@@ -116,9 +116,9 @@ public class UsuarioService {
         }
     }
 
-    /**
-     * Autentica un usuario con correo y contraseña
-     */
+    
+    //Autentica un usuario con correo y contraseña
+     
     public Usuario autenticar(String correo, String password) {
         System.out.println("\n=== SERVICE: AUTENTICACIÓN ===");
         System.out.println("Buscando: " + correo);
@@ -150,44 +150,44 @@ public class UsuarioService {
         return null;
     }
 
-    /**
-     * Busca un usuario por correo
-     */
+    
+    //Busca un usuario por correo
+    
     public Usuario buscarPorCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo).orElse(null);
     }
 
-    /**
-     * Busca un usuario por ID
-     */
+    
+    //Busca un usuario por ID
+     
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    /**
-     * Obtiene todos los usuarios activos
-     */
+    
+    //Obtiene todos los usuarios activos
+     
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAllActivos();
     }
 
-    /**
-     * Obtiene todos los usuarios (incluyendo inactivos)
-     */
+    
+    //Obtiene todos los usuarios (incluyendo inactivos)
+     
     public List<Usuario> listarTodosAdmin() {
         return usuarioRepository.findAll();
     }
 
-    /**
-     * Busca usuarios por nombre
-     */
+    
+    //Busca usuarios por nombre
+    
     public List<Usuario> buscarPorNombre(String nombre) {
         return usuarioRepository.findByNombresContaining(nombre);
     }
 
-    /**
-     * Actualiza un usuario existente
-     */
+    
+    //Actualiza un usuario existente
+    
     public boolean actualizar(Usuario usuario) {
         if (usuario.getId() == null) {
             return false;
@@ -214,9 +214,9 @@ public class UsuarioService {
         }
     }
 
-    /**
-     * Cambia la contraseña de un usuario
-     */
+    
+     //Cambia la contraseña de un usuario
+    
     public boolean cambiarPassword(Long usuarioId, String passwordActual, String passwordNueva) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         
@@ -240,9 +240,9 @@ public class UsuarioService {
         return true;
     }
 
-    /**
-     * Desactiva un usuario
-     */
+    
+     //Desactiva un usuario
+    
     public boolean desactivar(Long usuarioId) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         
@@ -256,9 +256,9 @@ public class UsuarioService {
         return true;
     }
 
-    /**
-     * Valida campos mínimos del usuario
-     */
+    
+    //Valida campos mínimos del usuario
+    
     private boolean validarCamposMinimos(Usuario usuario) {
         if (usuario.getNombres() == null || usuario.getNombres().trim().isEmpty()) {
             System.out.println("Nombres es obligatorio");
@@ -279,24 +279,24 @@ public class UsuarioService {
         return true;
     }
 
-    /**
-     * Valida el formato del correo electrónico
-     */
+    
+    //Valida el formato del correo electrónico
+    
     private boolean validarCorreo(String correo) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         return Pattern.compile(emailRegex).matcher(correo).matches();
     }
 
-    /**
-     * Valida la contraseña (mínimo 6 caracteres)
-     */
+    
+    //Valida la contraseña (mínimo 6 caracteres)
+    
     private boolean validarPassword(String password) {
         return password != null && password.length() >= 6;
     }
 
-    /**
-     * Valida que el usuario sea mayor de 18 años
-     */
+    
+    //valida que el usuario sea mayor de 18 años
+    
     private boolean validarEdad(LocalDate fechaNacimiento) {
         if (fechaNacimiento == null)
             return true;
@@ -305,9 +305,9 @@ public class UsuarioService {
         return edad >= 18;
     }
 
-    /**
-     * Valida el formato del documento según el tipo
-     */
+    
+    //Valida el formato del documento según el tipo
+     
     private boolean validarDocumento(String tipoDoc, String numero) {
         if (numero == null)
             return false;
@@ -326,9 +326,9 @@ public class UsuarioService {
         }
     }
 
-    /**
-     * Genera un nombre de usuario único a partir del correo o nombres
-     */
+
+    //Genera un nombre de usuario único a partir del correo o nombres
+    
     private String generarUsuario(String nombres, String correo) {
         String baseUsuario;
         

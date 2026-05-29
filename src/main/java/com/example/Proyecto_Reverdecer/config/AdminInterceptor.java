@@ -3,9 +3,9 @@ package com.example.Proyecto_Reverdecer.config;
 import com.example.Proyecto_Reverdecer.model.Usuario;
 import org.springframework.stereotype.Component;
 
-/**
- * Protege las rutas y validamos que el usuario sea admin
- */
+
+ //Protege las rutas y validamos que el usuario sea admin
+
 @Component
 public class AdminInterceptor extends BaseRoleInterceptor {
 

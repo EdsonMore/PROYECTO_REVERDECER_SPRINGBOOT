@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/perfil")
 public class PerfilController {
 
+    //setvicio para manejar usuarios
     private final UsuarioService usuarioService;
 
+    //inyeccion del servicio de usuarios
     public PerfilController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
+    //muestra el perfil del usuario
     @GetMapping
     public String mostrarPerfil(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -28,6 +31,7 @@ public class PerfilController {
         return "perfil";
     }
 
+    //actualiza el perfil del usuario
     @PostMapping
     public String actualizarPerfil(@ModelAttribute Usuario usuarioActualizado,
             HttpSession session, Model model) {

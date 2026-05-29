@@ -11,13 +11,17 @@ import java.util.stream.Collectors;
 @Service
 public class GestorAmbientalService {
 
+    //repositorio para consultar arboles
     @Autowired
     private ArbolRepository arbolRepository;
 
+    //cuenta el total de árboles registrados
     public long totalArboles() {
         return arbolRepository.count();
     }
 
+
+    //agrupa los arboles por especie, zona y estado
     public Map<String, Long> arbolesPorEspecie() {
         return arbolRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
@@ -39,6 +43,7 @@ public class GestorAmbientalService {
                         Collectors.counting()));
     }
 
+    //porcentaje de árboles en riesgo
     public double porcentajeEnRiesgo() {
         long total = arbolRepository.count();
         if (total == 0) return 0.0;
@@ -50,6 +55,8 @@ public class GestorAmbientalService {
         return Math.round((enRiesgo * 100.0 / total) * 10.0) / 10.0;
     }
 
+
+    //obtiene las zonas más criticas
     public Map<String, Long> zonasCriticas() {
         return arbolRepository.findAll().stream()
                 .filter(a -> esEstadoRiesgo(a.getEstado()))
@@ -65,6 +72,8 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
+
+    //porcentaje de árboles en riesgo por zona
     public Map<String, Double> porcentajeRiesgoPorZona() {
         Map<String, Long> totalPorZona = arbolesPorZona();
         Map<String, Long> riesgoPorZona = zonasCriticas();
@@ -87,6 +96,7 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
+    //especies con mejor supervivencia
     public Map<String, Double> especiesConMejorSupervivencia() {
         Map<String, List<Arbol>> porEspecie = arbolRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
@@ -112,7 +122,7 @@ public class GestorAmbientalService {
                         LinkedHashMap::new));
     }
 
-    
+    //cuenta especies activas por conteo 
     public Map<String, Long> especiesActivasPorConteo() {
         return arbolRepository.findAll().stream()
                 .filter(a -> !"MUERTO".equalsIgnoreCase(a.getEstado()))

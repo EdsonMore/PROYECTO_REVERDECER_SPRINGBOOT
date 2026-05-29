@@ -17,9 +17,11 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    //repositorio para buscar usuario 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    //carga usuario y asigna rol para autenticación
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByUser(username)

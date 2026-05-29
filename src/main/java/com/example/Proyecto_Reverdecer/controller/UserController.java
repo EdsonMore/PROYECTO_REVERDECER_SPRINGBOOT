@@ -12,18 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class UserController {
 
+    //servicio para manejar usuarios
     private final UsuarioService usuarioService;
 
+    //inyeccion del servicio de usuarios
     public UserController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
+    //muestra el formulario de registro
     @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "registro";
     }
 
+    //registra un nuevo usuario
     @PostMapping("/registro")
     public String registrarUsuario(@ModelAttribute Usuario usuario, Model model) {
         boolean exito = usuarioService.registrar(usuario);
@@ -34,12 +38,15 @@ public class UserController {
         return "redirect:/auth/login?success";
     }
 
+
+    //muestra el formulario de iniciar sesión
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "login";
     }
 
+    //autentica al usuario y crea la sesión
     @PostMapping("/login")
     public String loginUsuario(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
         Usuario encontrado = usuarioService.autenticar(usuario.getCorreo(), usuario.getPassword());
@@ -60,6 +67,7 @@ public class UserController {
         return "login";
     }
 
+    //cierra la sesión del usuario
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
