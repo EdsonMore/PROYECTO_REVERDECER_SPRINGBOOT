@@ -11,29 +11,37 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        String mysqlUrl = env("MYSQL_URL");
-
-        if (mysqlUrl != null) {
-            String jdbcUrl = "jdbc:" + mysqlUrl
+        // 1. MYSQL_PUBLIC_URL (TCP proxy - unica que funciona en Railway)
+        String publicUrl = env("MYSQL_PUBLIC_URL");
+        if (publicUrl != null) {
+            String jdbcUrl = "jdbc:" + publicUrl
                     + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-            System.out.println("[DB] Usando MYSQL_URL: " + jdbcUrl);
+            System.out.println("[DB] Conectando por TCP proxy: " + jdbcUrl);
             DriverManagerDataSource ds = new DriverManagerDataSource();
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
             ds.setUrl(jdbcUrl);
             return ds;
         }
 
-        String host = envDefault("DB_HOST", "localhost");
-        String port = envDefault("DB_PORT", "3306");
-        String db = envDefault("DB_DATABASE", "railway");
+        // 2. Fallback: MYSQL_URL (red privada)
+        String mysqlUrl = env("MYSQL_URL");
+        if (mysqlUrl != null) {
+            String jdbcUrl = "jdbc:" + mysqlUrl
+                    + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            System.out.println("[DB] Conectando por red privada: " + jdbcUrl);
+            DriverManagerDataSource ds = new DriverManagerDataSource();
+            ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            ds.setUrl(jdbcUrl);
+            return ds;
+        }
 
-        System.out.println("[DB] Conectando a: " + host + ":" + port + "/" + db);
+        // 3. Fallback final
+        System.out.println("[DB] Sin variables de BD disponibles");
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://" + host + ":" + port + "/" + db
-                + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
-        ds.setUsername(envDefault("DB_USERNAME", "root"));
-        ds.setPassword(envDefault("DB_PASSWORD", ""));
+        ds.setUrl("jdbc:mysql://localhost:3306/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+        ds.setUsername("root");
+        ds.setPassword("");
         return ds;
     }
 
