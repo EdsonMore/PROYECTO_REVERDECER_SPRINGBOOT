@@ -11,20 +11,8 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        // 1. MYSQL_PUBLIC_URL (TCP proxy - unica que funciona en Railway)
-        String publicUrl = env("MYSQL_PUBLIC_URL");
-        if (publicUrl != null) {
-            String jdbcUrl = "jdbc:" + publicUrl
-                    + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-            System.out.println("[DB] Conectando por TCP proxy: " + jdbcUrl);
-            DriverManagerDataSource ds = new DriverManagerDataSource();
-            ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            ds.setUrl(jdbcUrl);
-            return ds;
-        }
-
-        // 2. Fallback: MYSQL_URL (red privada)
         String mysqlUrl = env("MYSQL_URL");
+
         if (mysqlUrl != null) {
             String jdbcUrl = "jdbc:" + mysqlUrl
                     + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -35,7 +23,6 @@ public class DatabaseConfig {
             return ds;
         }
 
-        // 3. Fallback final
         System.out.println("[DB] Sin variables de BD disponibles");
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
