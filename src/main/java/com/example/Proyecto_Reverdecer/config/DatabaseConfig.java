@@ -11,42 +11,39 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        // 1. Try MYSQL_PUBLIC_URL (TCP proxy - works cross-service)
+        // 1. Try MYSQL_PUBLIC_URL
         String publicUrl = System.getenv("MYSQL_PUBLIC_URL");
-        if (publicUrl != null && !publicUrl.isEmpty()) {
+        System.out.println("[DB] MYSQL_PUBLIC_URL raw: '" + publicUrl + "'");
+        if (publicUrl != null && !publicUrl.isEmpty() && !publicUrl.contains("{{")) {
             String jdbcUrl = "jdbc:" + publicUrl
                     + "?useSSL=true&requireSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+            System.out.println("[DB] Trying public URL: " + jdbcUrl);
             DriverManagerDataSource ds = new DriverManagerDataSource();
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
             ds.setUrl(jdbcUrl);
             return ds;
         }
 
-        // 2. Try MYSQL_URL (private network - if available)
+        // 2. Try MYSQL_URL
         String mysqlUrl = System.getenv("MYSQL_URL");
-        if (mysqlUrl != null && !mysqlUrl.isEmpty()) {
+        System.out.println("[DB] MYSQL_URL raw: '" + mysqlUrl + "'");
+        if (mysqlUrl != null && !mysqlUrl.isEmpty() && !mysqlUrl.contains("{{")) {
             String jdbcUrl = "jdbc:" + mysqlUrl
                     + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+            System.out.println("[DB] Trying private URL: " + jdbcUrl);
             DriverManagerDataSource ds = new DriverManagerDataSource();
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
             ds.setUrl(jdbcUrl);
             return ds;
         }
 
-        // 3. Fallback: individual variables
-        String host = System.getenv().getOrDefault("MYSQLHOST", "localhost");
-        String port = System.getenv().getOrDefault("MYSQLPORT", "3306");
-        String db = System.getenv().getOrDefault("MYSQL_DATABASE", "reverdecer_bd");
-        String user = System.getenv().getOrDefault("MYSQLUSER", "root");
-        String password = System.getenv().getOrDefault("MYSQLPASSWORD", "0805");
-
+        // 3. Fallback: hardcoded connection string
+        System.out.println("[DB] Using fallback: jdbc:mysql://localhost:3306/reverdecer_bd (WILL FAIL!)");
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://" + host + ":" + port + "/" + db
-                + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
-        ds.setUsername(user);
-        ds.setPassword(password);
-
+        ds.setUrl("jdbc:mysql://localhost:3306/reverdecer_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
+        ds.setUsername("root");
+        ds.setPassword("0805");
         return ds;
     }
 }
