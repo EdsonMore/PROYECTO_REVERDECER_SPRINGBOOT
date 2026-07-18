@@ -14,6 +14,9 @@ public class EspecieService {
     @Autowired
     private EspecieRepository especieRepository;
 
+    @Autowired
+    private SpeciesEnricherService speciesEnricherService;
+
     public List<Especie> listarActivas() {
         return especieRepository.findByActivoTrueOrderByNombreComunAsc();
     }
@@ -31,6 +34,10 @@ public class EspecieService {
 
     public Optional<Especie> obtenerPorId(Long id) {
         return especieRepository.findById(id);
+    }
+
+    public Optional<Especie> buscarPorNombreComun(String nombre) {
+        return especieRepository.findByNombreComunIgnoreCase(nombre);
     }
 
     public Especie guardar(Especie especie) {
@@ -82,9 +89,9 @@ public class EspecieService {
         Especie especie = new Especie();
         especie.setNombreComun(nombreComun);
         especie.setNombreCientifico(cientifico);
-        especie.setDescripcion("Registrada automáticamente por usuario");
         especie.setAutoRegistrada(true);
         especie.setActivo(true);
+        speciesEnricherService.enriquecer(especie);
         return especieRepository.save(especie);
     }
 
