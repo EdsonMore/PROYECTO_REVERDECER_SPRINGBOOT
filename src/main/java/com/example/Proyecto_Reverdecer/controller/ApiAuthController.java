@@ -138,6 +138,67 @@ public class ApiAuthController {
         }
     }
 
+    // endpoint para registro de nuevos usuarios
+    @PostMapping("/registro")
+    public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario, HttpServletRequest request) {
+        System.out.println("\n=== API REGISTRO ===");
+        System.out.println("Registrando usuario: " + usuario.getCorreo());
+
+        String clientIp = getClientIp(request);
+
+        try {
+            if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new LoginResponse("La contraseña es obligatoria"));
+            }
+
+            if (usuarioService.registrar(usuario)) {
+                Usuario creado = usuarioService.buscarPorCorreo(usuario.getCorreo());
+                if (creado != null) {
+                    creado.setPassword(null);
+
+                    // Registrar auditoría de registro exitoso
+                    auditoriaService.registrar(
+                            "REGISTRO_EXITOSO",
+                            "Nuevo usuario registrado: " + usuario.getCorreo(),
+                            clientIp,
+                            "/api/auth/registro",
+                            creado.getId()
+                    );
+
+                    System.out.println("Registro exitoso para: " + creado.getCorreo());
+                    return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+                }
+            }
+
+            System.out.println("Error al registrar usuario");
+
+            auditoriaService.registrarSinUsuario(
+                    "REGISTRO_FALLIDO",
+                    "Error al registrar usuario: " + usuario.getCorreo(),
+                    clientIp,
+                    "/api/auth/registro"
+            );
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new LoginResponse("Error al registrar. Verifica los datos."));
+
+        } catch (Exception e) {
+            System.err.println("Error en registro: " + e.getMessage());
+            e.printStackTrace();
+
+            auditoriaService.registrarSinUsuario(
+                    "REGISTRO_ERROR",
+                    "Error en registro: " + e.getMessage(),
+                    clientIp,
+                    "/api/auth/registro"
+            );
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new LoginResponse("Error en el servidor: " + e.getMessage()));
+        }
+    }
+
     // endpoint para refrescar un token JWT
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestParam String token) {

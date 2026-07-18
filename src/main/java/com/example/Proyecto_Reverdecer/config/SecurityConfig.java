@@ -55,7 +55,7 @@ public class SecurityConfig {
             // Configurar autorización de solicitudes
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/login", "/api/auth/registro").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/arboles", "/api/arboles/*").permitAll()
                 .requestMatchers("/api/clima").permitAll()
                 .requestMatchers("/api/seguimientos/publico/**").permitAll()
