@@ -10,9 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.Proyecto_Reverdecer.service.CustomUserDetailsService;
 import com.example.Proyecto_Reverdecer.security.JwtAuthenticationFilter;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,56 +51,35 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             // Configurar autorización de solicitudes
             .authorizeHttpRequests(authz -> authz
-                // Permitir acceso libre a recursos estáticos
-                .requestMatchers("/static/**", "/css/**", "/js/**", "/img/**", "/data/**").permitAll()
-                .requestMatchers("/resources/**").permitAll()
-                
-                // Permitir acceso libre a rutas públicas
-                .requestMatchers("/", "/sobre-nosotros", "/contacto").permitAll()
-                .requestMatchers("/auth/registro", "/auth/login", "/auth/logout").permitAll()
-                .requestMatchers("/acceso-denegado").permitAll()
-                .requestMatchers("/mapa", "/mapa/**").permitAll()
-                .requestMatchers("/arboles/api").permitAll()
-                
-                // Endpoint REST para login con JWT (público)
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
-                
-                // Rutas protegidas por interceptores personalizados (permitAll aquí, validación en interceptor)
-                .requestMatchers("/admin/**").permitAll()
-                .requestMatchers("/gestor/**").permitAll()
-                .requestMatchers("/supervisor/**").permitAll()
-                
-                // Rutas que requieren sesión autenticada pero sin rol específico
-                .requestMatchers("/arboles/**").permitAll()
-                .requestMatchers("/perfil/**").permitAll()
-                
-                // API protegida requiere JWT
+                .requestMatchers(HttpMethod.GET, "/api/arboles", "/api/arboles/*").permitAll()
+                .requestMatchers("/api/clima").permitAll()
+                .requestMatchers("/api/seguimientos/publico/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
-                
-                // Todas las demás solicitudes permitidas
-                .anyRequest().permitAll()   
+                .anyRequest().denyAll()
             )
             .csrf(csrf -> csrf.disable())
-            .logout(logout -> logout
-                .logoutUrl("/auth/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll())
-            .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/acceso-denegado"))
             // agreamos el filtro JWT antes del filtro de autenticación de Spring Security
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    //gestiona eventos relacionados con la sesion
     @Bean
-    public org.springframework.security.web.session.HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new org.springframework.security.web.session.HttpSessionEventPublisher();
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

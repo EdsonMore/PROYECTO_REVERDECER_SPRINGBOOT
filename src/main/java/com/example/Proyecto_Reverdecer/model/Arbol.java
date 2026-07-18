@@ -1,3 +1,4 @@
+// src/main/java/com/example/Proyecto_Reverdecer/model/Arbol.java
 package com.example.Proyecto_Reverdecer.model;
 
 import java.time.LocalDate;

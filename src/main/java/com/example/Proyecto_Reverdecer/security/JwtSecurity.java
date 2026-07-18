@@ -23,12 +23,13 @@ public class JwtSecurity {
                 .compact();
     }
 
-    // Genera token con datos extra (userId y rol)
-    public String generateTokenWithClaims(String username, Long userId, String rol) {
+    // Genera token con datos extra (userId, rol y isAdmin)
+    public String generateTokenWithClaims(String username, Long userId, String rol, Boolean isAdmin) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("userId", userId)
                 .claim("rol", rol)
+                .claim("isAdmin", isAdmin != null && isAdmin)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(key)

@@ -1,3 +1,4 @@
+// src/main/java/com/example/Proyecto_Reverdecer/repository/UsuarioRepository.java
 package com.example.Proyecto_Reverdecer.repository;
 
 import com.example.Proyecto_Reverdecer.model.Usuario;
