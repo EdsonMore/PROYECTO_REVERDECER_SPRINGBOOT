@@ -4,6 +4,7 @@ package com.example.Proyecto_Reverdecer.model;
 import java.time.LocalDate;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,7 @@ public class Arbol implements Serializable {
     @Column(name = "foto_url", length = 500, nullable = true)
     private String fotoUrl;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
