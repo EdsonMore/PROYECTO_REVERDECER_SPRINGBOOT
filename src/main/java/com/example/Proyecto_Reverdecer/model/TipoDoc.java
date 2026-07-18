@@ -1,3 +1,4 @@
+// src/main/java/com/example/Proyecto_Reverdecer/model/TipoDoc.java
 package com.example.Proyecto_Reverdecer.model;
 
 /**
@@ -15,6 +16,7 @@ public enum TipoDoc {
         this.descripcion = descripcion;
     }
     
+
     public String getDescripcion() {
         return descripcion;
     }
