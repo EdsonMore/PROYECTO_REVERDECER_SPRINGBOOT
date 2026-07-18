@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProyectoReverdecerApplication {
 
 	public static void main(String[] args) {
+		String port = System.getenv("PORT");
+		if (port != null && !port.isEmpty()) {
+			System.setProperty("server.port", port);
+		}
 		SpringApplication.run(ProyectoReverdecerApplication.class, args);
 	}
 }
