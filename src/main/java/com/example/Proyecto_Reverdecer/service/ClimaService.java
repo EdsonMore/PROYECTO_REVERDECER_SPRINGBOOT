@@ -20,8 +20,9 @@ public class ClimaService {
             String json = restTemplate.getForObject(url, String.class);
 
             com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-            Map<String, Object> data = mapper.readValue(json, Map.class);
+            Map<String, Object> data = mapper.readValue(json, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
 
+            @SuppressWarnings("unchecked")
             Map<String, Object> current = (Map<String, Object>) data.get("current");
             Map<String, Object> clima = new HashMap<>();
 

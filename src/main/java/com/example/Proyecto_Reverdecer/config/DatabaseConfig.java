@@ -40,8 +40,4 @@ public class DatabaseConfig {
         return valor;
     }
 
-    private String envDefault(String nombre, String defecto) {
-        String valor = env(nombre);
-        return valor != null ? valor : defecto;
-    }
 }

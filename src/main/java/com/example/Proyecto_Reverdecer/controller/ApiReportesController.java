@@ -1,8 +1,8 @@
 package com.example.Proyecto_Reverdecer.controller;
 
 import com.example.Proyecto_Reverdecer.dto.LoginResponse;
-import com.example.Proyecto_Reverdecer.model.*;
-import com.example.Proyecto_Reverdecer.service.*;
+import com.example.Proyecto_Reverdecer.service.ArbolService;
+import com.example.Proyecto_Reverdecer.service.GestorAmbientalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

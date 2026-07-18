@@ -17,9 +17,9 @@ public class JwtSecurity {
     // Generamos token solo con email
     public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hora
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hora
                 .signWith(key)
                 .compact();
     }
@@ -27,12 +27,12 @@ public class JwtSecurity {
     // Genera token con datos extra (userId, rol y isAdmin)
     public String generateTokenWithClaims(String username, Long userId, String rol, Boolean isAdmin) {
         return Jwts.builder()
-                .setSubject(username)
+                .subject(username)
                 .claim("userId", userId)
                 .claim("rol", rol)
                 .claim("isAdmin", isAdmin != null && isAdmin)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(key)
                 .compact();
     }

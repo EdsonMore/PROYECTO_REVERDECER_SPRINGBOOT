@@ -1,7 +1,6 @@
 package com.example.Proyecto_Reverdecer.controller;
 
 import com.example.Proyecto_Reverdecer.dto.LoginResponse;
-import com.example.Proyecto_Reverdecer.model.Arbol;
 import com.example.Proyecto_Reverdecer.model.Usuario;
 import com.example.Proyecto_Reverdecer.service.GestorAmbientalService;
 import com.example.Proyecto_Reverdecer.service.UsuarioService;
