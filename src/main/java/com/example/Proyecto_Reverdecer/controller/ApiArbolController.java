@@ -4,6 +4,7 @@ import com.example.Proyecto_Reverdecer.dto.LoginResponse;
 import com.example.Proyecto_Reverdecer.model.Arbol;
 import com.example.Proyecto_Reverdecer.model.Usuario;
 import com.example.Proyecto_Reverdecer.service.ArbolService;
+import com.example.Proyecto_Reverdecer.service.EspecieService;
 import com.example.Proyecto_Reverdecer.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class ApiArbolController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private EspecieService especieService;
+
     private void limpiarPassword(Arbol arbol) {
         if (arbol != null && arbol.getUsuario() != null) {
             arbol.getUsuario().setPassword(null);
@@ -36,6 +40,24 @@ public class ApiArbolController {
             for (Arbol a : arboles) {
                 limpiarPassword(a);
             }
+        }
+    }
+
+    private void autoRegistrarEspecie(String especieStr) {
+        try {
+            if (especieStr == null || especieStr.trim().isEmpty()) return;
+            String nombreCientifico = especieStr.trim();
+            String nombreComun = nombreCientifico;
+            if (nombreCientifico.contains("(") && nombreCientifico.contains(")")) {
+                nombreComun = nombreCientifico.substring(nombreCientifico.lastIndexOf("(") + 1, nombreCientifico.lastIndexOf(")")).trim();
+                nombreCientifico = nombreCientifico.substring(0, nombreCientifico.indexOf("(")).trim();
+            }
+            if (!especieService.buscarPorNombreCientifico(nombreCientifico).isPresent()) {
+                especieService.autoRegistrar(nombreComun, nombreCientifico);
+                System.out.println("Especie auto-registrada: " + nombreCientifico);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al auto-registrar especie: " + e.getMessage());
         }
     }
 
@@ -122,6 +144,8 @@ public class ApiArbolController {
             }
             arbol.setFechaRegistro(LocalDate.now());
 
+            autoRegistrarEspecie(arbol.getEspecie());
+
             Arbol guardado = arbolService.guardar(arbol);
             limpiarPassword(guardado);
             return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
@@ -153,7 +177,10 @@ public class ApiArbolController {
             }
 
             if (arbol.getNombre() != null) existente.setNombre(arbol.getNombre());
-            if (arbol.getEspecie() != null) existente.setEspecie(arbol.getEspecie());
+            if (arbol.getEspecie() != null) {
+                existente.setEspecie(arbol.getEspecie());
+                autoRegistrarEspecie(arbol.getEspecie());
+            }
             if (arbol.getUbicacion() != null) existente.setUbicacion(arbol.getUbicacion());
             if (arbol.getDescripcion() != null) existente.setDescripcion(arbol.getDescripcion());
             if (arbol.getLatitud() != null) existente.setLatitud(arbol.getLatitud());
