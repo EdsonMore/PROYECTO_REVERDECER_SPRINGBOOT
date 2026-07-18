@@ -59,6 +59,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/arboles", "/api/arboles/*").permitAll()
                 .requestMatchers("/api/clima").permitAll()
                 .requestMatchers("/api/seguimientos/publico/**").permitAll()
+                .requestMatchers("/", "/health").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().denyAll()
             )
