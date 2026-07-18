@@ -11,28 +11,42 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        String host = obtenerVariable("DB_HOST", "localhost");
-        String port = obtenerVariable("DB_PORT", "3306");
-        String db = obtenerVariable("DB_DATABASE", "railway");
-        String user = obtenerVariable("DB_USERNAME", "root");
-        String password = obtenerVariable("DB_PASSWORD", "");
+        String mysqlUrl = env("MYSQL_URL");
+
+        if (mysqlUrl != null) {
+            String jdbcUrl = "jdbc:" + mysqlUrl
+                    + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            System.out.println("[DB] Usando MYSQL_URL: " + jdbcUrl);
+            DriverManagerDataSource ds = new DriverManagerDataSource();
+            ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            ds.setUrl(jdbcUrl);
+            return ds;
+        }
+
+        String host = envDefault("DB_HOST", "localhost");
+        String port = envDefault("DB_PORT", "3306");
+        String db = envDefault("DB_DATABASE", "railway");
 
         System.out.println("[DB] Conectando a: " + host + ":" + port + "/" + db);
-
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds.setUrl("jdbc:mysql://" + host + ":" + port + "/" + db
                 + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
-        ds.setUsername(user);
-        ds.setPassword(password);
+        ds.setUsername(envDefault("DB_USERNAME", "root"));
+        ds.setPassword(envDefault("DB_PASSWORD", ""));
         return ds;
     }
 
-    private String obtenerVariable(String nombre, String defecto) {
+    private String env(String nombre) {
         String valor = System.getenv(nombre);
         if (valor == null || valor.isEmpty() || valor.contains("${{")) {
-            return defecto;
+            return null;
         }
         return valor;
+    }
+
+    private String envDefault(String nombre, String defecto) {
+        String valor = env(nombre);
+        return valor != null ? valor : defecto;
     }
 }
