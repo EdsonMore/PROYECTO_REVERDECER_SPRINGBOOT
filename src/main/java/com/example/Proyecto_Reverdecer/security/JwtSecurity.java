@@ -10,8 +10,9 @@ import java.util.Date;
 @Service
 public class JwtSecurity {
 
-    //clave fija para los tokens
-    private final SecretKey key = Keys.hmacShaKeyFor("Leyva-expondrá-1234567890-PROYECTO-REVERDECER".getBytes());
+    private final SecretKey key = Keys.hmacShaKeyFor(
+        System.getenv().getOrDefault("JWT_SECRET", "Leyva-expondrá-1234567890-PROYECTO-REVERDECER").getBytes()
+    );
 
     // Generamos token solo con email
     public String generateToken(String username) {
