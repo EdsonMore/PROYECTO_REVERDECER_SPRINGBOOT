@@ -60,6 +60,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/clima").permitAll()
                 .requestMatchers("/api/seguimientos/publico/**").permitAll()
                 .requestMatchers("/", "/health").permitAll()
+                .requestMatchers("/api/stats/**").permitAll()
+                .requestMatchers("/api/supervivencia/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().denyAll()
             )
